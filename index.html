@@ -1,0 +1,1300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Slotted — The marketplace for YouTube Dynamic Brand Segments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     RESET + BASE
+     ========================================================= */
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  :root {
+    --bg-dark: #0A0E1A;
+    --bg-dark-2: #131826;
+    --cream: #F6F2E8;
+    --cream-2: #EFEAE0;
+    --ink: #0B0E16;
+    --ink-2: #2A2E3A;
+    --muted: #6B6E78;
+    --muted-2: #A0A4B0;
+    --line: rgba(11,14,22,0.10);
+    --line-dark: rgba(255,255,255,0.10);
+    --accent: #E85D3D;
+    --accent-dim: rgba(232,93,61,0.12);
+    --blue: #4A6CF7;
+    --green: #2BAA6E;
+    --radius: 14px;
+    --radius-lg: 24px;
+    --maxw: 1180px;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  /* =========================================================
+     SHARED
+     ========================================================= */
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .container { padding: 0 22px; } }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+  }
+  .eyebrow.eyebrow-dark::before { background: var(--accent); }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', 'Times New Roman', serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.06;
+    color: var(--ink);
+  }
+  .display { font-size: clamp(48px, 7vw, 86px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.02; }
+  h1 { font-size: clamp(36px, 5.4vw, 64px); }
+  h2 { font-size: clamp(32px, 4.4vw, 52px); }
+  h3 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 600; letter-spacing: -0.015em; }
+  .lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-2); line-height: 1.55; font-weight: 400; max-width: 680px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 999px;
+    font-weight: 500; font-size: 15px;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--ink); color: var(--cream); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(11,14,22,0.18); }
+  .btn-accent { background: var(--accent); color: white; }
+  .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(232,93,61,0.32); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(11,14,22,0.18); }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .btn-ghost-dark { background: transparent; color: var(--cream); border: 1px solid rgba(246,242,232,0.22); }
+  .btn-ghost-dark:hover { border-color: var(--cream); }
+  .btn .arrow {
+    display: inline-block; transition: transform .2s ease;
+  }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* =========================================================
+     NAV
+     ========================================================= */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 18px 0;
+    transition: all .2s ease;
+    backdrop-filter: blur(0px);
+  }
+  .nav.scrolled {
+    background: rgba(246, 242, 232, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+  }
+  .nav.scrolled .brand { color: var(--ink); }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; position: relative; }
+  .brand-dot::after {
+    content: ""; position: absolute; inset: -4px;
+    border: 1.5px solid var(--accent); border-radius: 50%;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0; transform: scale(1.6); }
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { font-size: 14.5px; font-weight: 450; color: var(--cream); opacity: 0.85; transition: opacity .15s; }
+  .nav.scrolled .nav-links a { color: var(--ink); opacity: 0.85; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta { padding: 10px 18px; font-size: 14px; }
+  @media (max-width: 760px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+
+  /* =========================================================
+     HERO
+     ========================================================= */
+  .hero {
+    position: relative;
+    background: var(--bg-dark);
+    color: var(--cream);
+    padding: 140px 0 100px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,93,61,0.18), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 10% 90%, rgba(74,108,247,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .hero .container { position: relative; z-index: 2; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+    .hero { padding: 120px 0 70px; }
+  }
+  .hero h1.display { color: var(--cream); margin: 22px 0 26px; max-width: 720px; }
+  .hero h1.display em {
+    font-style: italic; color: var(--accent);
+    font-weight: 400;
+  }
+  .hero .lede { color: rgba(246,242,232,0.74); max-width: 540px; font-size: clamp(18px, 1.5vw, 20px); }
+  .hero-ctas { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-ctas .btn-primary { background: var(--cream); color: var(--ink); }
+  .hero-ctas .btn-primary:hover { background: white; }
+
+  .hero-meta {
+    margin-top: 60px; display: flex; gap: 36px; flex-wrap: wrap;
+    padding-top: 28px; border-top: 1px solid var(--line-dark);
+    max-width: 580px;
+  }
+  .hero-meta div .num {
+    font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+  .hero-meta div .lbl {
+    font-size: 12.5px; color: rgba(246,242,232,0.55);
+    margin-top: 4px; font-weight: 450;
+  }
+
+  /* Hero visual — animated slot calendar */
+  .hero-visual {
+    position: relative; aspect-ratio: 1/1.05;
+    max-width: 460px; margin-left: auto;
+    width: 100%;
+  }
+  .slot-card {
+    position: absolute;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 18px;
+    padding: 18px;
+    backdrop-filter: blur(12px);
+    transition: transform .3s ease;
+  }
+  .slot-card:hover { transform: translateY(-3px); }
+  .slot-card .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .slot-card .ch {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 13px; color: var(--cream); font-weight: 500;
+  }
+  .ch-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.10);
+  }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 0.05em;
+    padding: 3px 8px; border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(246,242,232,0.7);
+  }
+  .pill.live { background: rgba(43,170,110,0.15); color: #5EE0A0; }
+  .pill.open { background: rgba(232,93,61,0.18); color: #FFB39C; }
+  .slot-card .meta { display: flex; justify-content: space-between; font-size: 12px; color: rgba(246,242,232,0.6); }
+  .slot-card .price {
+    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500;
+    color: var(--cream); letter-spacing: -0.02em; margin-top: 6px;
+  }
+  .slot-card .price .sm { font-size: 13px; color: rgba(246,242,232,0.55); font-family: 'Inter'; font-weight: 400; }
+
+  .card-1 { top: 0; left: 0; width: 72%; transform: rotate(-2deg); animation: float1 6s ease-in-out infinite; }
+  .card-2 { top: 28%; right: 0; width: 70%; transform: rotate(3deg); animation: float2 7s ease-in-out infinite; }
+  .card-3 { bottom: 0; left: 8%; width: 76%; transform: rotate(-1.5deg); animation: float3 8s ease-in-out infinite; }
+
+  @keyframes float1 { 0%,100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-8px); } }
+  @keyframes float2 { 0%,100% { transform: rotate(3deg) translateY(0); } 50% { transform: rotate(3deg) translateY(-6px); } }
+  @keyframes float3 { 0%,100% { transform: rotate(-1.5deg) translateY(0); } 50% { transform: rotate(-1.5deg) translateY(-10px); } }
+
+  /* =========================================================
+     LOGO STRIP / TRUST
+     ========================================================= */
+  .trust {
+    background: var(--bg-dark);
+    color: rgba(246,242,232,0.55);
+    padding: 0 0 80px;
+  }
+  .trust .container { text-align: center; }
+  .trust p {
+    font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 28px;
+    color: rgba(246,242,232,0.42);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .logos {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    gap: 52px; opacity: 0.6;
+  }
+  .logos .logo {
+    font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+  .logos .logo.sans { font-family: 'Inter'; font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
+
+  /* =========================================================
+     STAT BAR
+     ========================================================= */
+  .stats {
+    background: var(--cream);
+    padding: 80px 0 40px;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 800px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    padding: 36px 28px; border-right: 1px solid var(--line);
+  }
+  .stat:last-child { border-right: none; }
+  @media (max-width: 800px) {
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+  .stat .num {
+    font-family: 'Fraunces', serif; font-size: clamp(36px, 4vw, 52px);
+    font-weight: 500; letter-spacing: -0.025em; line-height: 1;
+  }
+  .stat .num em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .stat .lbl {
+    margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 450;
+    line-height: 1.4;
+  }
+
+  /* =========================================================
+     SHIFT / WHY DBS
+     ========================================================= */
+  .shift { padding: 130px 0 90px; background: var(--cream); }
+  .shift-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start;
+  }
+  @media (max-width: 900px) { .shift-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .shift h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .shift .lede { margin-top: 26px; }
+  .shift .comparison {
+    background: white; border-radius: var(--radius-lg);
+    padding: 36px; box-shadow: 0 1px 0 rgba(11,14,22,0.06), 0 24px 60px -20px rgba(11,14,22,0.10);
+  }
+  .compare-row {
+    padding: 18px 0; border-bottom: 1px solid var(--line);
+  }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 10px; display: block;
+  }
+  .compare-row .old, .compare-row .new {
+    font-size: 15px; line-height: 1.5; display: block;
+  }
+  .compare-row .old { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.18); margin-bottom: 6px; }
+  .compare-row .new { color: var(--ink); font-weight: 500; }
+  .compare-row .new::before {
+    content: "→"; color: var(--accent); margin-right: 8px; font-weight: 600;
+  }
+
+  /* =========================================================
+     HOW IT WORKS
+     ========================================================= */
+  .how { padding: 110px 0 130px; background: var(--cream); }
+  .section-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 70px; gap: 40px;
+  }
+  @media (max-width: 800px) { .section-head { flex-direction: column; align-items: flex-start; } }
+  .section-head .left { max-width: 580px; }
+  .section-head h2 { margin-top: 16px; }
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+  @media (max-width: 900px) { .steps { grid-template-columns: 1fr; } }
+  .step {
+    background: white; border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .step:hover { transform: translateY(-3px); box-shadow: 0 24px 60px -20px rgba(11,14,22,0.14); }
+  .step-num {
+    font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .step h3 { margin: 12px 0 14px; font-size: 22px; }
+  .step p { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+  .step-illu { margin-top: 28px; height: 130px; position: relative; }
+
+  /* =========================================================
+     AUDIENCE BLOCKS
+     ========================================================= */
+  .audience { padding: 80px 0; background: var(--cream); }
+  .audience-block {
+    background: white; border-radius: var(--radius-lg);
+    margin-bottom: 36px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .audience-block.creators {
+    background: linear-gradient(135deg, #FFF8F0 0%, #FFEDE0 100%);
+  }
+  .audience-block.brands {
+    background: linear-gradient(135deg, #0E1118 0%, #1A1F2E 100%);
+    color: var(--cream);
+  }
+  .audience-grid {
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px;
+    padding: 70px 64px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .audience-grid { grid-template-columns: 1fr; padding: 50px 32px; gap: 40px; }
+  }
+  .audience-block.brands h2,
+  .audience-block.brands p,
+  .audience-block.brands h3 { color: var(--cream); }
+  .audience-block.brands .lede { color: rgba(246,242,232,0.74); }
+  .audience-block .feat-list {
+    margin-top: 28px; list-style: none; padding: 0;
+  }
+  .audience-block .feat-list li {
+    display: flex; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid rgba(11,14,22,0.08);
+    align-items: flex-start;
+  }
+  .audience-block.brands .feat-list li {
+    border-color: rgba(255,255,255,0.10);
+  }
+  .audience-block .feat-list li:last-child { border-bottom: none; }
+  .feat-list .check {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; margin-top: 2px;
+  }
+  .audience-block.brands .feat-list .check { background: var(--cream); color: var(--ink); }
+  .feat-list .feat-text { font-size: 15px; line-height: 1.55; }
+  .feat-list .feat-text b { font-weight: 600; }
+  .audience-block .cta-row { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .audience-block.brands .btn-primary { background: var(--cream); color: var(--ink); }
+  .audience-block.brands .btn-ghost { color: var(--cream); border-color: rgba(255,255,255,0.22); }
+
+  /* Mock UI for creator/brand */
+  .ui-mock {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 30px 80px -20px rgba(11,14,22,0.18), 0 0 0 1px rgba(11,14,22,0.05);
+  }
+  .audience-block.brands .ui-mock {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.5);
+  }
+  .ui-mock-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 18px;
+  }
+  .audience-block.brands .ui-mock-head { border-color: rgba(255,255,255,0.10); }
+  .ui-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    font-weight: 500;
+  }
+  .audience-block.brands .ui-title { color: rgba(246,242,232,0.6); }
+  .ui-actions { display: flex; gap: 6px; }
+  .ui-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+
+  .calendar-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  }
+  .cal-day {
+    aspect-ratio: 1.4 / 1;
+    background: #FAF6EE; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 6px; color: var(--muted);
+    position: relative;
+  }
+  .cal-day.booked { background: #131826; color: rgba(255,255,255,0.5); }
+  .cal-day.booked::after { content: ""; position: absolute; bottom: 5px; left: 5px; right: 5px; height: 2px; background: var(--accent); border-radius: 999px; }
+  .cal-day.live { background: var(--accent); color: white; }
+  .cal-day.live::after { content: ""; position: absolute; top: 6px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: white; animation: pulse 1.8s ease-in-out infinite; }
+  .cal-day.open { background: #FFF; border: 1px dashed rgba(232,93,61,0.4); color: var(--accent); }
+
+  .listing-row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 14px;
+    align-items: center; padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .audience-block.brands .listing-row { border-color: rgba(255,255,255,0.10); }
+  .listing-row:last-child { border-bottom: none; }
+  .listing-creator {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .listing-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #E85D3D, #F4B942);
+    flex-shrink: 0;
+  }
+  .listing-avatar.av2 { background: linear-gradient(135deg, #4A6CF7, #6E48F2); }
+  .listing-avatar.av3 { background: linear-gradient(135deg, #2BAA6E, #3CCB8A); }
+  .listing-name { font-weight: 600; font-size: 13.5px; }
+  .listing-sub { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .audience-block.brands .listing-sub { color: rgba(246,242,232,0.5); }
+  .listing-stat {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    text-align: right;
+  }
+  .listing-stat .v { font-weight: 600; }
+  .listing-stat .l { color: var(--muted); font-size: 10.5px; }
+  .audience-block.brands .listing-stat .l { color: rgba(246,242,232,0.5); }
+  .listing-cta {
+    background: var(--ink); color: var(--cream);
+    padding: 6px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
+  }
+  .audience-block.brands .listing-cta { background: var(--cream); color: var(--ink); }
+
+  /* =========================================================
+     TESTIMONIALS
+     ========================================================= */
+  .testimonials { padding: 130px 0; background: var(--cream-2); }
+  .quotes {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px;
+  }
+  @media (max-width: 800px) { .quotes { grid-template-columns: 1fr; } }
+  .quote {
+    background: white; padding: 44px 38px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 0 rgba(11,14,22,0.05);
+    border: 1px solid var(--line);
+  }
+  .quote .mark {
+    font-family: 'Fraunces', serif; font-size: 60px; color: var(--accent);
+    line-height: 0.5; margin-bottom: 14px; font-weight: 500;
+  }
+  .quote .body {
+    font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.4;
+    font-weight: 400; color: var(--ink); margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .quote .who { display: flex; align-items: center; gap: 14px; }
+  .who-av {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #E85D3D, #F4B942);
+    flex-shrink: 0;
+  }
+  .who-av.b { background: linear-gradient(135deg, #4A6CF7, #6E48F2); }
+  .who .name { font-weight: 600; font-size: 14.5px; }
+  .who .role { font-size: 13px; color: var(--muted); margin-top: 1px; }
+
+  /* =========================================================
+     PRICING
+     ========================================================= */
+  .pricing { padding: 130px 0; background: var(--cream); }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 70px; }
+  @media (max-width: 900px) { .price-grid { grid-template-columns: 1fr; } }
+  .price-card {
+    background: white; border-radius: var(--radius-lg);
+    padding: 40px 34px;
+    border: 1px solid var(--line);
+    display: flex; flex-direction: column;
+  }
+  .price-card.featured { background: var(--ink); color: var(--cream); border-color: var(--ink); position: relative; }
+  .price-card.featured::before {
+    content: "MOST COMMON"; position: absolute; top: -12px; left: 32px;
+    background: var(--accent); color: white;
+    padding: 5px 12px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; font-weight: 500;
+  }
+  .price-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .price-card.featured h3 { color: var(--cream); }
+  .price-card .sub { font-size: 14px; color: var(--muted); }
+  .price-card.featured .sub { color: rgba(246,242,232,0.6); }
+  .price-card .num {
+    font-family: 'Fraunces', serif; font-size: 56px; font-weight: 500;
+    letter-spacing: -0.03em; margin: 24px 0 4px;
+  }
+  .price-card .of-what { font-size: 13.5px; color: var(--muted); }
+  .price-card.featured .of-what { color: rgba(246,242,232,0.6); }
+  .price-card ul {
+    list-style: none; margin: 28px 0; padding: 0; flex: 1;
+  }
+  .price-card li {
+    padding: 9px 0; font-size: 14.5px; color: var(--ink-2);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .price-card.featured li { color: rgba(246,242,232,0.85); }
+  .price-card li::before {
+    content: "✓"; color: var(--accent); font-weight: 600;
+    flex-shrink: 0;
+  }
+  .price-card .btn { width: 100%; justify-content: center; }
+  .price-card.featured .btn-primary { background: var(--cream); color: var(--ink); }
+
+  /* =========================================================
+     FAQ
+     ========================================================= */
+  .faq { padding: 130px 0; background: var(--cream); border-top: 1px solid var(--line); }
+  .faq-grid {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start;
+  }
+  @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0;
+    cursor: pointer;
+  }
+  .faq-item summary {
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 500; font-size: 17px; color: var(--ink);
+    list-style: none;
+    transition: color .15s;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { color: var(--accent); }
+  .faq-item summary::after {
+    content: "+"; font-family: 'Fraunces', serif; font-size: 24px;
+    color: var(--accent); transition: transform .25s ease;
+    line-height: 1;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p {
+    margin-top: 14px; color: var(--ink-2); font-size: 15px; line-height: 1.65;
+  }
+
+  /* =========================================================
+     FINAL CTA
+     ========================================================= */
+  .final-cta {
+    background: var(--bg-dark); color: var(--cream);
+    padding: 130px 0; position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 30% 50%, rgba(232,93,61,0.15), transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(74,108,247,0.10), transparent 70%);
+  }
+  .final-cta .container { position: relative; text-align: center; }
+  .final-cta h2 { color: var(--cream); max-width: 760px; margin: 24px auto 22px; }
+  .final-cta h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .final-cta .lede { color: rgba(246,242,232,0.75); margin: 0 auto; }
+  .final-cta .cta-row { margin-top: 44px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .final-cta .btn-primary { background: var(--cream); color: var(--ink); }
+
+  /* =========================================================
+     FOOTER
+     ========================================================= */
+  footer {
+    background: var(--bg-dark); color: rgba(246,242,232,0.6);
+    padding: 70px 0 50px;
+    border-top: 1px solid rgba(246,242,232,0.08);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px;
+  }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  footer .col h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(246,242,232,0.5); margin-bottom: 18px;
+    font-weight: 500;
+  }
+  footer .col ul { list-style: none; padding: 0; }
+  footer .col li { margin-bottom: 10px; font-size: 14px; }
+  footer .col li a { color: rgba(246,242,232,0.7); transition: color .15s; }
+  footer .col li a:hover { color: var(--cream); }
+  footer .brand { color: var(--cream); margin-bottom: 16px; }
+  footer .tagline { font-size: 14px; max-width: 280px; line-height: 1.55; }
+  .footer-bottom {
+    margin-top: 60px; padding-top: 28px; border-top: 1px solid rgba(246,242,232,0.08);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    font-size: 13px;
+  }
+
+  /* Selection / focus */
+  ::selection { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV
+========================================================= -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="brand"><span class="brand-dot"></span>Slotted</a>
+    <div class="nav-links">
+      <a href="#creators">For creators</a>
+      <a href="#brands">For brands</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#cta" class="btn btn-accent nav-cta">Get started <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">A new asset class for creator media</span>
+        <h1 class="display">Sponsorships used to end. <em>Now they keep earning.</em></h1>
+        <p class="lede">Slotted is the marketplace for YouTube Dynamic Brand Segments — the new 60-second slot you can sell, swap, and resell across markets, mid-flight.</p>
+        <div class="hero-ctas">
+          <a href="#creators" class="btn btn-primary">List your inventory <span class="arrow">→</span></a>
+          <a href="#brands" class="btn btn-ghost-dark">Browse creators</a>
+        </div>
+        <div class="hero-meta">
+          <div>
+            <div class="num">$4.5B</div>
+            <div class="lbl">Projected GMV by 2028</div>
+          </div>
+          <div>
+            <div class="num">10–18%</div>
+            <div class="lbl">Take rate — never on views</div>
+          </div>
+          <div>
+            <div class="num">60s</div>
+            <div class="lbl">Per slot. Resold N times.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating slot cards visual -->
+      <div class="hero-visual">
+        <div class="slot-card card-1">
+          <div class="head">
+            <div class="ch"><span class="ch-avatar"></span>MKBHD · Tech</div>
+            <span class="pill live">● LIVE</span>
+          </div>
+          <div class="meta"><span>US · 30 days</span><span>Slot 1 of 1</span></div>
+          <div class="price">$24,500 <span class="sm">/ slot</span></div>
+        </div>
+        <div class="slot-card card-2">
+          <div class="head">
+            <div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#4A6CF7,#6E48F2);"></span>Ali Abdaal · Productivity</div>
+            <span class="pill">QUEUED</span>
+          </div>
+          <div class="meta"><span>EU · 14 days</span><span>Starts Jun 3</span></div>
+          <div class="price">$18,200 <span class="sm">/ slot</span></div>
+        </div>
+        <div class="slot-card card-3">
+          <div class="head">
+            <div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#2BAA6E,#3CCB8A);"></span>Marques Eats · Lifestyle</div>
+            <span class="pill open">OPEN</span>
+          </div>
+          <div class="meta"><span>US, CA · Flexible</span><span>Yield: 92%</span></div>
+          <div class="price">$11,400 <span class="sm">/ slot · suggested</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TRUST / LOGO STRIP
+========================================================= -->
+<section class="trust">
+  <div class="container">
+    <p>Building with design partners across</p>
+    <div class="logos">
+      <span class="logo">Linus Tech Tips</span>
+      <span class="logo sans">vsauce</span>
+      <span class="logo">Veritasium</span>
+      <span class="logo sans">cleo</span>
+      <span class="logo">Wendover</span>
+      <span class="logo sans">athletic greens</span>
+      <span class="logo">Polygon</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     STAT BAR
+========================================================= -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="num"><em>98%</em></div>
+        <div class="lbl">More likely to trust creators vs. social platforms<sup style="font-size:9px">¹</sup></div>
+      </div>
+      <div class="stat">
+        <div class="num">3–5×</div>
+        <div class="lbl">Host-read CPM premium vs. standard display</div>
+      </div>
+      <div class="stat">
+        <div class="num">40–80%</div>
+        <div class="lbl">Of channel views come from back catalog</div>
+      </div>
+      <div class="stat">
+        <div class="num">$0</div>
+        <div class="lbl">In listing fees, monthly fees, or platform fees</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SHIFT
+========================================================= -->
+<section class="shift">
+  <div class="container">
+    <div class="shift-grid">
+      <div>
+        <span class="eyebrow">Why the format matters</span>
+        <h2 style="margin-top:16px">The unit of trade just <em>shifted.</em></h2>
+        <p class="lede">For fifteen years, the unit was "a campaign" — one creator, one video, one brand, frozen in place. Now it's "a slot." And slots have inventory dynamics: utilization, yield, seasonality, geo demand.</p>
+        <p class="lede" style="margin-top:18px;">That single change unlocks everything else.</p>
+      </div>
+      <div class="comparison">
+        <div class="compare-row">
+          <span class="label">The deal</span>
+          <div class="old">Frozen at launch, lives forever</div>
+          <div class="new">Swappable mid-flight, ends when you say</div>
+        </div>
+        <div class="compare-row">
+          <span class="label">Geography</span>
+          <div class="old">One creative, all viewers</div>
+          <div class="new">Different brands by country, same slot</div>
+        </div>
+        <div class="compare-row">
+          <span class="label">Back catalog</span>
+          <div class="old">Earned out years ago</div>
+          <div class="new">Evergreen inventory, always sellable</div>
+        </div>
+        <div class="compare-row">
+          <span class="label">Measurement</span>
+          <div class="old">Self-reported screenshots</div>
+          <div class="new">Native sync into Google Ads</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+<section class="how">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">How it works</span>
+        <h2>Three steps. Real money in your <em>YouTube workflow.</em></h2>
+      </div>
+      <p class="lede" style="max-width:360px;">No new tools to learn. No data to manually export. Slotted plugs into the surfaces your team already uses every day.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">① List</div>
+        <h3>Connect, list, set price</h3>
+        <p>Creators connect YouTube Studio. Available DBS slots surface as a calendar across new uploads and back catalog. Set base CPMs or accept platform-suggested pricing built from real transactions.</p>
+        <div class="step-illu">
+          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
+            <g font-family="JetBrains Mono" font-size="8" fill="#6B6E78">
+              <rect x="12" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5"/>
+              <text x="29" y="28" text-anchor="middle">Mon</text>
+              <rect x="50" y="14" width="34" height="22" rx="3" fill="#0A0E1A"/>
+              <text x="67" y="28" text-anchor="middle" fill="#fff">Tue</text>
+              <rect x="88" y="14" width="34" height="22" rx="3" fill="#E85D3D"/>
+              <text x="105" y="28" text-anchor="middle" fill="#fff" font-weight="bold">LIVE</text>
+              <rect x="126" y="14" width="34" height="22" rx="3" fill="#0A0E1A"/>
+              <text x="143" y="28" text-anchor="middle" fill="#fff">Thu</text>
+              <rect x="164" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5" stroke-dasharray="2"/>
+              <text x="181" y="28" text-anchor="middle" fill="#E85D3D">OPEN</text>
+              <rect x="202" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5" stroke-dasharray="2"/>
+              <text x="219" y="28" text-anchor="middle" fill="#E85D3D">OPEN</text>
+              <rect x="240" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5"/>
+              <text x="257" y="28" text-anchor="middle">Sun</text>
+            </g>
+            <g transform="translate(12, 56)">
+              <rect x="0" y="0" width="256" height="60" rx="8" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="22" cy="30" r="11" fill="#E85D3D"/>
+              <text x="44" y="24" font-family="Inter" font-size="11" font-weight="600" fill="#0A0E1A">Suggested pricing</text>
+              <text x="44" y="40" font-family="Inter" font-size="10" fill="#6B6E78">Based on 1,240 comparable slots</text>
+              <text x="240" y="38" text-anchor="end" font-family="Fraunces" font-size="20" font-weight="500" fill="#0A0E1A">$24K</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">② Match</div>
+        <h3>Brand finds you, books, funds escrow</h3>
+        <p>Brands discover creators by audience, geo, and historic DBS performance. They book inventory, sign standard terms, and fund escrow — all in one flow. You review the request and accept.</p>
+        <div class="step-illu">
+          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
+            <g transform="translate(14, 14)">
+              <rect x="0" y="0" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="20" cy="17" r="9" fill="url(#g1)"/>
+              <text x="36" y="14" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">Cleo · fintech</text>
+              <text x="36" y="26" font-family="Inter" font-size="9" fill="#6B6E78">14-day · US · 1.2M target views</text>
+              <text x="240" y="22" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#2BAA6E">● BOOKED</text>
+              <rect x="0" y="44" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="20" cy="61" r="9" fill="url(#g2)"/>
+              <text x="36" y="58" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">Athletic Greens</text>
+              <text x="36" y="70" font-family="Inter" font-size="9" fill="#6B6E78">30-day · UK + CA · Health vertical</text>
+              <text x="240" y="66" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#E85D3D">● PENDING</text>
+              <rect x="0" y="88" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="20" cy="105" r="9" fill="url(#g3)"/>
+              <text x="36" y="102" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">NordVPN</text>
+              <text x="36" y="114" font-family="Inter" font-size="9" fill="#6B6E78">Resell of Q1 slot · DE + FR</text>
+              <text x="240" y="110" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#4A6CF7">● REVIEW</text>
+            </g>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E85D3D"/><stop offset="1" stop-color="#F4B942"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2BAA6E"/><stop offset="1" stop-color="#3CCB8A"/></linearGradient>
+              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4A6CF7"/><stop offset="1" stop-color="#6E48F2"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③ Run + Resell</div>
+        <h3>Live, measured, and automatically resold</h3>
+        <p>Segments go live in YouTube Studio. Performance syncs from Google Ads in real time. When the deal ends, the slot reopens automatically — and Slotted offers it back to the market.</p>
+        <div class="step-illu">
+          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
+            <g transform="translate(14, 14)">
+              <text font-family="JetBrains Mono" font-size="9" fill="#6B6E78" y="10">PERFORMANCE — LAST 30 DAYS</text>
+              <polyline points="0,80 30,72 60,68 90,55 120,48 150,30 180,25 210,18 240,12 252,10"
+                fill="none" stroke="#E85D3D" stroke-width="2.2"/>
+              <polyline points="0,80 30,72 60,68 90,55 120,48 150,30 180,25 210,18 240,12 252,10 252,98 0,98"
+                fill="url(#fade)" opacity="0.35"/>
+              <circle cx="252" cy="10" r="4" fill="#E85D3D"/>
+              <circle cx="252" cy="10" r="8" fill="#E85D3D" opacity="0.25"/>
+              <text x="252" y="108" text-anchor="end" font-family="Fraunces" font-size="20" font-weight="500" fill="#0A0E1A">1.4M</text>
+              <text x="190" y="108" text-anchor="end" font-family="Inter" font-size="9" fill="#6B6E78">views · 92% VTR · ↑ 18%</text>
+            </g>
+            <defs>
+              <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+                <stop stop-color="#E85D3D" stop-opacity="0.4"/>
+                <stop offset="1" stop-color="#E85D3D" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     AUDIENCE — CREATORS
+========================================================= -->
+<section class="audience" id="creators">
+  <div class="container">
+    <div class="audience-block creators">
+      <div class="audience-grid">
+        <div>
+          <span class="eyebrow">For creators</span>
+          <h2 style="margin-top:14px">Sell your sponsorship slot. <em>Then sell it again.</em></h2>
+          <p class="lede" style="margin-top:20px;">Every long-form video you've uploaded is still earning views. Now it can keep earning sponsorship revenue — month after month, market after market.</p>
+          <ul class="feat-list">
+            <li><span class="check">✓</span><span class="feat-text"><b>Run your inventory like an asset.</b> Calendar view of every slot. Suggested pricing built from real platform transactions.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Resale, automatically.</b> When a deal ends, the slot reopens. We re-offer to relevant brands. You don't email anyone.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Geo-multiply your slots.</b> One slot, different brands, different countries. Same video. Same time.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Escrowed payouts.</b> Funds held when signed, released on go-live. No more chasing invoices.</span></li>
+          </ul>
+          <div class="cta-row">
+            <a href="#cta" class="btn btn-accent">Connect your channel <span class="arrow">→</span></a>
+            <a href="#" class="btn btn-ghost">See how the math works</a>
+          </div>
+        </div>
+        <div>
+          <div class="ui-mock">
+            <div class="ui-mock-head">
+              <span class="ui-title">Inventory · December</span>
+              <div class="ui-actions"><span class="ui-dot"></span><span class="ui-dot"></span><span class="ui-dot"></span></div>
+            </div>
+            <div class="calendar-grid">
+              <div class="cal-day">M 1</div>
+              <div class="cal-day">T 2</div>
+              <div class="cal-day booked">W 3</div>
+              <div class="cal-day booked">T 4</div>
+              <div class="cal-day live">F 5</div>
+              <div class="cal-day live">S 6</div>
+              <div class="cal-day live">S 7</div>
+              <div class="cal-day live">M 8</div>
+              <div class="cal-day live">T 9</div>
+              <div class="cal-day booked">W 10</div>
+              <div class="cal-day booked">T 11</div>
+              <div class="cal-day open">F 12</div>
+              <div class="cal-day open">S 13</div>
+              <div class="cal-day open">S 14</div>
+              <div class="cal-day open">M 15</div>
+              <div class="cal-day open">T 16</div>
+              <div class="cal-day booked">W 17</div>
+              <div class="cal-day booked">T 18</div>
+              <div class="cal-day booked">F 19</div>
+              <div class="cal-day booked">S 20</div>
+              <div class="cal-day booked">S 21</div>
+            </div>
+            <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;">YIELD THIS MONTH</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;">$184,200</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;">UTILIZATION</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--accent);">76%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     AUDIENCE — BRANDS
+========================================================= -->
+<section class="audience" id="brands" style="padding-top:0;">
+  <div class="container">
+    <div class="audience-block brands">
+      <div class="audience-grid">
+        <div>
+          <span class="eyebrow">For brands & agencies</span>
+          <h2 style="margin-top:14px">Buy YouTube creator inventory at the <em>speed of media.</em></h2>
+          <p class="lede" style="margin-top:20px;">Plan multi-creator campaigns, swap creative mid-flight, and measure everything inside the Google Ads workflow your team already uses.</p>
+          <ul class="feat-list">
+            <li><span class="check">✓</span><span class="feat-text"><b>Discover by audience, not by name.</b> Search creators by demographic, geo, vertical, DBS performance, brand-safety.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Plan campaigns as bundles.</b> 5 to 30 creators in one workflow. One contract. One launch. One reporting view.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Swap creative mid-flight.</b> Push a new version to every slot in your campaign in two clicks. Days, not weeks.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Measurement where you already work.</b> Native DBS metrics in Google Ads. Unified reporting in Slotted.</span></li>
+          </ul>
+          <div class="cta-row">
+            <a href="#cta" class="btn btn-primary">Request a demo <span class="arrow">→</span></a>
+            <a href="#" class="btn btn-ghost">Browse creators</a>
+          </div>
+        </div>
+        <div>
+          <div class="ui-mock">
+            <div class="ui-mock-head">
+              <span class="ui-title">Campaign · Q4 Launch · 12 creators</span>
+              <div class="ui-actions"><span class="ui-dot"></span><span class="ui-dot"></span><span class="ui-dot"></span></div>
+            </div>
+            <div>
+              <div class="listing-row">
+                <div class="listing-creator">
+                  <div class="listing-avatar"></div>
+                  <div>
+                    <div class="listing-name" style="color:var(--cream);">MKBHD</div>
+                    <div class="listing-sub">Tech · 18M subs · US/CA</div>
+                  </div>
+                </div>
+                <div class="listing-stat">
+                  <div class="v" style="color:var(--cream);">$24,500</div>
+                  <div class="l">/ slot · 1.4M est.</div>
+                </div>
+                <span class="listing-cta">Add</span>
+              </div>
+              <div class="listing-row">
+                <div class="listing-creator">
+                  <div class="listing-avatar av2"></div>
+                  <div>
+                    <div class="listing-name" style="color:var(--cream);">Ali Abdaal</div>
+                    <div class="listing-sub">Productivity · 5.6M · Global</div>
+                  </div>
+                </div>
+                <div class="listing-stat">
+                  <div class="v" style="color:var(--cream);">$18,200</div>
+                  <div class="l">/ slot · 820K est.</div>
+                </div>
+                <span class="listing-cta">Added</span>
+              </div>
+              <div class="listing-row">
+                <div class="listing-creator">
+                  <div class="listing-avatar av3"></div>
+                  <div>
+                    <div class="listing-name" style="color:var(--cream);">Wendover</div>
+                    <div class="listing-sub">Business · 4.8M · EU</div>
+                  </div>
+                </div>
+                <div class="listing-stat">
+                  <div class="v" style="color:var(--cream);">$14,800</div>
+                  <div class="l">/ slot · 640K est.</div>
+                </div>
+                <span class="listing-cta">Add</span>
+              </div>
+            </div>
+            <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.10);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:rgba(246,242,232,0.5);text-transform:uppercase;">CAMPAIGN BUDGET</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--cream);">$420,000</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:rgba(246,242,232,0.5);text-transform:uppercase;">PROJECTED REACH</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--accent);">8.4M</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TESTIMONIALS
+========================================================= -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">From the people building with us</span>
+        <h2>The format is new. <em>The wins aren't theoretical.</em></h2>
+      </div>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <div class="mark">"</div>
+        <div class="body">We have nine years of videos still pulling views. Before Slotted, only the new uploads were monetizable. Now every video is a slot we can sell — and resell — as long as it keeps performing.</div>
+        <div class="who">
+          <div class="who-av"></div>
+          <div>
+            <div class="name">Design partner</div>
+            <div class="role">Creator · 3M+ subscribers, technology</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote">
+        <div class="mark">"</div>
+        <div class="body">We were running 14 creator integrations across three quarters. Reconciling against media budget was a full-time job. With Slotted it sits inside our Google Ads workflow. We got 80% of that time back.</div>
+        <div class="who">
+          <div class="who-av b"></div>
+          <div>
+            <div class="name">Design partner</div>
+            <div class="role">Sr. Media Director · DTC brand</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRICING
+========================================================= -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:0;">
+      <div class="left">
+        <span class="eyebrow">Pricing</span>
+        <h2>Transparent. <em>And only when you earn.</em></h2>
+      </div>
+      <p class="lede" style="max-width:380px;">No listing fees. No subscriptions. No fees on views. We make money when you do.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Creator-led</h3>
+        <p class="sub">You bring the brand</p>
+        <div class="num">10–12<span style="font-size:30px;">%</span></div>
+        <div class="of-what">of closed deal value</div>
+        <ul>
+          <li>Unlimited slot listings</li>
+          <li>YouTube Studio + Google Ads sync</li>
+          <li>Standard contracts + escrow</li>
+          <li>Performance reporting</li>
+          <li>Automated resale flow</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost">Connect your channel</a>
+      </div>
+      <div class="price-card featured">
+        <h3>Platform-led</h3>
+        <p class="sub">Slotted brings the brand</p>
+        <div class="num">15–18<span style="font-size:30px;">%</span></div>
+        <div class="of-what">of closed deal value</div>
+        <ul>
+          <li>Everything in Creator-led</li>
+          <li>Inbound brand requests, qualified</li>
+          <li>Yield-pricing intelligence</li>
+          <li>Geo + multi-tenant routing</li>
+          <li>Creator success support</li>
+        </ul>
+        <a href="#cta" class="btn btn-primary">Get matched <span class="arrow">→</span></a>
+      </div>
+      <div class="price-card">
+        <h3>Agency tier</h3>
+        <p class="sub">Holdcos &amp; in-house teams</p>
+        <div class="num">$2.5K<span style="font-size:24px;">/seat/mo</span></div>
+        <div class="of-what">plus standard take rate</div>
+        <ul>
+          <li>Multi-brand planning workspace</li>
+          <li>Custom roles + permissions</li>
+          <li>White-label reporting</li>
+          <li>Bulk-buy workflows</li>
+          <li>API access</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FAQ
+========================================================= -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-grid">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 style="margin-top:14px;">Questions <em>we get a lot.</em></h2>
+        <p class="lede" style="margin-top:22px;">Don't see yours? <a href="#" style="color:var(--accent);font-weight:500;border-bottom:1.5px solid var(--accent);">Ask us anything →</a></p>
+      </div>
+      <div>
+        <details class="faq-item" open>
+          <summary>What is a Dynamic Brand Segment, exactly?</summary>
+          <p>DBS is a new YouTube format (launching April 2026) that lets creators insert a 60-second host-read sponsorship segment into their long-form videos that can be swapped, resold, or geo-targeted independently of the main video. Google built the delivery rail; Slotted is where the deals get done.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does Slotted replace my agent or manager?</summary>
+          <p>No. Slotted is the marketplace and software layer — the discovery, pricing, contracts, escrow, and reporting. Your manager handles strategy, relationships, and the deals Slotted can't see. Most creators keep both.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do payments work?</summary>
+          <p>Brands fund escrow when a deal is signed. We release funds to creators when the slot goes live in YouTube Studio (or, optionally, when a view threshold is hit). Payouts run through Stripe Connect. Standard creator payment terms.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is this just programmatic ads in disguise?</summary>
+          <p>No. Per Google's own FAQ: "This is not open exchange programmatic inventory. It's still a manual, direct deal between the Brand and Creator." Slotted enforces direct deals and creator approval on every booking.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I block certain brands or verticals?</summary>
+          <p>Yes. Creators set blocklists by brand, vertical, or competitor of an existing deal. Brands set safety screens by creator type, content category, or audience profile. Both sides keep full approval rights on every match.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What's the minimum spend for brands?</summary>
+          <p>Self-serve starts at $10K per campaign. Agency-tier customers and enterprise sales-supported accounts have no minimum. Most first campaigns land between $50K and $250K.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+<section class="final-cta" id="cta">
+  <div class="container">
+    <span class="eyebrow eyebrow-dark">Get started</span>
+    <h2>The marketplace runs on <em>both sides.</em><br>Pick yours.</h2>
+    <p class="lede">Creators: 60 seconds to see what your inventory is worth.<br>Brands: a starting bundle of creators, projected reach, projected performance — in 48 hours.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-primary">Connect your channel <span class="arrow">→</span></a>
+      <a href="#" class="btn btn-accent">Request a brand demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="col">
+        <a href="#" class="brand"><span class="brand-dot"></span>Slotted</a>
+        <p class="tagline">The marketplace for YouTube Dynamic Brand Segments. Where 60-second slots become a living asset.</p>
+      </div>
+      <div class="col">
+        <h4>Creators</h4>
+        <ul>
+          <li><a href="#">How it works</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Yield calculator</a></li>
+          <li><a href="#">Connect channel</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Brands</h4>
+        <ul>
+          <li><a href="#">Buying platform</a></li>
+          <li><a href="#">Agency tier</a></li>
+          <li><a href="#">Browse creators</a></li>
+          <li><a href="#">Request demo</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Slotted, Inc. All rights reserved.</span>
+      <div style="display:flex;gap:20px;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Brand safety</a>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:11px;color:rgba(246,242,232,0.4);max-width:600px;">¹ Google/Ipsos, Video &amp; Social Ad Impact Study, July–August 2023. Online survey, n=13,328 US, UK, BR, FR, DE, IT, JP, online users 18–54 who use social apps/sites monthly or more often.</p>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+</body>
+</html>
