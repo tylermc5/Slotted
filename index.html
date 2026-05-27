@@ -1,1517 +1,1287 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tabletop — Diner Acquisition for Restaurants</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Slotted — The endorsement exchange for YouTube Dynamic Brand Segments</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cream: #FAF6EE;
-    --cream-dark: #F0E6D4;
-    --white: #FFFFFF;
-    --dark: #1E2C24;
-    --dark-deep: #14201A;
-    --terracotta: #C8553D;
-    --terracotta-dark: #A8442C;
-    --peach: #E89F71;
-    --text-primary: #1A1A1A;
-    --text-body: #2C2C2C;
-    --text-muted: #6B6B6B;
-    --border: #E5DDD0;
-    --green: #2A5840;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-
+  :root {
+    --bg-dark: #0A0E1A;
+    --bg-dark-2: #131826;
+    --cream: #F6F2E8;
+    --cream-2: #EFEAE0;
+    --ink: #0B0E16;
+    --ink-2: #2A2E3A;
+    --muted: #6B6E78;
+    --muted-2: #A0A4B0;
+    --line: rgba(11,14,22,0.10);
+    --line-dark: rgba(255,255,255,0.10);
+    --accent: #E85D3D;
+    --accent-dim: rgba(232,93,61,0.12);
+    --blue: #4A6CF7;
+    --green: #2BAA6E;
+    --radius: 14px;
+    --radius-lg: 24px;
+    --maxw: 1180px;
+  }
   body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--cream);
-    color: var(--text-body);
-    font-size: 17px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400; color: var(--ink); background: var(--cream);
+    line-height: 1.55; font-size: 16px; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-  body.view-creators { background: var(--cream); }
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .container { padding: 0 22px; } }
 
-  .display, h1, h2, h3 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-variation-settings: "opsz" 144, "SOFT" 50;
-    color: var(--text-primary);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    font-weight: 500;
-  }
-
-  h2 { font-size: clamp(36px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.025em; }
-  h3 { font-size: 28px; letter-spacing: -0.015em; }
-
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
-
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(250, 246, 238, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-inner {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 32px; max-width: 1280px; margin: 0 auto;
-  }
-  .logo {
-    font-family: 'Fraunces', serif;
-    font-size: 26px; font-weight: 600; letter-spacing: -0.02em;
-    color: var(--text-primary);
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .logo .dot { color: var(--terracotta); }
-  .nav-links { display: flex; align-items: center; gap: 36px; }
-  .nav-links a {
-    color: var(--text-body); text-decoration: none;
-    font-size: 15px; font-weight: 500;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--terracotta); }
-  .btn {
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 22px;
-    background: var(--text-primary); color: var(--white);
-    border: none; border-radius: 999px;
-    font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
-    cursor: pointer; text-decoration: none;
-    transition: background 0.2s, transform 0.2s;
   }
-  .btn:hover { background: var(--terracotta); }
-  .btn.btn-primary { background: var(--terracotta); }
-  .btn.btn-primary:hover { background: var(--terracotta-dark); }
-  .btn.btn-large { padding: 16px 30px; font-size: 16px; }
-  .btn.btn-light { background: var(--white); color: var(--text-primary); }
-  .btn.btn-light:hover { background: var(--cream); }
-  .btn .arrow { transition: transform 0.2s; }
+  .eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', 'Times New Roman', serif;
+    font-weight: 500; letter-spacing: -0.02em; line-height: 1.06; color: var(--ink);
+  }
+  .display { font-size: clamp(48px, 7vw, 86px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.02; }
+  h1 { font-size: clamp(36px, 5.4vw, 64px); }
+  h2 { font-size: clamp(32px, 4.4vw, 52px); }
+  h3 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 600; letter-spacing: -0.015em; }
+  .lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-2); line-height: 1.55; font-weight: 400; max-width: 680px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 999px;
+    font-weight: 500; font-size: 15px;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--ink); color: var(--cream); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(11,14,22,0.18); }
+  .btn-accent { background: var(--accent); color: white; }
+  .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(232,93,61,0.32); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(11,14,22,0.18); }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .btn-ghost-dark { background: transparent; color: var(--cream); border: 1px solid rgba(246,242,232,0.22); }
+  .btn-ghost-dark:hover { border-color: var(--cream); }
+  .btn .arrow { display: inline-block; transition: transform .2s ease; }
   .btn:hover .arrow { transform: translateX(3px); }
 
-  /* VIEW TOGGLE */
-  .view-restaurants .creators-view { display: none; }
-  .view-creators .restaurants-view { display: none; }
-  .view-restaurants .nav-restaurants { display: flex; }
-  .view-restaurants .nav-creators { display: none; }
-  .view-creators .nav-restaurants { display: none; }
-  .view-creators .nav-creators { display: flex; }
+  /* NAV */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 0; transition: all .2s ease; backdrop-filter: blur(0px); }
+  .nav.scrolled { background: rgba(246, 242, 232, 0.85); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px;
+    letter-spacing: -0.02em; color: var(--cream);
+  }
+  .nav.scrolled .brand { color: var(--ink); }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; position: relative; }
+  .brand-dot::after {
+    content: ""; position: absolute; inset: -4px;
+    border: 1.5px solid var(--accent); border-radius: 50%;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0; transform: scale(1.6); }
+  }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { font-size: 14.5px; font-weight: 450; color: var(--cream); opacity: 0.85; transition: opacity .15s; }
+  .nav.scrolled .nav-links a { color: var(--ink); opacity: 0.85; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta { padding: 10px 18px; font-size: 14px; }
+  @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } }
 
   /* HERO */
-  .hero {
-    padding: 80px 0 120px;
-    position: relative;
-    overflow: hidden;
+  .hero { position: relative; background: var(--bg-dark); color: var(--cream); padding: 140px 0 100px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,93,61,0.18), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 10% 90%, rgba(74,108,247,0.10), transparent 60%);
+    pointer-events: none;
   }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 80px;
-    align-items: center;
+  .hero .container { position: relative; z-index: 2; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; }
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+    .hero { padding: 120px 0 70px; }
   }
-  .eyebrow {
-    display: inline-block;
-    font-size: 13px; font-weight: 600;
-    color: var(--terracotta);
-    text-transform: uppercase; letter-spacing: 0.12em;
-    margin-bottom: 24px;
-  }
-  .creators-view .eyebrow { color: var(--peach); }
-  h1 {
-    font-size: clamp(48px, 7vw, 84px);
-    line-height: 0.98;
-    letter-spacing: -0.035em;
-    margin-bottom: 28px;
-  }
-  h1 em {
-    font-style: italic;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
-    color: var(--terracotta);
-  }
-  .creators-view h1 em { color: var(--peach); }
-  .hero-sub {
-    font-size: 19px; line-height: 1.55;
-    color: var(--text-muted);
-    max-width: 520px;
-    margin-bottom: 36px;
-  }
-  .hero-ctas { display: flex; gap: 14px; align-items: center; }
-  .hero-secondary {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 12px 0;
-    transition: color 0.2s;
-  }
-  .hero-secondary:hover { color: var(--terracotta); }
+  .hero h1.display { color: var(--cream); margin: 22px 0 26px; max-width: 720px; }
+  .hero h1.display em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero .lede { color: rgba(246,242,232,0.74); max-width: 560px; font-size: clamp(18px, 1.5vw, 20px); }
+  .hero-ctas { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-ctas .btn-primary { background: var(--cream); color: var(--ink); }
+  .hero-ctas .btn-primary:hover { background: white; }
 
-  /* HERO VISUAL */
-  .hero-visual {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border-radius: 24px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #E89F71 0%, #C8553D 50%, #8B3528 100%);
-    box-shadow: 0 30px 80px rgba(200, 85, 61, 0.25), 0 8px 30px rgba(0, 0, 0, 0.08);
+  .hero-meta {
+    margin-top: 60px; display: flex; gap: 36px; flex-wrap: wrap;
+    padding-top: 28px; border-top: 1px solid var(--line-dark); max-width: 580px;
   }
-  .hero-visual::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.85;
-    mix-blend-mode: multiply;
-  }
-  .hero-visual::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(20, 32, 26, 0.6) 100%);
-  }
-  .hero-stat-card {
-    position: absolute;
-    background: var(--white);
-    border-radius: 20px;
-    padding: 18px 22px;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
-    display: flex; align-items: center; gap: 14px;
-    font-family: 'Inter', sans-serif;
-  }
-  .hero-stat-card.top { top: 28px; left: 28px; }
-  .hero-stat-card.bottom { bottom: 28px; right: 28px; }
-  .hero-stat-card .avatar {
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--peach), var(--terracotta));
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 600; font-size: 16px;
-    flex-shrink: 0;
-  }
-  .hero-stat-card .label {
-    font-size: 11px; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    font-weight: 600;
-  }
-  .hero-stat-card .value {
-    font-size: 18px; color: var(--text-primary);
-    font-weight: 600;
-    margin-top: 2px;
-  }
-  .hero-stat-card .value .accent { color: var(--terracotta); }
+  .hero-meta div .num { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; color: var(--cream); letter-spacing: -0.02em; }
+  .hero-meta div .lbl { font-size: 12.5px; color: rgba(246,242,232,0.55); margin-top: 4px; font-weight: 450; }
 
-  /* STATS BAR */
-  .stats-band {
-    background: var(--dark);
-    color: var(--cream);
-    padding: 100px 0;
+  /* Floating hero slot cards */
+  .hero-visual { position: relative; aspect-ratio: 1/1.05; max-width: 460px; margin-left: auto; width: 100%; }
+  .slot-card {
+    position: absolute; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10); border-radius: 18px;
+    padding: 18px; backdrop-filter: blur(12px); transition: transform .3s ease;
   }
-  .stats-band .container { max-width: 1280px; }
-  .stats-eyebrow {
-    color: var(--peach);
-    text-align: center;
-    margin-bottom: 24px;
+  .slot-card:hover { transform: translateY(-3px); }
+  .slot-card .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
+  .slot-card .ch { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--cream); font-weight: 500; }
+  .ch-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.10);
   }
-  .stats-heading {
-    color: var(--cream);
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 80px;
+  .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.05em;
+    padding: 3px 8px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); color: rgba(246,242,232,0.7); white-space: nowrap;
   }
-  .stats-heading em {
-    font-style: italic;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
-    color: var(--peach);
+  .pill.live { background: rgba(43,170,110,0.15); color: #5EE0A0; }
+  .pill.live::before { content: "●"; margin-right: 4px; animation: pulse-dot 1.6s infinite; }
+  @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .pill.open { background: rgba(232,93,61,0.18); color: #FFB39C; }
+  .pill.produce { background: rgba(74,108,247,0.18); color: #99B0FF; }
+  .slot-card .meta { display: flex; justify-content: space-between; font-size: 12px; color: rgba(246,242,232,0.6); gap: 8px; }
+  .slot-card .price {
+    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500;
+    color: var(--cream); letter-spacing: -0.02em; margin-top: 6px;
   }
+  .slot-card .price .sm { font-size: 13px; color: rgba(246,242,232,0.55); font-family: 'Inter'; font-weight: 400; }
+
+  .card-1 { top: 0; left: 0; width: 72%; transform: rotate(-2deg); animation: float1 6s ease-in-out infinite; }
+  .card-2 { top: 28%; right: 0; width: 70%; transform: rotate(3deg); animation: float2 7s ease-in-out infinite; }
+  .card-3 { bottom: 0; left: 8%; width: 76%; transform: rotate(-1.5deg); animation: float3 8s ease-in-out infinite; }
+  @keyframes float1 { 0%,100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-8px); } }
+  @keyframes float2 { 0%,100% { transform: rotate(3deg) translateY(0); } 50% { transform: rotate(3deg) translateY(-6px); } }
+  @keyframes float3 { 0%,100% { transform: rotate(-1.5deg) translateY(0); } 50% { transform: rotate(-1.5deg) translateY(-10px); } }
+
+  /* TRUST STRIP */
+  .trust { background: var(--bg-dark); color: rgba(246,242,232,0.55); padding: 0 0 80px; }
+  .trust .container { text-align: center; }
+  .trust p {
+    font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 28px; color: rgba(246,242,232,0.42);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 52px; opacity: 0.6; }
+  .logos .logo { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--cream); letter-spacing: -0.01em; }
+  .logos .logo.sans { font-family: 'Inter'; font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
+
+  /* STAT BAR */
+  .stats { background: var(--cream); padding: 80px 0 40px; }
   .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   }
-  .stat {
-    text-align: left;
-    padding-top: 32px;
-    border-top: 1px solid rgba(232, 159, 113, 0.2);
+  @media (max-width: 800px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat { padding: 36px 28px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: none; }
+  @media (max-width: 800px) {
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   }
-  .stat-number {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
-    font-size: clamp(64px, 8vw, 92px);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    color: var(--peach);
-    margin-bottom: 18px;
+  .stat .num { font-family: 'Fraunces', serif; font-size: clamp(36px, 4vw, 52px); font-weight: 500; letter-spacing: -0.025em; line-height: 1; }
+  .stat .num em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .stat .lbl { margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 450; line-height: 1.4; }
+
+  /* SHIFT */
+  .shift { padding: 130px 0 90px; background: var(--cream); }
+  .shift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
+  @media (max-width: 900px) { .shift-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .shift h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .shift .lede { margin-top: 26px; }
+  .shift .comparison {
+    background: white; border-radius: var(--radius-lg);
+    padding: 36px; box-shadow: 0 1px 0 rgba(11,14,22,0.06), 0 24px 60px -20px rgba(11,14,22,0.10);
   }
-  .stat-label {
-    font-size: 15px;
-    color: var(--cream);
-    line-height: 1.45;
-    opacity: 0.85;
+  .compare-row { padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 10px; display: block;
   }
-  .stats-source {
-    text-align: center;
-    margin-top: 60px;
-    font-size: 13px;
-    color: rgba(250, 246, 238, 0.5);
-    font-style: italic;
+  .compare-row .old, .compare-row .new { font-size: 15px; line-height: 1.5; display: block; }
+  .compare-row .old { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.18); margin-bottom: 6px; }
+  .compare-row .new { color: var(--ink); font-weight: 500; }
+  .compare-row .new::before { content: "→"; color: var(--accent); margin-right: 8px; font-weight: 600; }
+
+  /* DIVERGE (3-way synthesis) */
+  .diverge {
+    background: var(--bg-dark); color: var(--cream); padding: 130px 0; position: relative; overflow: hidden;
+  }
+  .diverge::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 40% 40% at 20% 30%, rgba(74,108,247,0.10), transparent 60%),
+      radial-gradient(ellipse 40% 40% at 85% 70%, rgba(232,93,61,0.12), transparent 60%);
+    pointer-events: none;
+  }
+  .diverge .container { position: relative; z-index: 2; }
+  .diverge .eyebrow { color: var(--accent); }
+  .diverge h2 { color: var(--cream); max-width: 22ch; }
+  .diverge h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .diverge .lede { color: rgba(246,242,232,0.72); margin-top: 22px; }
+  .diverge-table {
+    margin-top: 60px; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .diverge-head, .diverge-row-d {
+    display: grid; grid-template-columns: 140px 1fr 1fr 1.08fr;
+    padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.07); gap: 24px;
+  }
+  .diverge-head {
+    background: rgba(255,255,255,0.025); padding-top: 22px; padding-bottom: 22px;
+  }
+  .diverge-head .h-cell {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: rgba(246,242,232,0.5);
+    font-weight: 500; line-height: 1.4;
+  }
+  .diverge-head .h-cell .sub {
+    display: block; font-family: 'Inter', sans-serif; font-weight: 400;
+    text-transform: none; letter-spacing: 0; font-size: 11px;
+    color: rgba(246,242,232,0.35); margin-top: 4px;
+  }
+  .diverge-head .h-cell.us { color: var(--accent); }
+  .diverge-head .h-cell.us .sub { color: rgba(232,93,61,0.7); }
+  .diverge-row-d:last-child { border-bottom: none; }
+  .diverge-row-d .axis {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(246,242,232,0.45); padding-top: 2px;
+  }
+  .diverge-row-d .cell {
+    font-size: 14.5px; line-height: 1.5; color: rgba(246,242,232,0.55);
+  }
+  .diverge-row-d .cell.us {
+    color: var(--cream); background: rgba(232,93,61,0.10);
+    margin: -10px -16px; padding: 10px 16px;
+    border-left: 2px solid var(--accent); border-radius: 0 8px 8px 0;
+  }
+  .diverge-row-d .cell.us strong { color: var(--accent); font-weight: 500; }
+  @media (max-width: 900px) {
+    .diverge-head { display: none; }
+    .diverge-row-d { grid-template-columns: 1fr; gap: 10px; padding: 22px 22px; }
+    .diverge-row-d .cell::before {
+      content: attr(data-label); display: block;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(246,242,232,0.35); margin-bottom: 4px;
+    }
+    .diverge-row-d .cell.us { margin: 0; }
+    .diverge-row-d .cell.us::before { color: var(--accent); }
   }
 
-  /* SECTION GENERIC */
-  section { padding: 120px 0; }
-  .section-eyebrow {
-    color: var(--terracotta);
-    margin-bottom: 20px;
+  /* SYNTHESIS */
+  .synth { padding: 130px 0; background: var(--cream-2); }
+  .synth-head { text-align: left; max-width: 760px; margin-bottom: 60px; }
+  .synth-head h2 { margin-top: 16px; }
+  .synth-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .synth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .synth-grid { grid-template-columns: 1fr; } }
+  .synth-card {
+    background: white; border-radius: var(--radius-lg); padding: 40px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(11,14,22,0.05), 0 24px 60px -20px rgba(11,14,22,0.08);
+    display: flex; flex-direction: column;
   }
-  .creators-view .section-eyebrow { color: var(--terracotta); }
-  .section-heading {
-    max-width: 680px;
-    margin-bottom: 28px;
+  .synth-card .stamp {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    font-weight: 500; margin-bottom: 18px;
   }
-  .section-heading em {
-    font-style: italic;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
-    color: var(--terracotta);
+  .synth-card h3 { font-size: 28px; font-weight: 500; font-family: 'Fraunces', serif; margin-bottom: 26px; letter-spacing: -0.015em; }
+  .synth-card ul { list-style: none; }
+  .synth-card li {
+    padding: 14px 0; border-top: 1px solid var(--line);
+    display: flex; gap: 12px; font-size: 15px; line-height: 1.5; color: var(--ink-2);
   }
-  .section-intro {
-    font-size: 19px;
-    color: var(--text-muted);
-    max-width: 620px;
-    line-height: 1.55;
+  .synth-card li:first-child { border-top: none; padding-top: 0; }
+  .synth-card li::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+    flex-shrink: 0; margin-top: 9px;
   }
-
-  /* PROBLEM */
-  .problem {
-    background: var(--cream);
+  .synth-card .result {
+    margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
+    font-size: 14px; color: var(--muted); line-height: 1.5;
   }
-  .problem-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
-    align-items: start;
-  }
-  .problem-body p {
-    font-size: 18px;
-    color: var(--text-body);
-    margin-bottom: 20px;
-    line-height: 1.65;
-  }
-  .problem-body p:first-of-type {
-    font-size: 22px;
-    color: var(--text-primary);
-    line-height: 1.45;
-    margin-bottom: 28px;
-  }
-  .problem-quote {
-    background: var(--white);
-    border-radius: 24px;
-    padding: 48px;
-    border: 1px solid var(--border);
-    position: relative;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
-  }
-  .problem-quote .quote-mark {
-    font-family: 'Fraunces', serif;
-    font-size: 80px;
-    line-height: 0.8;
-    color: var(--terracotta);
-    margin-bottom: 16px;
-    font-style: italic;
-  }
-  .problem-quote .quote-text {
-    font-family: 'Fraunces', serif;
-    font-size: 24px;
-    line-height: 1.4;
-    color: var(--text-primary);
-    margin-bottom: 24px;
-    letter-spacing: -0.01em;
-  }
-  .problem-quote .quote-attr {
-    font-size: 14px;
-    color: var(--text-muted);
-    font-weight: 500;
+  .synth-card .result .big {
+    display: block; font-family: 'Fraunces', serif; font-size: 24px;
+    font-weight: 500; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 4px;
   }
 
   /* HOW IT WORKS */
-  .how-it-works {
-    background: var(--cream-dark);
-  }
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    margin-top: 80px;
-  }
+  .how { padding: 110px 0 130px; background: var(--cream); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 70px; gap: 40px; }
+  @media (max-width: 800px) { .section-head { flex-direction: column; align-items: flex-start; } }
+  .section-head .left { max-width: 580px; }
+  .section-head h2 { margin-top: 16px; }
+  .section-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 900px) { .steps { grid-template-columns: 1fr; } }
   .step {
-    background: var(--white);
-    padding: 36px 30px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: white; border-radius: var(--radius-lg);
+    padding: 36px 32px; border: 1px solid var(--line);
+    position: relative; overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
   }
-  .step:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
-  }
-  .step-num {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
-    font-size: 56px;
-    line-height: 1;
-    color: var(--terracotta);
-    margin-bottom: 24px;
-    font-style: italic;
-  }
-  .step-title {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 1.2;
-    margin-bottom: 14px;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-  }
-  .step-body {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.55;
-  }
+  .step:hover { transform: translateY(-3px); box-shadow: 0 24px 60px -20px rgba(11,14,22,0.14); }
+  .step-num { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: 0.02em; }
+  .step h3 { margin: 12px 0 14px; font-size: 22px; }
+  .step p { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+  .step-illu { margin-top: 28px; height: 130px; position: relative; }
 
-  /* WHY RESTAURANTS WIN */
-  .why-win {
-    background: var(--cream);
+  /* AUDIENCE */
+  .audience { padding: 80px 0; background: var(--cream); }
+  .audience-block { background: white; border-radius: var(--radius-lg); margin-bottom: 36px; overflow: hidden; border: 1px solid var(--line); }
+  .audience-block.creators { background: linear-gradient(135deg, #FFF8F0 0%, #FFEDE0 100%); }
+  .audience-block.brands { background: linear-gradient(135deg, #0E1118 0%, #1A1F2E 100%); color: var(--cream); }
+  .audience-grid {
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px;
+    padding: 70px 64px; align-items: center;
   }
-  .pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 80px 60px;
-    margin-top: 80px;
+  @media (max-width: 900px) { .audience-grid { grid-template-columns: 1fr; padding: 50px 32px; gap: 40px; } }
+  .audience-block h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .audience-block.brands h2, .audience-block.brands p, .audience-block.brands h3 { color: var(--cream); }
+  .audience-block.brands .lede { color: rgba(246,242,232,0.74); }
+  .audience-block .feat-list { margin-top: 28px; list-style: none; padding: 0; }
+  .audience-block .feat-list li {
+    display: flex; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid rgba(11,14,22,0.08); align-items: flex-start;
   }
-  .pillar {
-    border-top: 2px solid var(--text-primary);
-    padding-top: 32px;
+  .audience-block.brands .feat-list li { border-color: rgba(255,255,255,0.10); }
+  .audience-block .feat-list li:last-child { border-bottom: none; }
+  .feat-list .check {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; margin-top: 2px;
   }
-  .pillar-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    background: var(--terracotta);
-    color: white;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 22px;
-    font-style: italic;
-  }
-  .pillar-title {
-    font-family: 'Fraunces', serif;
-    font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 16px;
-    color: var(--text-primary);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-  }
-  .pillar-body {
-    font-size: 16px;
-    color: var(--text-body);
-    line-height: 1.6;
-  }
+  .audience-block.brands .feat-list .check { background: var(--cream); color: var(--ink); }
+  .feat-list .feat-text { font-size: 15px; line-height: 1.55; }
+  .feat-list .feat-text b { font-weight: 600; }
+  .audience-block .cta-row { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .audience-block.brands .btn-primary { background: var(--cream); color: var(--ink); }
+  .audience-block.brands .btn-ghost { color: var(--cream); border-color: rgba(255,255,255,0.22); }
 
-  /* PRICING */
-  .pricing {
-    background: var(--dark);
-    color: var(--cream);
+  /* Mock UI */
+  .ui-mock {
+    background: white; border-radius: 16px; padding: 22px;
+    box-shadow: 0 30px 80px -20px rgba(11,14,22,0.18), 0 0 0 1px rgba(11,14,22,0.05);
   }
-  .pricing .section-heading { color: var(--cream); }
-  .pricing .section-heading em { color: var(--peach); }
-  .pricing .section-eyebrow { color: var(--peach); }
-  .pricing .section-intro { color: rgba(250, 246, 238, 0.7); }
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 80px;
+  .audience-block.brands .ui-mock {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.5);
   }
-  .price-card {
-    background: var(--dark-deep);
-    border: 1px solid rgba(232, 159, 113, 0.15);
-    border-radius: 24px;
-    padding: 44px 36px;
-    transition: transform 0.3s, border-color 0.3s;
+  .ui-mock-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 18px;
   }
-  .price-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(232, 159, 113, 0.4);
+  .audience-block.brands .ui-mock-head { border-color: rgba(255,255,255,0.10); }
+  .ui-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500;
   }
-  .price-card.featured {
-    background: var(--terracotta);
-    border-color: var(--terracotta);
-    position: relative;
+  .audience-block.brands .ui-title { color: rgba(246,242,232,0.6); }
+  .ui-actions { display: flex; gap: 6px; }
+  .ui-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+
+  .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-day {
+    aspect-ratio: 1.4 / 1; background: #FAF6EE; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 6px; color: var(--muted); position: relative;
   }
-  .price-card.featured::before {
-    content: 'Most popular';
-    position: absolute;
-    top: -12px; left: 36px;
-    background: var(--peach);
-    color: var(--dark-deep);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 6px 12px;
-    border-radius: 999px;
+  .cal-day.booked { background: #131826; color: rgba(255,255,255,0.5); }
+  .cal-day.booked::after { content: ""; position: absolute; bottom: 5px; left: 5px; right: 5px; height: 2px; background: var(--accent); border-radius: 999px; }
+  .cal-day.live { background: var(--accent); color: white; }
+  .cal-day.live::after { content: ""; position: absolute; top: 6px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: white; animation: pulse-dot 1.8s ease-in-out infinite; }
+  .cal-day.open { background: #FFF; border: 1px dashed rgba(232,93,61,0.4); color: var(--accent); }
+  .cal-day.produce { background: #4A6CF7; color: white; }
+
+  .listing-row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 14px;
+    align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line);
   }
-  .price-tier {
-    font-family: 'Fraunces', serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: var(--peach);
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
+  .audience-block.brands .listing-row { border-color: rgba(255,255,255,0.10); }
+  .listing-row:last-child { border-bottom: none; }
+  .listing-creator { display: flex; align-items: center; gap: 12px; }
+  .listing-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0;
   }
-  .price-card.featured .price-tier { color: var(--cream); }
-  .price-for {
-    font-size: 14px;
-    color: rgba(250, 246, 238, 0.65);
-    margin-bottom: 32px;
-    line-height: 1.5;
+  .listing-avatar.av2 { background: linear-gradient(135deg, #4A6CF7, #6E48F2); }
+  .listing-avatar.av3 { background: linear-gradient(135deg, #2BAA6E, #3CCB8A); }
+  .listing-name { font-weight: 600; font-size: 13.5px; }
+  .listing-sub { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .audience-block.brands .listing-sub { color: rgba(246,242,232,0.5); }
+  .listing-stat { font-family: 'JetBrains Mono', monospace; font-size: 12px; text-align: right; }
+  .listing-stat .v { font-weight: 600; }
+  .listing-stat .l { color: var(--muted); font-size: 10.5px; }
+  .audience-block.brands .listing-stat .l { color: rgba(246,242,232,0.5); }
+  .listing-cta {
+    background: var(--ink); color: var(--cream);
+    padding: 6px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
   }
-  .price-amount {
-    display: flex; align-items: baseline; gap: 8px;
-    margin-bottom: 8px;
-  }
-  .price-num {
-    font-family: 'Fraunces', serif;
-    font-size: 56px;
-    font-weight: 500;
-    color: var(--cream);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .price-period {
-    font-size: 16px;
-    color: rgba(250, 246, 238, 0.65);
-  }
-  .price-access {
-    font-size: 13px;
-    color: rgba(250, 246, 238, 0.7);
-    margin-bottom: 26px;
-    font-weight: 500;
-  }
-  .price-card.featured .price-access { color: rgba(250, 246, 238, 0.9); }
-  .price-features {
-    list-style: none;
-    margin-bottom: 28px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid rgba(232, 159, 113, 0.15);
-  }
-  .price-card.featured .price-features { border-bottom-color: rgba(255, 255, 255, 0.2); }
-  .price-features li {
-    padding: 8px 0;
-    font-size: 14px;
-    color: rgba(250, 246, 238, 0.85);
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.4;
-  }
-  .price-features li::before {
-    content: '✓';
-    color: var(--peach);
-    flex-shrink: 0;
-    font-weight: 700;
-  }
-  .price-card.featured .price-features li::before { color: var(--cream); }
-  .price-guarantee {
-    font-size: 13px;
-    color: var(--peach);
-    margin-bottom: 28px;
-    font-weight: 600;
-    line-height: 1.45;
-    display: flex; align-items: flex-start; gap: 8px;
-  }
-  .price-card.featured .price-guarantee { color: var(--cream); }
-  .price-guarantee::before {
-    content: '◆';
-    flex-shrink: 0;
-  }
-  .price-card .btn {
-    width: 100%;
-    justify-content: center;
-    background: var(--cream);
-    color: var(--text-primary);
-  }
-  .price-card .btn:hover { background: var(--peach); color: var(--text-primary); }
-  .price-card.featured .btn { background: var(--cream); }
-  .pricing-footnote {
-    text-align: center;
-    margin-top: 36px;
-    font-size: 14px;
-    color: rgba(250, 246, 238, 0.6);
-    font-style: italic;
-  }
+  .audience-block.brands .listing-cta { background: var(--cream); color: var(--ink); }
+  .listing-cta.produced { background: var(--green); color: white; }
+  .listing-cta.relicense { background: var(--blue); color: white; }
 
   /* TESTIMONIALS */
-  .testimonials { background: var(--cream); }
-  .testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 80px;
+  .testimonials { padding: 130px 0; background: var(--cream-2); }
+  .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; }
+  @media (max-width: 800px) { .quotes { grid-template-columns: 1fr; } }
+  .quote {
+    background: white; padding: 44px 38px;
+    border-radius: var(--radius-lg); box-shadow: 0 1px 0 rgba(11,14,22,0.05); border: 1px solid var(--line);
   }
-  .testimonial {
-    background: var(--white);
-    border-radius: 24px;
-    padding: 40px;
-    border: 1px solid var(--border);
+  .quote .mark { font-family: 'Fraunces', serif; font-size: 60px; color: var(--accent); line-height: 0.5; margin-bottom: 14px; font-weight: 500; }
+  .quote .body {
+    font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.4;
+    font-weight: 400; color: var(--ink); margin-bottom: 28px; letter-spacing: -0.01em;
   }
-  .testimonial-text {
-    font-family: 'Fraunces', serif;
-    font-size: 19px;
-    line-height: 1.5;
-    color: var(--text-primary);
-    margin-bottom: 28px;
-    letter-spacing: -0.005em;
+  .quote .who { display: flex; align-items: center; gap: 14px; }
+  .who-av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0; }
+  .who-av.b { background: linear-gradient(135deg, #4A6CF7, #6E48F2); }
+  .who .name { font-weight: 600; font-size: 14.5px; }
+  .who .role { font-size: 13px; color: var(--muted); margin-top: 1px; }
+
+  /* PRICING */
+  .pricing { padding: 130px 0; background: var(--cream); }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 70px; }
+  @media (max-width: 900px) { .price-grid { grid-template-columns: 1fr; } }
+  .price-card { background: white; border-radius: var(--radius-lg); padding: 40px 34px; border: 1px solid var(--line); display: flex; flex-direction: column; }
+  .price-card.featured { background: var(--ink); color: var(--cream); border-color: var(--ink); position: relative; }
+  .price-card.featured::before {
+    content: "MOST CLEARED"; position: absolute; top: -12px; left: 32px;
+    background: var(--accent); color: white;
+    padding: 5px 12px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; font-weight: 500;
   }
-  .testimonial-attr {
-    display: flex; align-items: center; gap: 14px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
+  .price-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .price-card.featured h3 { color: var(--cream); }
+  .price-card .sub { font-size: 14px; color: var(--muted); }
+  .price-card.featured .sub { color: rgba(246,242,232,0.6); }
+  .price-card .num { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 500; letter-spacing: -0.03em; margin: 24px 0 4px; }
+  .price-card .of-what { font-size: 13.5px; color: var(--muted); }
+  .price-card.featured .of-what { color: rgba(246,242,232,0.6); }
+  .price-card ul { list-style: none; margin: 28px 0; padding: 0; flex: 1; }
+  .price-card li { padding: 9px 0; font-size: 14.5px; color: var(--ink-2); display: flex; gap: 10px; align-items: flex-start; }
+  .price-card.featured li { color: rgba(246,242,232,0.85); }
+  .price-card li::before { content: "✓"; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+  .price-card .btn { width: 100%; justify-content: center; }
+  .price-card.featured .btn-primary { background: var(--cream); color: var(--ink); }
+
+  /* FAQ */
+  .faq { padding: 130px 0; background: var(--cream); border-top: 1px solid var(--line); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+  @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .faq-item { border-bottom: 1px solid var(--line); padding: 22px 0; cursor: pointer; }
+  .faq-item summary {
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 500; font-size: 17px; color: var(--ink);
+    list-style: none; transition: color .15s; gap: 16px;
   }
-  .testimonial-avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--peach), var(--terracotta));
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 600; font-size: 15px;
-    flex-shrink: 0;
-  }
-  .testimonial-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .testimonial-role {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { color: var(--accent); }
+  .faq-item summary::after { content: "+"; font-family: 'Fraunces', serif; font-size: 24px; color: var(--accent); transition: transform .25s ease; line-height: 1; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { margin-top: 14px; color: var(--ink-2); font-size: 15px; line-height: 1.65; }
 
   /* FINAL CTA */
-  .final-cta {
-    background: var(--cream);
-    text-align: center;
-    padding: 140px 0;
+  .final-cta { background: var(--bg-dark); color: var(--cream); padding: 130px 0; position: relative; overflow: hidden; }
+  .final-cta::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 30% 50%, rgba(232,93,61,0.15), transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(74,108,247,0.10), transparent 70%);
   }
-  .final-cta-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    background: var(--terracotta);
-    color: var(--cream);
-    padding: 80px 48px;
-    border-radius: 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .final-cta-inner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 70% 30%, rgba(232, 159, 113, 0.4), transparent 60%);
-  }
-  .final-cta h2 {
-    color: var(--cream);
-    font-size: clamp(40px, 5vw, 60px);
-    margin-bottom: 20px;
-    position: relative;
-  }
-  .final-cta h2 em {
-    font-style: italic;
-    font-variation-settings: "opsz" 144, "SOFT" 100;
-    color: var(--peach);
-  }
-  .final-cta p {
-    font-size: 19px;
-    color: rgba(250, 246, 238, 0.9);
-    margin-bottom: 36px;
-    position: relative;
-    line-height: 1.5;
-  }
-  .final-cta .btn {
-    position: relative;
-    background: var(--cream);
-    color: var(--text-primary);
-  }
-  .final-cta .btn:hover { background: var(--white); }
-
-  /* CREATORS PAGE — specific styles */
-  .creators-view .hero-visual {
-    background: linear-gradient(135deg, var(--peach) 0%, var(--terracotta) 100%);
-  }
-  .creators-view .hero-visual::before {
-    background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&q=80');
-  }
-  .creators-view h1 em { color: var(--peach); }
-  .creators-view .btn.btn-primary { background: var(--terracotta); }
-
-  /* CREATOR EARNINGS */
-  .earnings {
-    background: var(--cream);
-  }
-  .earnings-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 80px;
-  }
-  .earnings-card {
-    background: var(--white);
-    border-radius: 24px;
-    padding: 40px;
-    border: 1px solid var(--border);
-    position: relative;
-  }
-  .earnings-card.highlight {
-    background: var(--dark);
-    color: var(--cream);
-    border-color: var(--dark);
-  }
-  .earnings-profile {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 28px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--border);
-  }
-  .earnings-card.highlight .earnings-profile {
-    border-bottom-color: rgba(232, 159, 113, 0.2);
-  }
-  .earnings-avatar {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--peach), var(--terracotta));
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 600; font-size: 18px;
-    flex-shrink: 0;
-  }
-  .earnings-name {
-    font-family: 'Fraunces', serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-  }
-  .earnings-card.highlight .earnings-name { color: var(--cream); }
-  .earnings-meta {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-  .earnings-card.highlight .earnings-meta { color: rgba(250, 246, 238, 0.65); }
-  .earnings-line {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 12px 0;
-    font-size: 14px;
-    color: var(--text-body);
-  }
-  .earnings-card.highlight .earnings-line { color: rgba(250, 246, 238, 0.85); }
-  .earnings-amount {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--text-primary);
-  }
-  .earnings-card.highlight .earnings-amount { color: var(--peach); }
-  .earnings-total {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 2px solid var(--text-primary);
-    display: flex; justify-content: space-between; align-items: baseline;
-  }
-  .earnings-card.highlight .earnings-total { border-top-color: var(--peach); }
-  .earnings-total-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .earnings-card.highlight .earnings-total-label { color: var(--peach); }
-  .earnings-total-amount {
-    font-family: 'Fraunces', serif;
-    font-size: 36px;
-    font-weight: 500;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-  }
-  .earnings-card.highlight .earnings-total-amount { color: var(--cream); }
-  .earnings-note {
-    margin-top: 16px;
-    font-size: 13px;
-    color: var(--text-muted);
-    font-style: italic;
-  }
-  .earnings-card.highlight .earnings-note { color: rgba(250, 246, 238, 0.6); }
-
-  /* CREATOR LOVE LIST */
-  .why-creators {
-    background: var(--cream-dark);
-  }
-  .creator-love-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 60px;
-    margin-top: 80px;
-  }
-  .love-item {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-  }
-  .love-icon {
-    width: 56px; height: 56px;
-    border-radius: 16px;
-    background: var(--terracotta);
-    color: white;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fraunces', serif;
-    font-size: 24px;
-    font-style: italic;
-    flex-shrink: 0;
-    font-weight: 600;
-  }
-  .love-content h3 {
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-  .love-content p {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.55;
-  }
-
-  /* WHAT WE LOOK FOR */
-  .look-for {
-    background: var(--cream);
-  }
-  .look-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px 60px;
-    margin-top: 60px;
-  }
-  .look-item {
-    border-left: 3px solid var(--terracotta);
-    padding-left: 24px;
-  }
-  .look-item h3 {
-    font-size: 21px;
-    margin-bottom: 8px;
-  }
-  .look-item p {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-  .dont-list {
-    margin-top: 80px;
-    background: var(--dark);
-    border-radius: 24px;
-    padding: 56px;
-    color: var(--cream);
-  }
-  .dont-list h3 {
-    color: var(--cream);
-    margin-bottom: 28px;
-  }
-  .dont-list ul {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px 32px;
-  }
-  .dont-list li {
-    padding: 12px 0;
-    color: rgba(250, 246, 238, 0.85);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
-    border-bottom: 1px solid rgba(232, 159, 113, 0.12);
-  }
-  .dont-list li::before {
-    content: '✕';
-    color: var(--peach);
-    font-weight: 700;
-  }
+  .final-cta .container { position: relative; text-align: center; }
+  .final-cta h2 { color: var(--cream); max-width: 800px; margin: 24px auto 22px; }
+  .final-cta h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .final-cta .lede { color: rgba(246,242,232,0.75); margin: 0 auto; }
+  .final-cta .cta-row { margin-top: 44px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .final-cta .btn-primary { background: var(--cream); color: var(--ink); }
 
   /* FOOTER */
-  footer {
-    background: var(--dark-deep);
-    color: rgba(250, 246, 238, 0.7);
-    padding: 80px 0 40px;
-  }
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: 60px;
-    margin-bottom: 60px;
-  }
-  footer .logo { color: var(--cream); }
-  .footer-tagline {
-    margin-top: 16px;
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 280px;
-  }
-  .footer-col h4 {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--cream);
-    margin-bottom: 20px;
-  }
-  .footer-col a {
-    display: block;
-    color: rgba(250, 246, 238, 0.7);
-    text-decoration: none;
-    font-size: 14px;
-    padding: 4px 0;
-    transition: color 0.2s;
-  }
-  .footer-col a:hover { color: var(--peach); }
-  .footer-bottom {
-    padding-top: 32px;
-    border-top: 1px solid rgba(232, 159, 113, 0.15);
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-  }
+  footer { background: var(--bg-dark); color: rgba(246,242,232,0.6); padding: 70px 0 50px; border-top: 1px solid rgba(246,242,232,0.08); }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  footer .col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,242,232,0.5); margin-bottom: 18px; font-weight: 500; }
+  footer .col ul { list-style: none; padding: 0; }
+  footer .col li { margin-bottom: 10px; font-size: 14px; }
+  footer .col li a { color: rgba(246,242,232,0.7); transition: color .15s; }
+  footer .col li a:hover { color: var(--cream); }
+  footer .brand { color: var(--cream); margin-bottom: 16px; }
+  footer .tagline { font-size: 14px; max-width: 320px; line-height: 1.55; }
+  .footer-bottom { margin-top: 60px; padding-top: 28px; border-top: 1px solid rgba(246,242,232,0.08); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; font-size: 13px; }
 
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .hero-grid, .problem-grid { grid-template-columns: 1fr; gap: 60px; }
-    .stats-grid, .steps-grid, .pricing-grid, .testimonial-grid, .earnings-grid { grid-template-columns: 1fr; }
-    .pillars-grid, .creator-love-grid, .look-list, .dont-list ul { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .nav-links { gap: 20px; }
-    .nav-links a:not(.btn) { display: none; }
-    section { padding: 80px 0; }
-    h1 { font-size: 48px; }
-  }
+  ::selection { background: var(--accent); color: white; }
 </style>
 </head>
-<body class="view-restaurants">
+<body>
 
-<!-- ============= NAV ============= -->
-<nav>
-  <div class="nav-inner">
-    <a class="logo" onclick="showView('restaurants')">Tabletop<span class="dot">.</span></a>
-
-    <div class="nav-links nav-restaurants">
-      <a onclick="scrollToSection('how-it-works')">How it works</a>
-      <a onclick="scrollToSection('pricing')">Pricing</a>
-      <a onclick="showView('creators')">For Creators</a>
-      <a class="btn btn-primary" onclick="scrollToSection('final-cta')">Book a demo</a>
-    </div>
-
-    <div class="nav-links nav-creators">
-      <a onclick="scrollToSection('earnings')">Earnings</a>
-      <a onclick="scrollToSection('look-for')">Apply</a>
-      <a onclick="showView('restaurants')">For Restaurants</a>
-      <a class="btn btn-primary" onclick="scrollToSection('look-for')">Apply to join</a>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="brand"><span class="brand-dot"></span>Slotted</a>
+    <div class="nav-links">
+      <a href="#diverge">The synthesis</a>
+      <a href="#creators">For creators</a>
+      <a href="#brands">For brands</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#cta" class="btn btn-accent nav-cta">Get started <span class="arrow">→</span></a>
     </div>
   </div>
 </nav>
 
-<!-- ============= RESTAURANTS VIEW ============= -->
-<div class="restaurants-view">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow">Diner acquisition for restaurants</div>
-          <h1>We don't sell content. We sell <em>diners.</em></h1>
-          <p class="hero-sub">Tabletop pairs your restaurant with a curated roster of local food creators and bills you only for verified new diners — $40 per cover, billed weekly against your POS. Refund floor on every guarantee. No briefs, no approvals, no meetings.</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary btn-large" onclick="scrollToSection('final-cta')">Book a demo<span class="arrow">→</span></a>
-            <a class="hero-secondary" onclick="scrollToSection('how-it-works')">See how it works ↓</a>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">The endorsement exchange · DBS launches April 2026</span>
+        <h1 class="display">Sponsorships used to end. <em>Now they trade like media.</em></h1>
+        <p class="lede">Slotted is the endorsement exchange for YouTube Dynamic Brand Segments. Every spot is produced by the creator in their own voice. Every slot trades like media — audience-targeted, geo-tenanted, resellable, swappable, natively measured inside Google Ads.</p>
+        <div class="hero-ctas">
+          <a href="#creators" class="btn btn-primary">List your inventory <span class="arrow">→</span></a>
+          <a href="#brands" class="btn btn-ghost-dark">Submit a brief</a>
+        </div>
+        <div class="hero-meta">
+          <div>
+            <div class="num">$4.5B</div>
+            <div class="lbl">Projected exchange GMV by 2028</div>
+          </div>
+          <div>
+            <div class="num">10% / 15%</div>
+            <div class="lbl">Flat take. Never on views.</div>
+          </div>
+          <div>
+            <div class="num">60s</div>
+            <div class="lbl">Per slot. Creator-produced fresh per buyer.</div>
           </div>
         </div>
-        <div class="hero-visual">
-          <div class="hero-stat-card top">
-            <div class="avatar">M</div>
-            <div>
-              <div class="label">@maria_eats_atx</div>
-              <div class="value">+24 new diners <span class="accent">this week</span></div>
-            </div>
+      </div>
+
+      <!-- Floating slot cards -->
+      <div class="hero-visual">
+        <div class="slot-card card-1">
+          <div class="head">
+            <div class="ch"><span class="ch-avatar"></span>MKBHD · Tech</div>
+            <span class="pill live">LIVE</span>
           </div>
-          <div class="hero-stat-card bottom">
-            <div class="avatar" style="background: linear-gradient(135deg, #2A5840, #1F3A2E);">$</div>
-            <div>
-              <div class="label">POS-verified · billed weekly</div>
-              <div class="value">47 new diners · $1,880</div>
-            </div>
+          <div class="meta"><span>US · 30 days</span><span>creator-read v2</span></div>
+          <div class="price">$24,500 <span class="sm">/ slot</span></div>
+        </div>
+        <div class="slot-card card-2">
+          <div class="head">
+            <div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#4A6CF7,#6E48F2);"></span>Ali Abdaal · Productivity</div>
+            <span class="pill produce">IN PRODUCTION</span>
           </div>
+          <div class="meta"><span>EU · 14 days</span><span>brief approved · 7d TR</span></div>
+          <div class="price">$18,200 <span class="sm">/ slot</span></div>
+        </div>
+        <div class="slot-card card-3">
+          <div class="head">
+            <div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#2BAA6E,#3CCB8A);"></span>Marques Eats · Lifestyle</div>
+            <span class="pill open">RE-LICENSE</span>
+          </div>
+          <div class="meta"><span>US, CA · Flex</span><span>brief match: 88%</span></div>
+          <div class="price">$11,400 <span class="sm">/ slot · suggested</span></div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STATS BAND -->
-  <section class="stats-band">
-    <div class="container">
-      <div class="eyebrow stats-eyebrow">The data is in</div>
-      <h2 class="stats-heading">Restaurant discovery has fundamentally <em>shifted to creators.</em></h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div class="stat-number">45%</div>
-          <div class="stat-label">of US consumers buy at least one item per month based on a creator recommendation.</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">31%</div>
-          <div class="stat-label">have tried a new restaurant after seeing a creator post — the #1 creator-influenced action.</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">22%</div>
-          <div class="stat-label">convert within 24 hours of seeing a creator recommendation.</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">69%</div>
-          <div class="stat-label">of Gen Z buy from creator recommendations every single month.</div>
-        </div>
-      </div>
-      <p class="stats-source">Source: Statista 2026 · NeoReach Creator Impact Report 2026</p>
+<!-- TRUST STRIP -->
+<section class="trust">
+  <div class="container">
+    <p>Building with design partners across</p>
+    <div class="logos">
+      <span class="logo">Linus Tech Tips</span>
+      <span class="logo sans">vsauce</span>
+      <span class="logo">Veritasium</span>
+      <span class="logo sans">cleo</span>
+      <span class="logo">Wendover</span>
+      <span class="logo sans">athletic greens</span>
+      <span class="logo">Polygon</span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PROBLEM -->
-  <section class="problem">
-    <div class="container">
-      <div class="problem-grid">
-        <div>
-          <div class="eyebrow section-eyebrow">The problem</div>
-          <h2 class="section-heading">Why every dollar you spent on creator marketing got you nothing <em>you could measure.</em></h2>
-        </div>
-        <div class="problem-body">
-          <p>The problem isn't that creator marketing doesn't work. It does. The problem is the deal structure. You pay regardless of outcome.</p>
-          <p>Yelp ads, Instagram boosts, third-party delivery promos, agency retainers, horizontal influencer platforms, one-off creator deals — every one of them collects your money whether a single new diner walks through your door. They're getting paid for impressions, content, or "reach." You're paying for hope.</p>
-          <p>Tabletop is the first program where the deal is restructured. You pay <strong>only</strong> when a verified new diner sits down. Below a contracted cover floor, you don't pay at all. The risk lives with us and our creators, not you.</p>
-          <p style="font-weight: 600; color: var(--text-primary); margin-top: 28px;">That's not creator marketing. That's diner acquisition.</p>
-        </div>
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="num"><em>98%</em></div>
+        <div class="lbl">More likely to trust creators vs. social platforms<sup style="font-size:9px">¹</sup></div>
+      </div>
+      <div class="stat">
+        <div class="num">3–5×</div>
+        <div class="lbl">Creator-read CPM premium vs. standard display</div>
+      </div>
+      <div class="stat">
+        <div class="num">40–80%</div>
+        <div class="lbl">Of channel views come from back catalog</div>
+      </div>
+      <div class="stat">
+        <div class="num">$0</div>
+        <div class="lbl">In listing fees, monthly fees, or platform fees</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- HOW IT WORKS -->
-  <section class="how-it-works" id="how-it-works">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">How it works</div>
-      <h2 class="section-heading">A creator program that <em>actually pays out.</em></h2>
-      <p class="section-intro">Four steps from signup to first billed diner. No briefs, no approvals, no monthly reviews. You decide once. We do the rest.</p>
-
-      <div class="steps-grid">
-        <div class="step">
-          <div class="step-num">01</div>
-          <div class="step-title">Tell us about your restaurant</div>
-          <div class="step-body">Cuisine, vibe, neighborhoods, target customer. Twenty minutes, not a brand book. We get enough to assemble the right creators on the first try.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <div class="step-title">We assign your pooled creator team</div>
-          <div class="step-body">2–8 local food creators selected by conversion rate, not follower count. They also work with non-competing restaurants in your city — their audience compounds across the network.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <div class="step-title">Content runs without you</div>
-          <div class="step-body">Sequenced content across TikTok, Reels, and Stories. You don't write briefs. You don't approve frames. You don't sit in monthly review meetings.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">04</div>
-          <div class="step-title">POS verifies. You pay per diner.</div>
-          <div class="step-body">Every attributed new diner is matched against your Toast or Square. $40 per verified cover, billed weekly. Hit the cover floor or we refund.</div>
-        </div>
+<!-- SHIFT -->
+<section class="shift">
+  <div class="container">
+    <div class="shift-grid">
+      <div>
+        <span class="eyebrow">Why the format matters</span>
+        <h2 style="margin-top:16px">The unit of trade just <em>shifted.</em></h2>
+        <p class="lede">For fifteen years, the unit was "a campaign" — one creator, one video, one brand, frozen in place. Now it's "a slot," and the creative inside it is a creator-read endorsement. Slots have inventory dynamics: utilization, yield, seasonality, geo demand. Reads have production curves: turnaround, capacity, re-licensing.</p>
+        <p class="lede" style="margin-top:18px;">That single shift unlocks everything else.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- WHY RESTAURANTS WIN -->
-  <section class="why-win">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">Why restaurants win</div>
-      <h2 class="section-heading">Restructured for the way you actually <em>want to be billed.</em></h2>
-
-      <div class="pillars-grid">
-        <div class="pillar">
-          <div class="pillar-icon">◆</div>
-          <div class="pillar-title">Cover guarantee, not impression promises</div>
-          <div class="pillar-body">Every program comes with a contracted cover floor. We commit to a minimum number of verified new diners in the first 30 days. Miss the floor and we refund — in writing, before you ever pay. No agency, no platform, no creator deal underwrites the outcome. We do.</div>
+      <div class="comparison">
+        <div class="compare-row">
+          <span class="label">The deal</span>
+          <div class="old">Frozen at launch, lives forever</div>
+          <div class="new">Swap between produced versions. End when you say.</div>
         </div>
-        <div class="pillar">
-          <div class="pillar-icon">✓</div>
-          <div class="pillar-title">POS-verified, not platform-claimed</div>
-          <div class="pillar-body">Every billed cover is matched against your point of sale — Toast, Square, Clover. No "we got you 800K impressions" reports. No "estimated reach" math. If a diner doesn't sit down and place an order, we don't bill. Full stop.</div>
+        <div class="compare-row">
+          <span class="label">Geography</span>
+          <div class="old">One creative, all viewers</div>
+          <div class="new">Different creator-reads per country, same slot.</div>
         </div>
-        <div class="pillar">
-          <div class="pillar-icon">∅</div>
-          <div class="pillar-title">Zero operator effort</div>
-          <div class="pillar-body">No briefs. No content approvals. No monthly review calls. You said yes once. After that, your only weekly interaction with Tabletop is the invoice that lists the new diners we delivered and the creators who drove them.</div>
+        <div class="compare-row">
+          <span class="label">Back catalog</span>
+          <div class="old">Earned out years ago</div>
+          <div class="new">Evergreen. Re-licensed every quarter, with approval.</div>
         </div>
-        <div class="pillar">
-          <div class="pillar-icon">⌘</div>
-          <div class="pillar-title">Network pooling compounds quality</div>
-          <div class="pillar-body">Your creators work across 3–5 non-competing restaurants in your city. The follower who saw your taco spot Tuesday saw the wine bar Friday and the brunch place Sunday. That compound exposure drives conversion rates no single-restaurant deal can match — and the creator economics get to a place no horizontal platform can touch.</div>
+        <div class="compare-row">
+          <span class="label">Measurement</span>
+          <div class="old">Self-reported screenshots</div>
+          <div class="new">Native sync into Google Ads. Verified.</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PRICING -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">Pricing</div>
-      <h2 class="section-heading">Pay per diner. <em>Access fee</em> reserves your slot.</h2>
-      <p class="section-intro">Three access tiers. The per-diner price is the headline number; the small monthly access fee reserves your creator slots and funds attribution infrastructure. There is no other cost.</p>
+<!-- DIVERGE -->
+<section class="diverge" id="diverge">
+  <div class="container">
+    <span class="eyebrow">A category neither neighbor could build</span>
+    <h2 style="margin-top:16px">Not influencer marketing. Not programmatic ad-tech. <em>The synthesis.</em></h2>
+    <p class="lede">Influencer platforms pair bespoke creative with bespoke trading. Programmatic exchanges pair standardized trading with brand-supplied creative. Slotted is the only point where creator-produced creative meets exchange-cleared trading. No one else lives at that intersection.</p>
 
-      <div class="pricing-grid">
-        <div class="price-card">
-          <div class="price-tier">Local</div>
-          <div class="price-for">For independent restaurants and single-location operators</div>
-          <div class="price-amount">
-            <div class="price-num">$40</div>
-            <div class="price-period">/ verified diner</div>
-          </div>
-          <div class="price-access">+ $299 / month access fee</div>
-          <ul class="price-features">
-            <li>2 local food creators, pooled across your city</li>
-            <li>4–5 pieces of content per month</li>
-            <li>POS-verified attribution dashboard</li>
-            <li>Daily settlement to creators (Stripe Connect)</li>
-            <li>Cancel anytime</li>
-          </ul>
-          <div class="price-guarantee">Cover floor guarantee — first 50 diners or refund</div>
-          <a class="btn" onclick="scrollToSection('final-cta')">Get started<span class="arrow">→</span></a>
-        </div>
-
-        <div class="price-card featured">
-          <div class="price-tier">Group</div>
-          <div class="price-for">For small groups (2–5 locations) and emerging food brands</div>
-          <div class="price-amount">
-            <div class="price-num">$40</div>
-            <div class="price-period">/ verified diner</div>
-          </div>
-          <div class="price-access">+ $599 / month access fee</div>
-          <ul class="price-features">
-            <li>3–4 creators per program, rotating quarterly</li>
-            <li>8–10 pieces of content per month</li>
-            <li>Toast / Square / Clover integration + cohort tracking</li>
-            <li>Quarterly creator content shoots</li>
-            <li>Persistent diner-identity layer (repeat tracking)</li>
-          </ul>
-          <div class="price-guarantee">Cover floor guarantee — first 120 diners or refund</div>
-          <a class="btn" onclick="scrollToSection('final-cta')">Get started<span class="arrow">→</span></a>
-        </div>
-
-        <div class="price-card">
-          <div class="price-tier">Regional</div>
-          <div class="price-for">For multi-location chains and scaling regional brands</div>
-          <div class="price-amount">
-            <div class="price-num">$50</div>
-            <div class="price-period">/ verified diner</div>
-          </div>
-          <div class="price-access">+ $1,299 / month access fee</div>
-          <ul class="price-features">
-            <li>6–8 creators per program, including anchor talent</li>
-            <li>18+ pieces of content per month</li>
-            <li>Managed paid amplification of top content</li>
-            <li>Dedicated account manager</li>
-            <li>Custom revenue-tied reporting</li>
-          </ul>
-          <div class="price-guarantee">Cover floor guarantee — first 300 diners or refund</div>
-          <a class="btn" onclick="scrollToSection('final-cta')">Talk to sales<span class="arrow">→</span></a>
-        </div>
+    <div class="diverge-table">
+      <div class="diverge-head">
+        <div></div>
+        <div class="h-cell">Influencer platforms<span class="sub">CreatorIQ, Captiv8, Aspire</span></div>
+        <div class="h-cell">Programmatic ad-tech<span class="sub">DV360, Trade Desk, CTV</span></div>
+        <div class="h-cell us">Slotted<span class="sub">The endorsement exchange</span></div>
       </div>
-      <p class="pricing-footnote">+ $5 per repeat visit within 90 days (half paid to the creator who brought them back). No setup fees, no implementation costs, no surprise add-ons.</p>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="testimonials">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">From our partners</div>
-      <h2 class="section-heading">Restaurants are <em>finally getting</em> creator marketing right.</h2>
-
-      <div class="testimonial-grid">
-        <div class="testimonial">
-          <div class="testimonial-text">"Two years of trying to figure out creator deals on our own. Eight months on Tabletop: 312 new diners attributed straight to our POS. We pay $40 each. Math doesn't lie."</div>
-          <div class="testimonial-attr">
-            <div class="testimonial-avatar">SC</div>
-            <div>
-              <div class="testimonial-name">Sarah Chen</div>
-              <div class="testimonial-role">Owner, Hearth &amp; Hue · Austin</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial">
-          <div class="testimonial-text">"What sold me was the refund floor. Anyone willing to underwrite cover-count has skin in the game. Three programs, three over-performances. Yelp can't touch this."</div>
-          <div class="testimonial-attr">
-            <div class="testimonial-avatar">MR</div>
-            <div>
-              <div class="testimonial-name">Marcus Reyes</div>
-              <div class="testimonial-role">Owner, Casa Mira Group · Nashville</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial">
-          <div class="testimonial-text">"Six restaurants. Old creator deals were 60-day-net invoices to chase. Tabletop bills me weekly only for diners my POS confirmed. There's no marketing person managing this. It manages itself."</div>
-          <div class="testimonial-attr">
-            <div class="testimonial-avatar">AK</div>
-            <div>
-              <div class="testimonial-name">Amelia Kowalski</div>
-              <div class="testimonial-role">Director of Marketing, Brooklyn Plate Co.</div>
-            </div>
-          </div>
-        </div>
+      <div class="diverge-row-d">
+        <div class="axis">Who creates the ad</div>
+        <div class="cell" data-label="Influencer">Brand provides direction, often the creative itself</div>
+        <div class="cell" data-label="Programmatic">Brand-supplied creative, often automated variants</div>
+        <div class="cell us" data-label="Slotted"><strong>Creator produces every read,</strong> in their voice, against the buyer's brief</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Unit of trade</div>
+        <div class="cell" data-label="Influencer">A bespoke campaign deal</div>
+        <div class="cell" data-label="Programmatic">An impression on an exchange</div>
+        <div class="cell us" data-label="Slotted"><strong>A creator-read endorsement,</strong> slotted into a standardized 60s window</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Pricing</div>
+        <div class="cell" data-label="Influencer">Bilaterally negotiated, opaque, re-litigated</div>
+        <div class="cell" data-label="Programmatic">Auction-cleared on opaque rails</div>
+        <div class="cell us" data-label="Slotted"><strong>Public clearing prices</strong> from real transactions across the market</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Trust transfer</div>
+        <div class="cell" data-label="Influencer">High when it works, fragile when it doesn't</div>
+        <div class="cell" data-label="Programmatic">Near zero — generic creative, anonymous placement</div>
+        <div class="cell us" data-label="Slotted"><strong>Structural</strong> — the creator's voice is the endorsement, not packaging around it</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Geography</div>
+        <div class="cell" data-label="Influencer">One creative, all viewers</div>
+        <div class="cell" data-label="Programmatic">Geo-targeted, same brand creative everywhere</div>
+        <div class="cell us" data-label="Slotted"><strong>Geo multi-tenancy</strong> — different reads per country, same slot</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Mid-flight</div>
+        <div class="cell" data-label="Influencer">Frozen until contract ends</div>
+        <div class="cell" data-label="Programmatic">Real-time, no creator in the loop</div>
+        <div class="cell us" data-label="Slotted"><strong>Swap between produced versions</strong> in two clicks. Commission new with turnaround.</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Measurement</div>
+        <div class="cell" data-label="Influencer">Self-reported screenshots, weeks late</div>
+        <div class="cell" data-label="Programmatic">Open exchange logs, brand-controlled</div>
+        <div class="cell us" data-label="Slotted"><strong>Native sync into Google Ads,</strong> verified, real-time</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Buyer workflow</div>
+        <div class="cell" data-label="Influencer">Influencer marketing team, bespoke per deal</div>
+        <div class="cell" data-label="Programmatic">Trading desk, no creator approval needed</div>
+        <div class="cell us" data-label="Slotted"><strong>Trading-desk motion + structural creator approval</strong> on every booking</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FINAL CTA -->
-  <section class="final-cta" id="final-cta">
-    <div class="container">
-      <div class="final-cta-inner">
-        <h2>Want to see what <em>50 new diners</em> looks like?</h2>
-        <p>Book a 20-minute demo. We'll show you the local creator roster we'd assemble for your restaurant — actual creators, actual audiences in your zip code — plus the cover floor we'll guarantee in writing before you ever pay a cent.</p>
-        <a class="btn btn-large">Book a demo<span class="arrow">→</span></a>
-      </div>
+<!-- SYNTHESIS -->
+<section class="synth">
+  <div class="container">
+    <div class="synth-head">
+      <span class="eyebrow">What the synthesis actually is</span>
+      <h2>The creator is the creative. <em>The exchange is the rail.</em></h2>
+      <p class="lede" style="margin-top: 22px;">Every spot is creator-produced — recorded by the creator, in their voice, against the buyer's brief, with the creator's approval on every match. Every slot is exchange-cleared — public yield curves, geo tenancy, native measurement, mid-flight swap. The trust transfer of creator-read endorsement, plus the operational speed of media trading. That combination did not exist before.</p>
     </div>
-  </section>
 
-</div>
-
-
-<!-- ============= CREATORS VIEW ============= -->
-<div class="creators-view">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow">Tabletop for Creators</div>
-          <h1>Get paid per diner. Across <em>every restaurant</em> in your city.</h1>
-          <p class="hero-sub">The platform where local food creators earn $20 for every verified new diner driven by their content — across 3–5 partner restaurants per city. Pooled audience. Daily payouts. No invoicing, no waiting.</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary btn-large" onclick="scrollToSection('look-for')">Apply to join<span class="arrow">→</span></a>
-            <a class="hero-secondary" onclick="scrollToSection('earnings')">See real earnings ↓</a>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-stat-card top">
-            <div class="avatar">$</div>
-            <div>
-              <div class="label">Today's earnings · Nov 14</div>
-              <div class="value">$340.00 <span class="accent">(17 diners)</span></div>
-            </div>
-          </div>
-          <div class="hero-stat-card bottom">
-            <div class="avatar">📍</div>
-            <div>
-              <div class="label">Active partnerships</div>
-              <div class="value">4 restaurants · Austin</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE PITCH -->
-  <section class="problem">
-    <div class="container">
-      <div class="problem-grid">
-        <div>
-          <div class="eyebrow section-eyebrow">The pitch</div>
-          <h2 class="section-heading">One-off DMs aren't a <em>creator career.</em></h2>
-        </div>
-        <div class="problem-body">
-          <p>If you've spent a year posting food content in your city, you already know the problem with brand deals. They're one-offs. They come from DMs. The brief is twelve pages. They pay $400 if you're lucky and three months later if you're not.</p>
-          <p>Or worse: you sign up for an influencer platform that charges the restaurant $1,500 a month, takes 70% off the top, and pays you $200 if your post happens to drive five redemptions. That's not creator economics. That's content labor with a worse middleman.</p>
-          <p>Tabletop pays you 50% of every verified diner your content drove. Across 3–5 restaurants per city, not one. Settled daily through Stripe Connect. Repeat-visit bonus on every diner who comes back.</p>
-          <p style="font-family: 'Fraunces', serif; font-size: 28px; line-height: 1.2; color: var(--text-primary); margin-top: 36px; font-weight: 500; letter-spacing: -0.01em;">Your audience, finally monetized at <em style="font-style: italic; color: var(--terracotta); font-variation-settings: 'opsz' 144, 'SOFT' 100;">actual value.</em></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY CREATORS LOVE IT -->
-  <section class="why-creators">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">Why creators love Tabletop</div>
-      <h2 class="section-heading">Per-diner pay. <em>Daily settlement.</em> Pooled audience economics.</h2>
-
-      <div class="creator-love-grid">
-        <div class="love-item">
-          <div class="love-icon">↑</div>
-          <div class="love-content">
-            <h3>Per-diner pay, not per-post fees</h3>
-            <p>$20 for every verified new diner your content drove into a Local or Group partner. $25 for Regional. $5 every time that diner comes back within 90 days. The ceiling moves with your conversion, not the brief.</p>
-          </div>
-        </div>
-        <div class="love-item">
-          <div class="love-icon">✱</div>
-          <div class="love-content">
-            <h3>Your audience monetized across restaurants</h3>
-            <p>Tabletop assigns you to 3–5 non-competing restaurants in your city. One shoot day produces content that runs across all of them. Each restaurant pays attribution separately. Your audience earns in multiples, not once.</p>
-          </div>
-        </div>
-        <div class="love-item">
-          <div class="love-icon">⚡</div>
-          <div class="love-content">
-            <h3>Settled daily, not net-60</h3>
-            <p>Stripe Connect direct deposit. Every diner who shows up today shows up in your account tomorrow morning. No invoicing. No accounts-payable chase. No waiting for the quarterly check.</p>
-          </div>
-        </div>
-        <div class="love-item">
-          <div class="love-icon">✎</div>
-          <div class="love-content">
-            <h3>Ranked by conversion, not follower count</h3>
-            <p>Tabletop sorts on one metric: covers-per-thousand-impressions. A 12K-follower line cook who converts at 4% out-earns the 250K-follower travel account that converts at 0.1%. The data finally rewards the right thing.</p>
-          </div>
-        </div>
-        <div class="love-item">
-          <div class="love-icon">★</div>
-          <div class="love-content">
-            <h3>Restaurants you'd actually eat at</h3>
-            <p>We match for brand fit and audience overlap. Not budget. You'll never be paired with a chain whose food contradicts your aesthetic just because they had spend to deploy.</p>
-          </div>
-        </div>
-        <div class="love-item">
-          <div class="love-icon">🍴</div>
-          <div class="love-content">
-            <h3>Free meals at every partner</h3>
-            <p>For you and a guest. Every month, for as long as you're in the program. Standard, not a perk.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EARNINGS EXAMPLES -->
-  <section class="earnings" id="earnings">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">Real earnings</div>
-      <h2 class="section-heading">What creators are <em>actually making</em> on Tabletop.</h2>
-      <p class="section-intro">Real numbers from the Year 3 program model. The point isn't any single figure — it's that they <strong>compound</strong> across restaurants and across repeat visits.</p>
-
-      <div class="earnings-grid">
-        <div class="earnings-card">
-          <div class="earnings-profile">
-            <div class="earnings-avatar">M</div>
-            <div>
-              <div class="earnings-name">Maria</div>
-              <div class="earnings-meta">Austin · 35K · 4 restaurants</div>
-            </div>
-          </div>
-          <div class="earnings-line">
-            <span>108 verified diners @ $20</span>
-            <span class="earnings-amount">$2,160</span>
-          </div>
-          <div class="earnings-line">
-            <span>32 repeat visits @ $5</span>
-            <span class="earnings-amount">$160</span>
-          </div>
-          <div class="earnings-line">
-            <span>Mid-tier content advance</span>
-            <span class="earnings-amount">$100</span>
-          </div>
-          <div class="earnings-total">
-            <span class="earnings-total-label">Per month</span>
-            <span class="earnings-total-amount">$2,420</span>
-          </div>
-          <div class="earnings-note">+ free meals at 4 restaurants every month</div>
-        </div>
-
-        <div class="earnings-card highlight">
-          <div class="earnings-profile">
-            <div class="earnings-avatar">J</div>
-            <div>
-              <div class="earnings-name">Jamal</div>
-              <div class="earnings-meta">Brooklyn · 95K · 6 restaurants</div>
-            </div>
-          </div>
-          <div class="earnings-line">
-            <span>220 verified diners @ $20–25</span>
-            <span class="earnings-amount">$5,100</span>
-          </div>
-          <div class="earnings-line">
-            <span>68 repeat visits @ $5</span>
-            <span class="earnings-amount">$340</span>
-          </div>
-          <div class="earnings-line">
-            <span>Top-tier content fee (Regional)</span>
-            <span class="earnings-amount">$400</span>
-          </div>
-          <div class="earnings-total">
-            <span class="earnings-total-label">Per month</span>
-            <span class="earnings-total-amount">$5,840</span>
-          </div>
-          <div class="earnings-note">Top performer · Q3 2026 · Multi-restaurant pooled</div>
-        </div>
-
-        <div class="earnings-card">
-          <div class="earnings-profile">
-            <div class="earnings-avatar">P</div>
-            <div>
-              <div class="earnings-name">Priya</div>
-              <div class="earnings-meta">Nashville · 18K · 3 restaurants</div>
-            </div>
-          </div>
-          <div class="earnings-line">
-            <span>84 verified diners @ $20</span>
-            <span class="earnings-amount">$1,680</span>
-          </div>
-          <div class="earnings-line">
-            <span>24 repeat visits @ $5</span>
-            <span class="earnings-amount">$120</span>
-          </div>
-          <div class="earnings-line">
-            <span>Mid-tier content advance</span>
-            <span class="earnings-amount">$135</span>
-          </div>
-          <div class="earnings-total">
-            <span class="earnings-total-label">Per month</span>
-            <span class="earnings-total-amount">$1,935</span>
-          </div>
-          <div class="earnings-note">Niche specialist · conversion beats reach</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT WE LOOK FOR -->
-  <section class="look-for" id="look-for">
-    <div class="container">
-      <div class="eyebrow section-eyebrow">Apply to join</div>
-      <h2 class="section-heading">What we look for in <em>Tabletop creators.</em></h2>
-
-      <div class="look-list">
-        <div class="look-item">
-          <h3>Hyperlocal focus</h3>
-          <p>You post food content in a specific city or region. Hyperlocal creators win on this platform. National food creators are great for cookbook deals; they don't drive foot traffic in any one ZIP code.</p>
-        </div>
-        <div class="look-item">
-          <h3>Conversion, not just engagement</h3>
-          <p>We sort creators by one number above all others: covers-per-thousand-impressions on food content. Save rate matters. Comments that include "trying this!" matter. Follower count is one input among many.</p>
-        </div>
-        <div class="look-item">
-          <h3>Craft</h3>
-          <p>Quality matters. Lighting, sound, narrative. We're not asking for high production value — authenticity beats production every time — but we are asking for craft.</p>
-        </div>
-        <div class="look-item">
-          <h3>Long-term mindset</h3>
-          <p>Tabletop only works if creators stay across multiple restaurants over multiple months. Network pooling compounds the longer you're in. If you're shopping for the highest single-post rate, we're not your platform.</p>
-        </div>
-      </div>
-
-      <div class="dont-list">
-        <h3>What we <em style="font-style: italic; color: var(--peach); font-variation-settings: 'opsz' 144, 'SOFT' 100;">don't</em> do</h3>
+    <div class="synth-grid">
+      <div class="synth-card">
+        <div class="stamp">What's creator-produced</div>
+        <h3>The creative is creator-authored.</h3>
         <ul>
-          <li>Negotiate you down on rate</li>
-          <li>Send 12-page contracts</li>
-          <li>Ask for rights in perpetuity</li>
-          <li>Pay late, ever (Stripe Connect daily)</li>
-          <li>Sort creators by follower count</li>
-          <li>Match you with brands you wouldn't pick</li>
+          <li>The script — creator writes, brand briefs the key messages and CTA</li>
+          <li>The voice — every read is the creator's, never a brand voiceover</li>
+          <li>The integration — woven into the video, not pasted in</li>
+          <li>The approval — creator signs off on every match before go-live</li>
         </ul>
+        <div class="result">
+          <span class="big">3–5× display CPM</span>
+          The trust transfer from creator to brand is the actual asset. The slot is the wrapper.
+        </div>
+      </div>
+      <div class="synth-card">
+        <div class="stamp">What's exchange-cleared</div>
+        <h3>The trade is media-buying motion.</h3>
+        <ul>
+          <li>The price — public clearing curves built from real transactions</li>
+          <li>The geography — one slot, multiple country tenants, distinct reads</li>
+          <li>The measurement — native sync into Google Ads, no screenshots</li>
+          <li>The lifecycle — slot resells, reads re-license, creative swaps in-flight</li>
+        </ul>
+        <div class="result">
+          <span class="big">Trading-desk-ready</span>
+          Buy audiences at media-buying speed. Creator approval upstream of the trade, not blocking it.
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FINAL CTA -->
-  <section class="final-cta">
-    <div class="container">
-      <div class="final-cta-inner">
-        <h2>Drop your handle. We'll get back to you <em>within 7 days.</em></h2>
-        <p>Tell us your city, your three favorite restaurants in your neighborhood, and what kind of food content you make. Two minutes.</p>
-        <a class="btn btn-large">Apply to join Tabletop<span class="arrow">→</span></a>
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">How a slot becomes a spot</span>
+        <h2>List. Produce. <em>Resell.</em></h2>
+      </div>
+      <p class="lede" style="max-width:380px;">No new tools to learn. No data to manually export. Slotted plugs into the surfaces your team already uses every day.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">① List</div>
+        <h3>Connect, list, set capacity</h3>
+        <p>Creators connect YouTube Studio. Available DBS slots surface as a calendar across new uploads and back catalog. Publish your endorsement profile — verticals, turnaround, capacity, banned categories. Set base CPMs or accept the platform yield curve.</p>
+        <div class="step-illu">
+          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
+            <g font-family="JetBrains Mono" font-size="8" fill="#6B6E78">
+              <rect x="12" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5"/>
+              <text x="29" y="28" text-anchor="middle">Mon</text>
+              <rect x="50" y="14" width="34" height="22" rx="3" fill="#0A0E1A"/>
+              <text x="67" y="28" text-anchor="middle" fill="#fff">Tue</text>
+              <rect x="88" y="14" width="34" height="22" rx="3" fill="#E85D3D"/>
+              <text x="105" y="28" text-anchor="middle" fill="#fff" font-weight="bold">LIVE</text>
+              <rect x="126" y="14" width="34" height="22" rx="3" fill="#0A0E1A"/>
+              <text x="143" y="28" text-anchor="middle" fill="#fff">Thu</text>
+              <rect x="164" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5" stroke-dasharray="2"/>
+              <text x="181" y="28" text-anchor="middle" fill="#E85D3D">OPEN</text>
+              <rect x="202" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5" stroke-dasharray="2"/>
+              <text x="219" y="28" text-anchor="middle" fill="#E85D3D">OPEN</text>
+              <rect x="240" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5"/>
+              <text x="257" y="28" text-anchor="middle">Sun</text>
+            </g>
+            <g transform="translate(12, 56)">
+              <rect x="0" y="0" width="256" height="60" rx="8" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="22" cy="30" r="11" fill="#E85D3D"/>
+              <text x="44" y="24" font-family="Inter" font-size="11" font-weight="600" fill="#0A0E1A">Yield curve · clearing price</text>
+              <text x="44" y="40" font-family="Inter" font-size="10" fill="#6B6E78">Based on 1,240 comparable slots</text>
+              <text x="240" y="38" text-anchor="end" font-family="Fraunces" font-size="20" font-weight="500" fill="#0A0E1A">$24K</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">② Brief &amp; Produce</div>
+        <h3>Brand briefs. Creator produces.</h3>
+        <p>Buyers submit a structured brief — brand, product, key messages, CTA, audience — not a finished creative. The creator records the read in their own voice, often delivering 2–3 versions. Both sides approve before go-live. Escrow funds on signature.</p>
+        <div class="step-illu">
+          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
+            <g transform="translate(14, 14)">
+              <rect x="0" y="0" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="20" cy="17" r="9" fill="url(#g1)"/>
+              <text x="36" y="14" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">Cleo · fintech brief</text>
+              <text x="36" y="26" font-family="Inter" font-size="9" fill="#6B6E78">key msgs · CTA · 14-day · US</text>
+              <text x="240" y="22" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#2BAA6E">● APPROVED</text>
+              <rect x="0" y="44" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="20" cy="61" r="9" fill="url(#g2)"/>
+              <text x="36" y="58" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">Athletic Greens</text>
+              <text x="36" y="70" font-family="Inter" font-size="9" fill="#6B6E78">2 reads delivered · brand reviewing</text>
+              <text x="240" y="66" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#4A6CF7">● PRODUCED</text>
+              <rect x="0" y="88" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
+              <circle cx="20" cy="105" r="9" fill="url(#g3)"/>
+              <text x="36" y="102" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">NordVPN</text>
+              <text x="36" y="114" font-family="Inter" font-size="9" fill="#6B6E78">brief match: 88% · re-license</text>
+              <text x="240" y="110" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#E85D3D">● RE-LICENSE</text>
+            </g>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E85D3D"/><stop offset="1" stop-color="#F4B942"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2BAA6E"/><stop offset="1" stop-color="#3CCB8A"/></linearGradient>
+              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4A6CF7"/><stop offset="1" stop-color="#6E48F2"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③ Run, re-license, resell</div>
+        <h3>Live, measured, and back on market</h3>
+        <p>Reads go live in YouTube Studio. Performance syncs from Google Ads in real time. Swap between produced versions in two clicks. When a term ends, the slot reopens — and existing reads re-license when new briefs match.</p>
+        <div class="step-illu">
+          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
+            <g transform="translate(14, 14)">
+              <text font-family="JetBrains Mono" font-size="9" fill="#6B6E78" y="10">PERFORMANCE — LAST 30 DAYS</text>
+              <polyline points="0,80 30,72 60,68 90,55 120,48 150,30 180,25 210,18 240,12 252,10"
+                fill="none" stroke="#E85D3D" stroke-width="2.2"/>
+              <polyline points="0,80 30,72 60,68 90,55 120,48 150,30 180,25 210,18 240,12 252,10 252,98 0,98"
+                fill="url(#fade)" opacity="0.35"/>
+              <circle cx="252" cy="10" r="4" fill="#E85D3D"/>
+              <circle cx="252" cy="10" r="8" fill="#E85D3D" opacity="0.25"/>
+              <text x="252" y="108" text-anchor="end" font-family="Fraunces" font-size="20" font-weight="500" fill="#0A0E1A">1.4M</text>
+              <text x="190" y="108" text-anchor="end" font-family="Inter" font-size="9" fill="#6B6E78">views · 92% VTR · ↑ 18%</text>
+            </g>
+            <defs>
+              <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+                <stop stop-color="#E85D3D" stop-opacity="0.4"/>
+                <stop offset="1" stop-color="#E85D3D" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
+<!-- FOR CREATORS -->
+<section class="audience" id="creators">
+  <div class="container">
+    <div class="audience-block creators">
+      <div class="audience-grid">
+        <div>
+          <span class="eyebrow">For creators</span>
+          <h2 style="margin-top:14px">You're not selling videos. You're selling <em>endorsement capacity.</em></h2>
+          <p class="lede" style="margin-top:20px;">Every long-form video is a slot. Every read you record is a tradeable asset. The exchange clears both — inventory by yield curve, production by your capacity and rate card. The deal ends; the inventory doesn't.</p>
+          <ul class="feat-list">
+            <li><span class="check">✓</span><span class="feat-text"><b>Publish your endorsement profile.</b> Verticals you'll endorse, turnaround, capacity per month, rate-card adjustments. Buyers self-match against it.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Produce on your schedule, in your voice.</b> Record reads in batches. Deliver 2–3 versions per booking so buyers can pick. Stockpile evergreen for re-licensing.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Re-license what you've already made.</b> When a new brief matches an existing read — with your approval — earn again on production you've already done.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Geo-multiply your slots.</b> One slot, different reads, different countries. Same video. Same time. Four buyers, four invoices.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Escrowed payouts.</b> Funds held when signed, released on go-live. No more chasing invoices.</span></li>
+          </ul>
+          <div class="cta-row">
+            <a href="#cta" class="btn btn-accent">Connect your channel <span class="arrow">→</span></a>
+            <a href="#" class="btn btn-ghost">See how the math works</a>
+          </div>
+        </div>
+        <div>
+          <div class="ui-mock">
+            <div class="ui-mock-head">
+              <span class="ui-title">Inventory · December</span>
+              <div class="ui-actions"><span class="ui-dot"></span><span class="ui-dot"></span><span class="ui-dot"></span></div>
+            </div>
+            <div class="calendar-grid">
+              <div class="cal-day">M 1</div>
+              <div class="cal-day">T 2</div>
+              <div class="cal-day booked">W 3</div>
+              <div class="cal-day booked">T 4</div>
+              <div class="cal-day live">F 5</div>
+              <div class="cal-day live">S 6</div>
+              <div class="cal-day live">S 7</div>
+              <div class="cal-day live">M 8</div>
+              <div class="cal-day produce">T 9</div>
+              <div class="cal-day produce">W 10</div>
+              <div class="cal-day booked">T 11</div>
+              <div class="cal-day open">F 12</div>
+              <div class="cal-day open">S 13</div>
+              <div class="cal-day open">S 14</div>
+              <div class="cal-day open">M 15</div>
+              <div class="cal-day open">T 16</div>
+              <div class="cal-day booked">W 17</div>
+              <div class="cal-day booked">T 18</div>
+              <div class="cal-day booked">F 19</div>
+              <div class="cal-day booked">S 20</div>
+              <div class="cal-day booked">S 21</div>
+            </div>
+            <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;">YIELD THIS MONTH</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;">$184,200</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;">CAPACITY USED</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--accent);">76%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- ============= FOOTER ============= -->
+<!-- FOR BRANDS -->
+<section class="audience" id="brands" style="padding-top:0;">
+  <div class="container">
+    <div class="audience-block brands">
+      <div class="audience-grid">
+        <div>
+          <span class="eyebrow">For brands &amp; agencies</span>
+          <h2 style="margin-top:14px">Buy creator-read endorsements at the <em>speed of media.</em></h2>
+          <p class="lede" style="margin-top:20px;">Submit a brief, not a creative. The creator turns it into a read in their voice. You get audience-first targeting, public clearing prices, mid-flight swap, and native Google Ads measurement — the workflow your trading desk already uses.</p>
+          <ul class="feat-list">
+            <li><span class="check">✓</span><span class="feat-text"><b>Submit a brief, not a creative.</b> Structured object: brand, product, key messages, CTA, banned phrases. The creator records the read. Approval gated by both sides.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Discover by audience, not by name.</b> Filter by audience, geo, vertical, brand-safety, and creator endorsement profile. Slot allocation runs against clearing price.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Swap creative mid-flight.</b> Push between produced versions in two clicks. Swap CTAs instantly. Commission new reads on creator turnaround.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Measurement where you already work.</b> Native DBS metrics in Google Ads. Unified reporting in Slotted. No screenshots.</span></li>
+          </ul>
+          <div class="cta-row">
+            <a href="#cta" class="btn btn-primary">Submit a brief <span class="arrow">→</span></a>
+            <a href="#" class="btn btn-ghost">Trading-desk seat</a>
+          </div>
+        </div>
+        <div>
+          <div class="ui-mock">
+            <div class="ui-mock-head">
+              <span class="ui-title">Campaign · Q4 Launch · 12 creators</span>
+              <div class="ui-actions"><span class="ui-dot"></span><span class="ui-dot"></span><span class="ui-dot"></span></div>
+            </div>
+            <div>
+              <div class="listing-row">
+                <div class="listing-creator">
+                  <div class="listing-avatar"></div>
+                  <div>
+                    <div class="listing-name" style="color:var(--cream);">MKBHD</div>
+                    <div class="listing-sub">Tech · 18M subs · US/CA</div>
+                  </div>
+                </div>
+                <div class="listing-stat">
+                  <div class="v" style="color:var(--cream);">$24,500</div>
+                  <div class="l">brief approved · 7d TR</div>
+                </div>
+                <span class="listing-cta produced">Produced</span>
+              </div>
+              <div class="listing-row">
+                <div class="listing-creator">
+                  <div class="listing-avatar av2"></div>
+                  <div>
+                    <div class="listing-name" style="color:var(--cream);">Ali Abdaal</div>
+                    <div class="listing-sub">Productivity · 5.6M · Global</div>
+                  </div>
+                </div>
+                <div class="listing-stat">
+                  <div class="v" style="color:var(--cream);">$18,200</div>
+                  <div class="l">2 versions live · v2 ready</div>
+                </div>
+                <span class="listing-cta">Brief</span>
+              </div>
+              <div class="listing-row">
+                <div class="listing-creator">
+                  <div class="listing-avatar av3"></div>
+                  <div>
+                    <div class="listing-name" style="color:var(--cream);">Wendover</div>
+                    <div class="listing-sub">Business · 4.8M · EU</div>
+                  </div>
+                </div>
+                <div class="listing-stat">
+                  <div class="v" style="color:var(--cream);">$14,800</div>
+                  <div class="l">brief match: 88%</div>
+                </div>
+                <span class="listing-cta relicense">Re-license</span>
+              </div>
+            </div>
+            <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.10);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:rgba(246,242,232,0.5);text-transform:uppercase;">CLEARED SPEND</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--cream);">$420,000</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:rgba(246,242,232,0.5);text-transform:uppercase;">PROJECTED REACH</div>
+                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--accent);">8.4M</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">From design partners</span>
+        <h2>The format is new. <em>The wins aren't theoretical.</em></h2>
+      </div>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <div class="mark">"</div>
+        <div class="body">Nine years of videos. Before Slotted, only new uploads were inventory and every sponsorship meant a new negotiation. Now the back catalog clears every quarter — different brands, different countries, creator-read each time. I record in batches, re-license what fits, decline what doesn't. Production turned into a yield curve.</div>
+        <div class="who">
+          <div class="who-av"></div>
+          <div>
+            <div class="name">Design partner</div>
+            <div class="role">Creator · 3M+ subscribers, technology</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote">
+        <div class="mark">"</div>
+        <div class="body">First creator inventory my trading desk could buy at media-buying speed. We submit briefs, creators produce reads in their voice, we get audience targeting and Google Ads measurement on the back end. Premium CPMs, exchange motion, creator approval upstream of the trade. Eight reads in a week using the CTV workflow.</div>
+        <div class="who">
+          <div class="who-av b"></div>
+          <div>
+            <div class="name">Design partner</div>
+            <div class="role">Trading Desk Lead · Performance agency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:0;">
+      <div class="left">
+        <span class="eyebrow">Pricing</span>
+        <h2>Transparent. <em>And only when the slot clears.</em></h2>
+      </div>
+      <p class="lede" style="max-width:380px;">No listing fees. No subscriptions. No fees on views. We earn when the exchange clears your slot and the creator-read goes live.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Bring-your-own</h3>
+        <p class="sub">You source the buyer</p>
+        <div class="num">10<span style="font-size:30px;">%</span></div>
+        <div class="of-what">flat, on cleared deal value</div>
+        <ul>
+          <li>Unlimited slot listings</li>
+          <li>Endorsement profile + brief intake</li>
+          <li>YouTube Studio + Google Ads sync</li>
+          <li>Standardized contracts + escrow</li>
+          <li>Real-time performance reporting</li>
+          <li>Re-license + resale flow</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost">Connect your channel</a>
+      </div>
+      <div class="price-card featured">
+        <h3>Cleared on exchange</h3>
+        <p class="sub">Slotted sources the buyer</p>
+        <div class="num">15<span style="font-size:30px;">%</span></div>
+        <div class="of-what">flat, on cleared deal value</div>
+        <ul>
+          <li>Everything in Bring-your-own</li>
+          <li>Qualified inbound briefs</li>
+          <li>Yield-curve clearing prices</li>
+          <li>Geo multi-tenant routing</li>
+          <li>Brief-match scoring for re-licensing</li>
+          <li>Demand-side success support</li>
+        </ul>
+        <a href="#cta" class="btn btn-primary">Get matched <span class="arrow">→</span></a>
+      </div>
+      <div class="price-card">
+        <h3>Trading desk seat</h3>
+        <p class="sub">Holdcos &amp; in-house buying teams</p>
+        <div class="num">$2.5K<span style="font-size:24px;">/seat/mo</span></div>
+        <div class="of-what">plus standard take</div>
+        <ul>
+          <li>Multi-brand planning workspace</li>
+          <li>Brief library + version management</li>
+          <li>Custom roles + permissions</li>
+          <li>White-label reporting</li>
+          <li>Bulk-buy and bundle workflows</li>
+          <li>Exchange API access</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-grid">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 style="margin-top:14px;">Questions <em>we get a lot.</em></h2>
+        <p class="lede" style="margin-top:22px;">Don't see yours? <a href="#" style="color:var(--accent);font-weight:500;border-bottom:1.5px solid var(--accent);">Ask us anything →</a></p>
+      </div>
+      <div>
+        <details class="faq-item" open>
+          <summary>Who actually creates the ad?</summary>
+          <p>The creator does — always. The buyer submits a brief (brand, product, key messages, CTA, audience screens). The creator records the read in their own voice, against the brief, often delivering 2–3 versions. Both sides approve before go-live. The creative is never brand-supplied. The trust transfer from creator to brand is the entire reason DBS clears at 3–5× display CPMs.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is this just programmatic ads in disguise?</summary>
+          <p>No. Slotted brings the buying motion of programmatic — public clearing prices, yield curves, geo tenancy, swap, native measurement — to a market where the creative is creator-produced and every booking is a direct deal with creator approval. Per Google's own documentation, DBS inventory is not open-exchange programmatic. The motion is exchange-cleared. The creative isn't.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long does production take?</summary>
+          <p>Depends on the creator. Each creator publishes their standard turnaround in their endorsement profile — typical range is 5–10 business days from brief approval to delivered read. Buyers see turnaround upfront and can filter for faster cycles. Mid-flight swap between produced versions is instant. CTA-only swaps (URL, promo code) are instant. Commissioning a new version follows the creator's turnaround.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is re-licensing?</summary>
+          <p>When an existing creator-read fits a new buyer's brief — same product category, compatible messaging, creator-approved — it can be re-licensed at a discount instead of re-produced from scratch. The exchange runs a brief-match score against every existing read in the creator's library. Re-licensing is always opt-in for the creator. It's how production compounds into IP rather than expiring with each campaign.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is a Dynamic Brand Segment, exactly?</summary>
+          <p>DBS is a new YouTube format (launching April 2026, US geo-targeting May 2026) that turns the 60-second creator-read sponsorship inside a long-form video into a standardized, swappable, geo-targeted, resellable slot. Google built the delivery and measurement rails. They explicitly opted out of the transaction layer. Slotted is the transaction layer.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Why isn't a CreatorIQ or Captiv8 the right place for this?</summary>
+          <p>Their data model is the campaign, not the slot or the read. Influencer platforms manage creator relationships and run bespoke per-deal workflows. None of them clear inventory, run public yield curves, route geo multi-tenancy, run brief-match re-licensing, or sync measurement to Google Ads natively. Retrofitting any of those into a campaign-shaped data model is a 12–24 month rebuild. We started slot-shaped, read-aware.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does Slotted replace my agent or manager?</summary>
+          <p>No. Slotted is the marketplace and software layer — discovery, brief intake, contracts, escrow, reporting, re-licensing. Strategy, relationships, and the bespoke deals that don't fit the slot model still belong to humans. Most creators keep both.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do payments work?</summary>
+          <p>Brands fund escrow when a brief is approved. We release funds to creators when the read goes live in YouTube Studio — or optionally when a view threshold is hit. Payouts run through Stripe Connect with standard creator payment terms.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I block certain brands or verticals?</summary>
+          <p>Yes. Creators publish their endorsement profile upfront — verticals they'll read for, verticals they refuse, competitor blocks, banned categories. Buyers set safety screens by creator type, content category, and audience profile. Both sides keep full approval rights on every brief and every read.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What's the minimum spend?</summary>
+          <p>Self-serve starts at $10K per campaign. Trading-desk seat and enterprise sales accounts have no minimum. Most first campaigns clear between $50K and $250K across multiple reads.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="cta">
+  <div class="container">
+    <span class="eyebrow">Get started</span>
+    <h2>The creator is the creative.<br><em>The exchange is the rail.</em></h2>
+    <p class="lede">Creators: 60 seconds to see what your slots clear at, and what your production capacity is worth on the curve. Brands: submit a brief, see audience-matched creators with quoted turnaround and yield — in 48 hours.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-primary">Connect your channel <span class="arrow">→</span></a>
+      <a href="#" class="btn btn-accent">Submit a brief <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div>
-        <a class="logo">Tabletop<span class="dot" style="color: var(--peach);">.</span></a>
-        <p class="footer-tagline">Diner acquisition for restaurants. Per-cover billing, POS-verified attribution, refund-floor guarantees.</p>
+      <div class="col">
+        <a href="#" class="brand"><span class="brand-dot"></span>Slotted</a>
+        <p class="tagline">The endorsement exchange for YouTube Dynamic Brand Segments. Creator-produced creative, exchange-cleared trade. DBS is the first format. The category is everything that comes next.</p>
       </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <a onclick="showView('restaurants')">For restaurants</a>
-        <a onclick="showView('creators')">For creators</a>
-        <a>Pricing</a>
-        <a>Case studies</a>
+      <div class="col">
+        <h4>Creators</h4>
+        <ul>
+          <li><a href="#">How clearing works</a></li>
+          <li><a href="#">Endorsement profile</a></li>
+          <li><a href="#">Yield calculator</a></li>
+          <li><a href="#">Connect channel</a></li>
+        </ul>
       </div>
-      <div class="footer-col">
+      <div class="col">
+        <h4>Brands</h4>
+        <ul>
+          <li><a href="#">Submit a brief</a></li>
+          <li><a href="#">Trading-desk seat</a></li>
+          <li><a href="#">Exchange API</a></li>
+          <li><a href="#">Request demo</a></li>
+        </ul>
+      </div>
+      <div class="col">
         <h4>Company</h4>
-        <a>About</a>
-        <a>Careers</a>
-        <a>Press</a>
-        <a>Contact</a>
-      </div>
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <a>Creator economy report</a>
-        <a>Restaurant benchmarks</a>
-        <a>Help center</a>
-        <a>Blog</a>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <a>Privacy</a>
-        <a>Terms</a>
-        <a>Cookie policy</a>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Tabletop. All rights reserved.</span>
-      <span>Made with care in Austin, TX</span>
+      <span>© 2026 Slotted, Inc. All rights reserved.</span>
+      <div style="display:flex;gap:20px;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Brand safety</a>
+      </div>
     </div>
+    <p style="margin-top:24px;font-size:11px;color:rgba(246,242,232,0.4);max-width:600px;">¹ Google/Ipsos, Video &amp; Social Ad Impact Study, July–August 2023. Online survey, n=13,328 US, UK, BR, FR, DE, IT, JP, online users 18–54 who use social apps/sites monthly or more often.</p>
   </div>
 </footer>
 
 <script>
-  function showView(view) {
-    document.body.className = 'view-' + view;
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 </script>
-
 </body>
 </html>
