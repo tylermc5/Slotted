@@ -22,152 +22,80 @@
     --line: rgba(11,14,22,0.10);
     --line-dark: rgba(255,255,255,0.10);
     --accent: #E85D3D;
-    --accent-dim: rgba(232,93,61,0.12);
+    --accent-soft: #F2C9B5;
     --blue: #4A6CF7;
     --green: #2BAA6E;
     --radius: 14px;
     --radius-lg: 24px;
     --maxw: 1180px;
   }
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-weight: 400; color: var(--ink); background: var(--cream);
-    line-height: 1.55; font-size: 16px; -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+  body { font-family: 'Inter', system-ui, sans-serif; color: var(--ink); background: var(--cream); line-height: 1.55; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
   .container { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
   @media (max-width: 720px) { .container { padding: 0 22px; } }
-
-  .eyebrow {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--accent); font-weight: 500;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .eyebrow::before {
-    content: ""; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent); display: inline-block;
-  }
-
-  h1, h2, h3 {
-    font-family: 'Fraunces', 'Times New Roman', serif;
-    font-weight: 500; letter-spacing: -0.02em; line-height: 1.06; color: var(--ink);
-  }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -0.02em; line-height: 1.06; color: var(--ink); }
   .display { font-size: clamp(48px, 7vw, 86px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.02; }
   h1 { font-size: clamp(36px, 5.4vw, 64px); }
   h2 { font-size: clamp(32px, 4.4vw, 52px); }
   h3 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 600; letter-spacing: -0.015em; }
   .lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-2); line-height: 1.55; font-weight: 400; max-width: 680px; }
-
-  .btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 22px; border-radius: 999px;
-    font-weight: 500; font-size: 15px;
-    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
-    white-space: nowrap;
-  }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-weight: 500; font-size: 15px; transition: all .18s ease; white-space: nowrap; }
   .btn-primary { background: var(--ink); color: var(--cream); }
   .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(11,14,22,0.18); }
   .btn-accent { background: var(--accent); color: white; }
-  .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(232,93,61,0.32); }
   .btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(11,14,22,0.18); }
-  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
   .btn-ghost-dark { background: transparent; color: var(--cream); border: 1px solid rgba(246,242,232,0.22); }
-  .btn-ghost-dark:hover { border-color: var(--cream); }
-  .btn .arrow { display: inline-block; transition: transform .2s ease; }
+  .arrow { transition: transform .2s ease; }
   .btn:hover .arrow { transform: translateX(3px); }
 
   /* NAV */
-  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 0; transition: all .2s ease; backdrop-filter: blur(0px); }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 0; transition: all .2s ease; }
   .nav.scrolled { background: rgba(246, 242, 232, 0.85); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
   .nav .container { display: flex; align-items: center; justify-content: space-between; }
-  .brand {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px;
-    letter-spacing: -0.02em; color: var(--cream);
-  }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--cream); }
   .nav.scrolled .brand { color: var(--ink); }
   .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; position: relative; }
-  .brand-dot::after {
-    content: ""; position: absolute; inset: -4px;
-    border: 1.5px solid var(--accent); border-radius: 50%;
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 0; transform: scale(1.6); }
-  }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a { font-size: 14.5px; font-weight: 450; color: var(--cream); opacity: 0.85; transition: opacity .15s; }
+  .brand-dot::after { content: ""; position: absolute; inset: -4px; border: 1.5px solid var(--accent); border-radius: 50%; animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0; transform: scale(1.6); } }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { font-size: 14.5px; color: var(--cream); opacity: 0.85; }
   .nav.scrolled .nav-links a { color: var(--ink); opacity: 0.85; }
-  .nav-links a:hover { opacity: 1; }
   .nav-cta { padding: 10px 18px; font-size: 14px; }
   @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } }
 
   /* HERO */
   .hero { position: relative; background: var(--bg-dark); color: var(--cream); padding: 140px 0 100px; overflow: hidden; }
-  .hero::before {
-    content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,93,61,0.18), transparent 60%),
-      radial-gradient(ellipse 60% 50% at 10% 90%, rgba(74,108,247,0.10), transparent 60%);
-    pointer-events: none;
-  }
+  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,93,61,0.18), transparent 60%), radial-gradient(ellipse 60% 50% at 10% 90%, rgba(74,108,247,0.10), transparent 60%); }
   .hero .container { position: relative; z-index: 2; }
   .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; }
-  @media (max-width: 980px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 50px; }
-    .hero { padding: 120px 0 70px; }
-  }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 50px; } .hero { padding: 120px 0 70px; } }
   .hero h1.display { color: var(--cream); margin: 22px 0 26px; max-width: 720px; }
   .hero h1.display em { font-style: italic; color: var(--accent); font-weight: 400; }
   .hero .lede { color: rgba(246,242,232,0.74); max-width: 560px; font-size: clamp(18px, 1.5vw, 20px); }
   .hero-ctas { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; }
   .hero-ctas .btn-primary { background: var(--cream); color: var(--ink); }
-  .hero-ctas .btn-primary:hover { background: white; }
-
-  .hero-meta {
-    margin-top: 60px; display: flex; gap: 36px; flex-wrap: wrap;
-    padding-top: 28px; border-top: 1px solid var(--line-dark); max-width: 580px;
-  }
+  .hero-meta { margin-top: 60px; display: flex; gap: 36px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--line-dark); max-width: 660px; }
   .hero-meta div .num { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; color: var(--cream); letter-spacing: -0.02em; }
   .hero-meta div .lbl { font-size: 12.5px; color: rgba(246,242,232,0.55); margin-top: 4px; font-weight: 450; }
 
   /* Floating hero slot cards */
   .hero-visual { position: relative; aspect-ratio: 1/1.05; max-width: 460px; margin-left: auto; width: 100%; }
-  .slot-card {
-    position: absolute; background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.10); border-radius: 18px;
-    padding: 18px; backdrop-filter: blur(12px); transition: transform .3s ease;
-  }
-  .slot-card:hover { transform: translateY(-3px); }
+  .slot-card { position: absolute; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 18px; backdrop-filter: blur(12px); }
   .slot-card .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
   .slot-card .ch { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--cream); font-weight: 500; }
-  .ch-avatar {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0;
-    border: 2px solid rgba(255,255,255,0.10);
-  }
-  .pill {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.05em;
-    padding: 3px 8px; border-radius: 999px;
-    background: rgba(255,255,255,0.06); color: rgba(246,242,232,0.7); white-space: nowrap;
-  }
+  .ch-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0; border: 2px solid rgba(255,255,255,0.10); }
+  .pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 999px; background: rgba(255,255,255,0.06); color: rgba(246,242,232,0.7); white-space: nowrap; }
   .pill.live { background: rgba(43,170,110,0.15); color: #5EE0A0; }
-  .pill.live::before { content: "●"; margin-right: 4px; animation: pulse-dot 1.6s infinite; }
-  @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .pill.live::before { content: "●"; margin-right: 4px; animation: dotpulse 1.6s infinite; }
+  @keyframes dotpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
   .pill.open { background: rgba(232,93,61,0.18); color: #FFB39C; }
   .pill.produce { background: rgba(74,108,247,0.18); color: #99B0FF; }
   .slot-card .meta { display: flex; justify-content: space-between; font-size: 12px; color: rgba(246,242,232,0.6); gap: 8px; }
-  .slot-card .price {
-    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500;
-    color: var(--cream); letter-spacing: -0.02em; margin-top: 6px;
-  }
+  .slot-card .price { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; color: var(--cream); margin-top: 6px; }
   .slot-card .price .sm { font-size: 13px; color: rgba(246,242,232,0.55); font-family: 'Inter'; font-weight: 400; }
-
   .card-1 { top: 0; left: 0; width: 72%; transform: rotate(-2deg); animation: float1 6s ease-in-out infinite; }
   .card-2 { top: 28%; right: 0; width: 70%; transform: rotate(3deg); animation: float2 7s ease-in-out infinite; }
   .card-3 { bottom: 0; left: 8%; width: 76%; transform: rotate(-1.5deg); animation: float3 8s ease-in-out infinite; }
@@ -175,34 +103,25 @@
   @keyframes float2 { 0%,100% { transform: rotate(3deg) translateY(0); } 50% { transform: rotate(3deg) translateY(-6px); } }
   @keyframes float3 { 0%,100% { transform: rotate(-1.5deg) translateY(0); } 50% { transform: rotate(-1.5deg) translateY(-10px); } }
 
-  /* TRUST STRIP */
+  /* TRUST */
   .trust { background: var(--bg-dark); color: rgba(246,242,232,0.55); padding: 0 0 80px; }
   .trust .container { text-align: center; }
-  .trust p {
-    font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase;
-    font-weight: 500; margin-bottom: 28px; color: rgba(246,242,232,0.42);
-    font-family: 'JetBrains Mono', monospace;
-  }
+  .trust p { font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; margin-bottom: 28px; color: rgba(246,242,232,0.42); font-family: 'JetBrains Mono', monospace; }
   .logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 52px; opacity: 0.6; }
-  .logos .logo { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--cream); letter-spacing: -0.01em; }
-  .logos .logo.sans { font-family: 'Inter'; font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
+  .logos .logo { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--cream); }
+  .logos .logo.sans { font-family: 'Inter'; font-weight: 700; text-transform: lowercase; }
 
-  /* STAT BAR */
+  /* STATS */
   .stats { background: var(--cream); padding: 80px 0 40px; }
-  .stats-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   @media (max-width: 800px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
   .stat { padding: 36px 28px; border-right: 1px solid var(--line); }
   .stat:last-child { border-right: none; }
-  @media (max-width: 800px) {
-    .stat:nth-child(2) { border-right: none; }
-    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  }
-  .stat .num { font-family: 'Fraunces', serif; font-size: clamp(36px, 4vw, 52px); font-weight: 500; letter-spacing: -0.025em; line-height: 1; }
+  @media (max-width: 800px) { .stat:nth-child(2) { border-right: none; } .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+  .stat .num { font-family: 'Fraunces', serif; font-size: clamp(32px, 3.6vw, 48px); font-weight: 500; letter-spacing: -0.025em; line-height: 1; }
   .stat .num em { font-style: italic; color: var(--accent); font-weight: 400; }
-  .stat .lbl { margin-top: 12px; font-size: 14px; color: var(--muted); font-weight: 450; line-height: 1.4; }
+  .stat .lbl { margin-top: 12px; font-size: 14px; color: var(--muted); line-height: 1.4; }
+  .stat .src { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); margin-top: 6px; letter-spacing: 0.04em; }
 
   /* SHIFT */
   .shift { padding: 130px 0 90px; background: var(--cream); }
@@ -210,127 +129,92 @@
   @media (max-width: 900px) { .shift-grid { grid-template-columns: 1fr; gap: 40px; } }
   .shift h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   .shift .lede { margin-top: 26px; }
-  .shift .comparison {
-    background: white; border-radius: var(--radius-lg);
-    padding: 36px; box-shadow: 0 1px 0 rgba(11,14,22,0.06), 0 24px 60px -20px rgba(11,14,22,0.10);
-  }
+  .comparison { background: white; border-radius: var(--radius-lg); padding: 36px; box-shadow: 0 24px 60px -20px rgba(11,14,22,0.10); }
   .compare-row { padding: 18px 0; border-bottom: 1px solid var(--line); }
   .compare-row:last-child { border-bottom: none; }
-  .compare-row .label {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-    margin-bottom: 10px; display: block;
-  }
+  .compare-row .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display: block; }
   .compare-row .old, .compare-row .new { font-size: 15px; line-height: 1.5; display: block; }
-  .compare-row .old { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.18); margin-bottom: 6px; }
+  .compare-row .old { color: var(--muted); text-decoration: line-through; margin-bottom: 6px; }
   .compare-row .new { color: var(--ink); font-weight: 500; }
   .compare-row .new::before { content: "→"; color: var(--accent); margin-right: 8px; font-weight: 600; }
 
-  /* DIVERGE (3-way synthesis) */
-  .diverge {
-    background: var(--bg-dark); color: var(--cream); padding: 130px 0; position: relative; overflow: hidden;
-  }
-  .diverge::before {
-    content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 40% 40% at 20% 30%, rgba(74,108,247,0.10), transparent 60%),
-      radial-gradient(ellipse 40% 40% at 85% 70%, rgba(232,93,61,0.12), transparent 60%);
-    pointer-events: none;
-  }
+  /* DIVERGE — three-way synthesis */
+  .diverge { background: var(--bg-dark); color: var(--cream); padding: 130px 0; position: relative; overflow: hidden; }
+  .diverge::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 40% 40% at 20% 30%, rgba(74,108,247,0.10), transparent 60%), radial-gradient(ellipse 40% 40% at 85% 70%, rgba(232,93,61,0.12), transparent 60%); }
   .diverge .container { position: relative; z-index: 2; }
   .diverge .eyebrow { color: var(--accent); }
   .diverge h2 { color: var(--cream); max-width: 22ch; }
   .diverge h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   .diverge .lede { color: rgba(246,242,232,0.72); margin-top: 22px; }
-  .diverge-table {
-    margin-top: 60px; background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  .diverge-head, .diverge-row-d {
-    display: grid; grid-template-columns: 140px 1fr 1fr 1.08fr;
-    padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.07); gap: 24px;
-  }
-  .diverge-head {
-    background: rgba(255,255,255,0.025); padding-top: 22px; padding-bottom: 22px;
-  }
-  .diverge-head .h-cell {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    letter-spacing: 0.12em; text-transform: uppercase; color: rgba(246,242,232,0.5);
-    font-weight: 500; line-height: 1.4;
-  }
-  .diverge-head .h-cell .sub {
-    display: block; font-family: 'Inter', sans-serif; font-weight: 400;
-    text-transform: none; letter-spacing: 0; font-size: 11px;
-    color: rgba(246,242,232,0.35); margin-top: 4px;
-  }
+  .diverge-table { margin-top: 56px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); overflow: hidden; }
+  .diverge-head, .diverge-row-d { display: grid; grid-template-columns: 120px 1fr 1fr 1fr 1.08fr; padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,0.07); gap: 18px; }
+  .diverge-head { background: rgba(255,255,255,0.025); }
+  .diverge-head .h-cell { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(246,242,232,0.5); font-weight: 500; line-height: 1.4; }
+  .diverge-head .h-cell .sub { display: block; font-family: 'Inter'; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10.5px; color: rgba(246,242,232,0.35); margin-top: 4px; }
   .diverge-head .h-cell.us { color: var(--accent); }
   .diverge-head .h-cell.us .sub { color: rgba(232,93,61,0.7); }
-  .diverge-row-d:last-child { border-bottom: none; }
-  .diverge-row-d .axis {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: rgba(246,242,232,0.45); padding-top: 2px;
-  }
-  .diverge-row-d .cell {
-    font-size: 14.5px; line-height: 1.5; color: rgba(246,242,232,0.55);
-  }
-  .diverge-row-d .cell.us {
-    color: var(--cream); background: rgba(232,93,61,0.10);
-    margin: -10px -16px; padding: 10px 16px;
-    border-left: 2px solid var(--accent); border-radius: 0 8px 8px 0;
-  }
+  .diverge-row-d .axis { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(246,242,232,0.45); }
+  .diverge-row-d .cell { font-size: 13.5px; line-height: 1.45; color: rgba(246,242,232,0.55); }
+  .diverge-row-d .cell.us { color: var(--cream); background: rgba(232,93,61,0.10); margin: -10px -14px; padding: 10px 14px; border-left: 2px solid var(--accent); border-radius: 0 6px 6px 0; }
   .diverge-row-d .cell.us strong { color: var(--accent); font-weight: 500; }
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
     .diverge-head { display: none; }
-    .diverge-row-d { grid-template-columns: 1fr; gap: 10px; padding: 22px 22px; }
-    .diverge-row-d .cell::before {
-      content: attr(data-label); display: block;
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(246,242,232,0.35); margin-bottom: 4px;
-    }
+    .diverge-row-d { grid-template-columns: 1fr; gap: 10px; padding: 22px; }
+    .diverge-row-d .cell::before { content: attr(data-label); display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(246,242,232,0.35); margin-bottom: 4px; }
     .diverge-row-d .cell.us { margin: 0; }
     .diverge-row-d .cell.us::before { color: var(--accent); }
   }
 
   /* SYNTHESIS */
   .synth { padding: 130px 0; background: var(--cream-2); }
-  .synth-head { text-align: left; max-width: 760px; margin-bottom: 60px; }
+  .synth-head { max-width: 760px; margin-bottom: 60px; }
   .synth-head h2 { margin-top: 16px; }
   .synth-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   .synth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   @media (max-width: 900px) { .synth-grid { grid-template-columns: 1fr; } }
-  .synth-card {
-    background: white; border-radius: var(--radius-lg); padding: 40px;
-    border: 1px solid var(--line);
-    box-shadow: 0 1px 0 rgba(11,14,22,0.05), 0 24px 60px -20px rgba(11,14,22,0.08);
-    display: flex; flex-direction: column;
-  }
-  .synth-card .stamp {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
-    font-weight: 500; margin-bottom: 18px;
-  }
-  .synth-card h3 { font-size: 28px; font-weight: 500; font-family: 'Fraunces', serif; margin-bottom: 26px; letter-spacing: -0.015em; }
+  .synth-card { background: white; border-radius: var(--radius-lg); padding: 40px; border: 1px solid var(--line); box-shadow: 0 24px 60px -20px rgba(11,14,22,0.08); display: flex; flex-direction: column; }
+  .synth-card .stamp { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 18px; }
+  .synth-card h3 { font-size: 28px; font-weight: 500; font-family: 'Fraunces', serif; margin-bottom: 26px; }
   .synth-card ul { list-style: none; }
-  .synth-card li {
-    padding: 14px 0; border-top: 1px solid var(--line);
-    display: flex; gap: 12px; font-size: 15px; line-height: 1.5; color: var(--ink-2);
-  }
+  .synth-card li { padding: 14px 0; border-top: 1px solid var(--line); display: flex; gap: 12px; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .synth-card li:first-child { border-top: none; padding-top: 0; }
-  .synth-card li::before {
-    content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
-    flex-shrink: 0; margin-top: 9px;
-  }
-  .synth-card .result {
-    margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
-    font-size: 14px; color: var(--muted); line-height: 1.5;
-  }
-  .synth-card .result .big {
-    display: block; font-family: 'Fraunces', serif; font-size: 24px;
-    font-weight: 500; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 4px;
-  }
+  .synth-card li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 9px; }
+  .synth-card .result { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  .synth-card .result .big { display: block; font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 4px; }
+
+  /* VS AGENTIO — focused two-column comparison */
+  .vsagent { background: var(--cream); padding: 130px 0; }
+  .vsagent .lede { margin-top: 22px; }
+  .vsagent h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
+  @media (max-width: 900px) { .vs-grid { grid-template-columns: 1fr; } }
+  .vs-card { padding: 36px; border-radius: var(--radius-lg); border: 1px solid var(--line); background: white; }
+  .vs-card.them { background: var(--cream-2); }
+  .vs-card.us { background: var(--bg-dark); color: var(--cream); border-color: var(--bg-dark); }
+  .vs-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .vs-card.us .vs-head { border-bottom-color: rgba(255,255,255,0.12); }
+  .vs-card .who { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .vs-card.us .who { color: var(--accent); }
+  .vs-card .name { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.015em; }
+  .vs-card.us .name { color: var(--cream); }
+  .vs-card .name em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .vs-row { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .vs-card.us .vs-row { border-bottom-color: rgba(255,255,255,0.08); }
+  .vs-row:last-child { border-bottom: none; }
+  .vs-axis { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+  .vs-card.us .vs-axis { color: rgba(246,242,232,0.55); }
+  .vs-text { font-size: 14.5px; line-height: 1.45; }
+  .vs-card.them .vs-text { color: var(--ink-2); }
+  .vs-card.us .vs-text { color: var(--cream); }
+  .vs-card.us .vs-text strong { color: var(--accent); font-weight: 500; }
+
+  /* SHIFTS */
+  .shift-grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 56px; }
+  @media (max-width: 720px) { .shift-grid-cards { grid-template-columns: 1fr 1fr; } }
+  .shift-card-c { background: var(--cream-2); border: 1px solid var(--line); border-radius: 12px; padding: 26px; }
+  .shift-card-c .label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 14px; font-weight: 500; }
+  .shift-card-c .then { font-size: 14px; color: var(--muted); margin-bottom: 10px; text-decoration: line-through; }
+  .shift-card-c .now { font-size: 15px; font-weight: 500; line-height: 1.4; }
 
   /* HOW IT WORKS */
   .how { padding: 110px 0 130px; background: var(--cream); }
@@ -341,129 +225,41 @@
   .section-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
   @media (max-width: 900px) { .steps { grid-template-columns: 1fr; } }
-  .step {
-    background: white; border-radius: var(--radius-lg);
-    padding: 36px 32px; border: 1px solid var(--line);
-    position: relative; overflow: hidden;
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-  .step:hover { transform: translateY(-3px); box-shadow: 0 24px 60px -20px rgba(11,14,22,0.14); }
-  .step-num { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: 0.02em; }
+  .step { background: white; border-radius: var(--radius-lg); padding: 36px 32px; border: 1px solid var(--line); }
+  .step-num { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; color: var(--accent); }
   .step h3 { margin: 12px 0 14px; font-size: 22px; }
   .step p { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
-  .step-illu { margin-top: 28px; height: 130px; position: relative; }
 
   /* AUDIENCE */
   .audience { padding: 80px 0; background: var(--cream); }
-  .audience-block { background: white; border-radius: var(--radius-lg); margin-bottom: 36px; overflow: hidden; border: 1px solid var(--line); }
+  .audience-block { border-radius: var(--radius-lg); margin-bottom: 36px; overflow: hidden; border: 1px solid var(--line); }
   .audience-block.creators { background: linear-gradient(135deg, #FFF8F0 0%, #FFEDE0 100%); }
   .audience-block.brands { background: linear-gradient(135deg, #0E1118 0%, #1A1F2E 100%); color: var(--cream); }
-  .audience-grid {
-    display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px;
-    padding: 70px 64px; align-items: center;
-  }
+  .audience-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; padding: 70px 64px; align-items: center; }
   @media (max-width: 900px) { .audience-grid { grid-template-columns: 1fr; padding: 50px 32px; gap: 40px; } }
   .audience-block h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   .audience-block.brands h2, .audience-block.brands p, .audience-block.brands h3 { color: var(--cream); }
   .audience-block.brands .lede { color: rgba(246,242,232,0.74); }
-  .audience-block .feat-list { margin-top: 28px; list-style: none; padding: 0; }
-  .audience-block .feat-list li {
-    display: flex; gap: 14px; padding: 14px 0;
-    border-bottom: 1px solid rgba(11,14,22,0.08); align-items: flex-start;
-  }
+  .audience-block .feat-list { margin-top: 28px; list-style: none; }
+  .audience-block .feat-list li { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(11,14,22,0.08); align-items: flex-start; }
   .audience-block.brands .feat-list li { border-color: rgba(255,255,255,0.10); }
   .audience-block .feat-list li:last-child { border-bottom: none; }
-  .feat-list .check {
-    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
-    background: var(--accent); color: white;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 600; margin-top: 2px;
-  }
+  .feat-list .check { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-top: 2px; }
   .audience-block.brands .feat-list .check { background: var(--cream); color: var(--ink); }
   .feat-list .feat-text { font-size: 15px; line-height: 1.55; }
   .feat-list .feat-text b { font-weight: 600; }
   .audience-block .cta-row { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
   .audience-block.brands .btn-primary { background: var(--cream); color: var(--ink); }
-  .audience-block.brands .btn-ghost { color: var(--cream); border-color: rgba(255,255,255,0.22); }
-
-  /* Mock UI */
-  .ui-mock {
-    background: white; border-radius: 16px; padding: 22px;
-    box-shadow: 0 30px 80px -20px rgba(11,14,22,0.18), 0 0 0 1px rgba(11,14,22,0.05);
-  }
-  .audience-block.brands .ui-mock {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.5);
-  }
-  .ui-mock-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 18px;
-  }
-  .audience-block.brands .ui-mock-head { border-color: rgba(255,255,255,0.10); }
-  .ui-title {
-    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500;
-  }
-  .audience-block.brands .ui-title { color: rgba(246,242,232,0.6); }
-  .ui-actions { display: flex; gap: 6px; }
-  .ui-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
-
-  .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .cal-day {
-    aspect-ratio: 1.4 / 1; background: #FAF6EE; border-radius: 6px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    padding: 6px; color: var(--muted); position: relative;
-  }
-  .cal-day.booked { background: #131826; color: rgba(255,255,255,0.5); }
-  .cal-day.booked::after { content: ""; position: absolute; bottom: 5px; left: 5px; right: 5px; height: 2px; background: var(--accent); border-radius: 999px; }
-  .cal-day.live { background: var(--accent); color: white; }
-  .cal-day.live::after { content: ""; position: absolute; top: 6px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: white; animation: pulse-dot 1.8s ease-in-out infinite; }
-  .cal-day.open { background: #FFF; border: 1px dashed rgba(232,93,61,0.4); color: var(--accent); }
-  .cal-day.produce { background: #4A6CF7; color: white; }
-
-  .listing-row {
-    display: grid; grid-template-columns: 1fr auto auto; gap: 14px;
-    align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line);
-  }
-  .audience-block.brands .listing-row { border-color: rgba(255,255,255,0.10); }
-  .listing-row:last-child { border-bottom: none; }
-  .listing-creator { display: flex; align-items: center; gap: 12px; }
-  .listing-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0;
-  }
-  .listing-avatar.av2 { background: linear-gradient(135deg, #4A6CF7, #6E48F2); }
-  .listing-avatar.av3 { background: linear-gradient(135deg, #2BAA6E, #3CCB8A); }
-  .listing-name { font-weight: 600; font-size: 13.5px; }
-  .listing-sub { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
-  .audience-block.brands .listing-sub { color: rgba(246,242,232,0.5); }
-  .listing-stat { font-family: 'JetBrains Mono', monospace; font-size: 12px; text-align: right; }
-  .listing-stat .v { font-weight: 600; }
-  .listing-stat .l { color: var(--muted); font-size: 10.5px; }
-  .audience-block.brands .listing-stat .l { color: rgba(246,242,232,0.5); }
-  .listing-cta {
-    background: var(--ink); color: var(--cream);
-    padding: 6px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
-  }
-  .audience-block.brands .listing-cta { background: var(--cream); color: var(--ink); }
-  .listing-cta.produced { background: var(--green); color: white; }
-  .listing-cta.relicense { background: var(--blue); color: white; }
 
   /* TESTIMONIALS */
   .testimonials { padding: 130px 0; background: var(--cream-2); }
   .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; }
   @media (max-width: 800px) { .quotes { grid-template-columns: 1fr; } }
-  .quote {
-    background: white; padding: 44px 38px;
-    border-radius: var(--radius-lg); box-shadow: 0 1px 0 rgba(11,14,22,0.05); border: 1px solid var(--line);
-  }
-  .quote .mark { font-family: 'Fraunces', serif; font-size: 60px; color: var(--accent); line-height: 0.5; margin-bottom: 14px; font-weight: 500; }
-  .quote .body {
-    font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.4;
-    font-weight: 400; color: var(--ink); margin-bottom: 28px; letter-spacing: -0.01em;
-  }
+  .quote { background: white; padding: 44px 38px; border-radius: var(--radius-lg); border: 1px solid var(--line); }
+  .quote .mark { font-family: 'Fraunces', serif; font-size: 60px; color: var(--accent); line-height: 0.5; margin-bottom: 14px; }
+  .quote .body { font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.4; margin-bottom: 28px; letter-spacing: -0.01em; }
   .quote .who { display: flex; align-items: center; gap: 14px; }
-  .who-av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #E85D3D, #F4B942); flex-shrink: 0; }
+  .who-av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #E85D3D, #F4B942); }
   .who-av.b { background: linear-gradient(135deg, #4A6CF7, #6E48F2); }
   .who .name { font-weight: 600; font-size: 14.5px; }
   .who .role { font-size: 13px; color: var(--muted); margin-top: 1px; }
@@ -473,24 +269,19 @@
   .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 70px; }
   @media (max-width: 900px) { .price-grid { grid-template-columns: 1fr; } }
   .price-card { background: white; border-radius: var(--radius-lg); padding: 40px 34px; border: 1px solid var(--line); display: flex; flex-direction: column; }
-  .price-card.featured { background: var(--ink); color: var(--cream); border-color: var(--ink); position: relative; }
-  .price-card.featured::before {
-    content: "MOST CLEARED"; position: absolute; top: -12px; left: 32px;
-    background: var(--accent); color: white;
-    padding: 5px 12px; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; font-weight: 500;
-  }
+  .price-card.featured { background: var(--ink); color: var(--cream); position: relative; }
+  .price-card.featured::before { content: "MOST CLEARED"; position: absolute; top: -12px; left: 32px; background: var(--accent); color: white; padding: 5px 12px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; }
   .price-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
   .price-card.featured h3 { color: var(--cream); }
   .price-card .sub { font-size: 14px; color: var(--muted); }
   .price-card.featured .sub { color: rgba(246,242,232,0.6); }
-  .price-card .num { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 500; letter-spacing: -0.03em; margin: 24px 0 4px; }
+  .price-card .num { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 500; margin: 24px 0 4px; letter-spacing: -0.03em; }
   .price-card .of-what { font-size: 13.5px; color: var(--muted); }
   .price-card.featured .of-what { color: rgba(246,242,232,0.6); }
-  .price-card ul { list-style: none; margin: 28px 0; padding: 0; flex: 1; }
-  .price-card li { padding: 9px 0; font-size: 14.5px; color: var(--ink-2); display: flex; gap: 10px; align-items: flex-start; }
+  .price-card ul { list-style: none; margin: 28px 0; flex: 1; }
+  .price-card li { padding: 9px 0; font-size: 14.5px; color: var(--ink-2); display: flex; gap: 10px; }
   .price-card.featured li { color: rgba(246,242,232,0.85); }
-  .price-card li::before { content: "✓"; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+  .price-card li::before { content: "✓"; color: var(--accent); font-weight: 600; }
   .price-card .btn { width: 100%; justify-content: center; }
   .price-card.featured .btn-primary { background: var(--cream); color: var(--ink); }
 
@@ -499,25 +290,15 @@
   .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
   @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; gap: 40px; } }
   .faq-item { border-bottom: 1px solid var(--line); padding: 22px 0; cursor: pointer; }
-  .faq-item summary {
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: 500; font-size: 17px; color: var(--ink);
-    list-style: none; transition: color .15s; gap: 16px;
-  }
+  .faq-item summary { display: flex; justify-content: space-between; align-items: center; font-weight: 500; font-size: 17px; list-style: none; gap: 16px; }
   .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary:hover { color: var(--accent); }
-  .faq-item summary::after { content: "+"; font-family: 'Fraunces', serif; font-size: 24px; color: var(--accent); transition: transform .25s ease; line-height: 1; }
+  .faq-item summary::after { content: "+"; font-family: 'Fraunces', serif; font-size: 24px; color: var(--accent); transition: transform .25s ease; }
   .faq-item[open] summary::after { transform: rotate(45deg); }
   .faq-item p { margin-top: 14px; color: var(--ink-2); font-size: 15px; line-height: 1.65; }
 
-  /* FINAL CTA */
+  /* CTA */
   .final-cta { background: var(--bg-dark); color: var(--cream); padding: 130px 0; position: relative; overflow: hidden; }
-  .final-cta::before {
-    content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 60% at 30% 50%, rgba(232,93,61,0.15), transparent 60%),
-      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(74,108,247,0.10), transparent 70%);
-  }
+  .final-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 30% 50%, rgba(232,93,61,0.15), transparent 60%), radial-gradient(ellipse 50% 60% at 80% 60%, rgba(74,108,247,0.10), transparent 70%); }
   .final-cta .container { position: relative; text-align: center; }
   .final-cta h2 { color: var(--cream); max-width: 800px; margin: 24px auto 22px; }
   .final-cta h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
@@ -525,15 +306,13 @@
   .final-cta .cta-row { margin-top: 44px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   .final-cta .btn-primary { background: var(--cream); color: var(--ink); }
 
-  /* FOOTER */
-  footer { background: var(--bg-dark); color: rgba(246,242,232,0.6); padding: 70px 0 50px; border-top: 1px solid rgba(246,242,232,0.08); }
+  footer { background: var(--bg-dark); color: rgba(246,242,232,0.6); padding: 70px 0 50px; }
   .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; }
   @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
   footer .col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,242,232,0.5); margin-bottom: 18px; font-weight: 500; }
-  footer .col ul { list-style: none; padding: 0; }
+  footer .col ul { list-style: none; }
   footer .col li { margin-bottom: 10px; font-size: 14px; }
-  footer .col li a { color: rgba(246,242,232,0.7); transition: color .15s; }
-  footer .col li a:hover { color: var(--cream); }
+  footer .col li a { color: rgba(246,242,232,0.7); }
   footer .brand { color: var(--cream); margin-bottom: 16px; }
   footer .tagline { font-size: 14px; max-width: 320px; line-height: 1.55; }
   .footer-bottom { margin-top: 60px; padding-top: 28px; border-top: 1px solid rgba(246,242,232,0.08); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; font-size: 13px; }
@@ -543,7 +322,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav" id="nav">
   <div class="container">
     <a href="#" class="brand"><span class="brand-dot"></span>Slotted</a>
@@ -552,8 +330,7 @@
       <a href="#creators">For creators</a>
       <a href="#brands">For brands</a>
       <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="#cta" class="btn btn-accent nav-cta">Get started <span class="arrow">→</span></a>
+      <a href="#cta" class="btn btn-accent nav-cta">Get access <span class="arrow">→</span></a>
     </div>
   </div>
 </nav>
@@ -565,59 +342,40 @@
       <div>
         <span class="eyebrow">The endorsement exchange · DBS launches April 2026</span>
         <h1 class="display">Sponsorships used to end. <em>Now they trade like media.</em></h1>
-        <p class="lede">Slotted is the endorsement exchange for YouTube Dynamic Brand Segments. Every spot is produced by the creator in their own voice. Every slot trades like media — audience-targeted, geo-tenanted, resellable, swappable, natively measured inside Google Ads.</p>
+        <p class="lede">Slotted is the endorsement exchange for YouTube Dynamic Brand Segments. Every spot is produced by the creator in their own voice. Every slot trades like media — audience-targeted, geo-tenanted, resellable, swappable, priced to the view curve each buyer actually captures.</p>
         <div class="hero-ctas">
           <a href="#creators" class="btn btn-primary">List your inventory <span class="arrow">→</span></a>
           <a href="#brands" class="btn btn-ghost-dark">Submit a brief</a>
         </div>
         <div class="hero-meta">
-          <div>
-            <div class="num">$4.5B</div>
-            <div class="lbl">Projected exchange GMV by 2028</div>
-          </div>
-          <div>
-            <div class="num">10% / 15%</div>
-            <div class="lbl">Flat take. Never on views.</div>
-          </div>
-          <div>
-            <div class="num">60s</div>
-            <div class="lbl">Per slot. Creator-produced fresh per buyer.</div>
-          </div>
+          <div><div class="num">$4.5B</div><div class="lbl">Projected exchange GMV by 2028</div></div>
+          <div><div class="num">10% / 15%</div><div class="lbl">Flat take. Never on views.</div></div>
+          <div><div class="num">60s</div><div class="lbl">Per slot. Creator-produced fresh.</div></div>
+          <div><div class="num">1:1</div><div class="lbl">Pay for the view curve you actually capture.</div></div>
         </div>
       </div>
-
-      <!-- Floating slot cards -->
       <div class="hero-visual">
         <div class="slot-card card-1">
-          <div class="head">
-            <div class="ch"><span class="ch-avatar"></span>MKBHD · Tech</div>
-            <span class="pill live">LIVE</span>
-          </div>
-          <div class="meta"><span>US · 30 days</span><span>creator-read v2</span></div>
+          <div class="head"><div class="ch"><span class="ch-avatar"></span>MKBHD · Tech</div><span class="pill live">LIVE</span></div>
+          <div class="meta"><span>US · 30 days</span><span>integration #4</span></div>
           <div class="price">$24,500 <span class="sm">/ slot</span></div>
         </div>
         <div class="slot-card card-2">
-          <div class="head">
-            <div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#4A6CF7,#6E48F2);"></span>Ali Abdaal · Productivity</div>
-            <span class="pill produce">IN PRODUCTION</span>
-          </div>
-          <div class="meta"><span>EU · 14 days</span><span>brief approved · 7d TR</span></div>
+          <div class="head"><div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#4A6CF7,#6E48F2);"></span>Ali Abdaal · Productivity</div><span class="pill produce">IN PRODUCTION</span></div>
+          <div class="meta"><span>EU · 14 days</span><span>brief #2 · 12mo pkg</span></div>
           <div class="price">$18,200 <span class="sm">/ slot</span></div>
         </div>
         <div class="slot-card card-3">
-          <div class="head">
-            <div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#2BAA6E,#3CCB8A);"></span>Marques Eats · Lifestyle</div>
-            <span class="pill open">RE-LICENSE</span>
-          </div>
-          <div class="meta"><span>US, CA · Flex</span><span>brief match: 88%</span></div>
-          <div class="price">$11,400 <span class="sm">/ slot · suggested</span></div>
+          <div class="head"><div class="ch"><span class="ch-avatar" style="background:linear-gradient(135deg,#2BAA6E,#3CCB8A);"></span>Marques Eats · Lifestyle</div><span class="pill open">OPEN</span></div>
+          <div class="meta"><span>US, CA · Flex</span><span>back catalog · EP 098</span></div>
+          <div class="price">$11,400 <span class="sm">/ slot</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TRUST STRIP -->
+<!-- TRUST -->
 <section class="trust">
   <div class="container">
     <p>Building with design partners across</p>
@@ -638,20 +396,24 @@
   <div class="container">
     <div class="stats-grid">
       <div class="stat">
-        <div class="num"><em>98%</em></div>
-        <div class="lbl">More likely to trust creators vs. social platforms<sup style="font-size:9px">¹</sup></div>
+        <div class="num"><em>40%</em></div>
+        <div class="lbl">of views land after day 30. Slot duration drives CPM, not vendor-defined amortization</div>
+        <div class="src">Agentio · 10K integrations</div>
       </div>
       <div class="stat">
         <div class="num">3–5×</div>
         <div class="lbl">Creator-read CPM premium vs. standard display</div>
+        <div class="src">Mediakix benchmark</div>
       </div>
       <div class="stat">
-        <div class="num">40–80%</div>
-        <div class="lbl">Of channel views come from back catalog</div>
+        <div class="num">1.9×</div>
+        <div class="lbl">CVR lift by 6th integration with the same creator — trust curve unlocks</div>
+        <div class="src">Agentio · 10K integrations</div>
       </div>
       <div class="stat">
         <div class="num">$0</div>
         <div class="lbl">In listing fees, monthly fees, or platform fees</div>
+        <div class="src">Pricing on cleared deals only</div>
       </div>
     </div>
   </div>
@@ -664,96 +426,84 @@
       <div>
         <span class="eyebrow">Why the format matters</span>
         <h2 style="margin-top:16px">The unit of trade just <em>shifted.</em></h2>
-        <p class="lede">For fifteen years, the unit was "a campaign" — one creator, one video, one brand, frozen in place. Now it's "a slot," and the creative inside it is a creator-read endorsement. Slots have inventory dynamics: utilization, yield, seasonality, geo demand. Reads have production curves: turnaround, capacity, re-licensing.</p>
+        <p class="lede">For fifteen years, the unit was "a campaign" — one creator, one video, one brand, frozen in place. Now it's "a slot," and the creative inside it is a creator-read endorsement. Slots have inventory dynamics: utilization, yield, seasonality, geo demand. Reads have production curves: turnaround, capacity, trust curve across repeat integrations.</p>
         <p class="lede" style="margin-top:18px;">That single shift unlocks everything else.</p>
       </div>
       <div class="comparison">
-        <div class="compare-row">
-          <span class="label">The deal</span>
-          <div class="old">Frozen at launch, lives forever</div>
-          <div class="new">Swap between produced versions. End when you say.</div>
-        </div>
-        <div class="compare-row">
-          <span class="label">Geography</span>
-          <div class="old">One creative, all viewers</div>
-          <div class="new">Different creator-reads per country, same slot.</div>
-        </div>
-        <div class="compare-row">
-          <span class="label">Back catalog</span>
-          <div class="old">Earned out years ago</div>
-          <div class="new">Evergreen. Re-licensed every quarter, with approval.</div>
-        </div>
-        <div class="compare-row">
-          <span class="label">Measurement</span>
-          <div class="old">Self-reported screenshots</div>
-          <div class="new">Native sync into Google Ads. Verified.</div>
-        </div>
+        <div class="compare-row"><span class="label">The deal</span><div class="old">Frozen at launch, lives forever</div><div class="new">Swap between produced versions. End when you say.</div></div>
+        <div class="compare-row"><span class="label">Geography</span><div class="old">One creative, all viewers</div><div class="new">Different creator-reads per country, same slot.</div></div>
+        <div class="compare-row"><span class="label">Back catalog</span><div class="old">Earned out years ago</div><div class="new">Evergreen inventory. Fresh creator-read for each new buyer.</div></div>
+        <div class="compare-row"><span class="label">Measurement</span><div class="old">Self-reported screenshots</div><div class="new">Native sync into Google Ads. View curve priced to slot duration.</div></div>
+        <div class="compare-row"><span class="label">Relationship</span><div class="old">One-shot campaigns, single-deal pricing</div><div class="new">6/12-month packages. Trust curve priced in.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DIVERGE -->
-<section class="diverge" id="diverge">
+<!-- DIVERGE — 4-way comparison -->
+<section id="diverge" class="diverge">
   <div class="container">
-    <span class="eyebrow">A category neither neighbor could build</span>
-    <h2 style="margin-top:16px">Not influencer marketing. Not programmatic ad-tech. <em>The synthesis.</em></h2>
-    <p class="lede">Influencer platforms pair bespoke creative with bespoke trading. Programmatic exchanges pair standardized trading with brand-supplied creative. Slotted is the only point where creator-produced creative meets exchange-cleared trading. No one else lives at that intersection.</p>
+    <span class="eyebrow">A category three neighbors cannot build</span>
+    <h2 style="margin-top:16px">Not influencer marketing. Not ad-tech. Not integration platforms. <em>The synthesis.</em></h2>
+    <p class="lede">Influencer platforms run bespoke trading on bespoke creative. Programmatic ad-tech runs standardized trading on brand-supplied creative. Integration platforms brought programmatic-style buying to creator integrations — but on a campaign-shaped data model, not slot-shaped. Slotted is the only point where creator-produced creative meets exchange-cleared trading on DBS-native infrastructure.</p>
 
     <div class="diverge-table">
       <div class="diverge-head">
         <div></div>
         <div class="h-cell">Influencer platforms<span class="sub">CreatorIQ, Captiv8, Aspire</span></div>
+        <div class="h-cell">Integration platforms<span class="sub">Agentio</span></div>
         <div class="h-cell">Programmatic ad-tech<span class="sub">DV360, Trade Desk, CTV</span></div>
         <div class="h-cell us">Slotted<span class="sub">The endorsement exchange</span></div>
       </div>
-      <div class="diverge-row-d">
-        <div class="axis">Who creates the ad</div>
-        <div class="cell" data-label="Influencer">Brand provides direction, often the creative itself</div>
-        <div class="cell" data-label="Programmatic">Brand-supplied creative, often automated variants</div>
-        <div class="cell us" data-label="Slotted"><strong>Creator produces every read,</strong> in their voice, against the buyer's brief</div>
-      </div>
+
       <div class="diverge-row-d">
         <div class="axis">Unit of trade</div>
         <div class="cell" data-label="Influencer">A bespoke campaign deal</div>
+        <div class="cell" data-label="Agentio">A creator integration (video-shaped)</div>
         <div class="cell" data-label="Programmatic">An impression on an exchange</div>
-        <div class="cell us" data-label="Slotted"><strong>A creator-read endorsement,</strong> slotted into a standardized 60s window</div>
+        <div class="cell us" data-label="Slotted"><strong>A creator-read endorsement, slotted</strong> — swappable, geo-tenanted, resellable</div>
+      </div>
+      <div class="diverge-row-d">
+        <div class="axis">Creative model</div>
+        <div class="cell" data-label="Influencer">Bespoke, brand-supplied direction</div>
+        <div class="cell" data-label="Agentio">Creator-produced, per integration</div>
+        <div class="cell" data-label="Programmatic">Brand-supplied, automated variants</div>
+        <div class="cell us" data-label="Slotted"><strong>Creator-produced</strong> against a structured brief, custom per booking</div>
       </div>
       <div class="diverge-row-d">
         <div class="axis">Pricing</div>
-        <div class="cell" data-label="Influencer">Bilaterally negotiated, opaque, re-litigated</div>
+        <div class="cell" data-label="Influencer">Bilaterally negotiated, opaque</div>
+        <div class="cell" data-label="Agentio">Standardized but private to platform</div>
         <div class="cell" data-label="Programmatic">Auction-cleared on opaque rails</div>
         <div class="cell us" data-label="Slotted"><strong>Public clearing prices</strong> from real transactions across the market</div>
       </div>
       <div class="diverge-row-d">
-        <div class="axis">Trust transfer</div>
-        <div class="cell" data-label="Influencer">High when it works, fragile when it doesn't</div>
-        <div class="cell" data-label="Programmatic">Near zero — generic creative, anonymous placement</div>
-        <div class="cell us" data-label="Slotted"><strong>Structural</strong> — the creator's voice is the endorsement, not packaging around it</div>
+        <div class="axis">Measurement</div>
+        <div class="cell" data-label="Influencer">Self-reported screenshots</div>
+        <div class="cell" data-label="Agentio">Custom amortization, vendor-defined</div>
+        <div class="cell" data-label="Programmatic">Open exchange logs, brand-controlled</div>
+        <div class="cell us" data-label="Slotted"><strong>Native Google Ads sync, duration-aware CPM</strong> — pay for the curve you capture, not a vendor average</div>
       </div>
       <div class="diverge-row-d">
         <div class="axis">Geography</div>
         <div class="cell" data-label="Influencer">One creative, all viewers</div>
-        <div class="cell" data-label="Programmatic">Geo-targeted, same brand creative everywhere</div>
-        <div class="cell us" data-label="Slotted"><strong>Geo multi-tenancy</strong> — different reads per country, same slot</div>
+        <div class="cell" data-label="Agentio">No native geo-tenancy</div>
+        <div class="cell" data-label="Programmatic">Geo-targeted, brand creative</div>
+        <div class="cell us" data-label="Slotted"><strong>Geo multi-tenancy</strong> — different reads per country, same slot, same time</div>
       </div>
       <div class="diverge-row-d">
-        <div class="axis">Mid-flight</div>
-        <div class="cell" data-label="Influencer">Frozen until contract ends</div>
-        <div class="cell" data-label="Programmatic">Real-time, no creator in the loop</div>
-        <div class="cell us" data-label="Slotted"><strong>Swap between produced versions</strong> in two clicks. Commission new with turnaround.</div>
-      </div>
-      <div class="diverge-row-d">
-        <div class="axis">Measurement</div>
-        <div class="cell" data-label="Influencer">Self-reported screenshots, weeks late</div>
-        <div class="cell" data-label="Programmatic">Open exchange logs, brand-controlled</div>
-        <div class="cell us" data-label="Slotted"><strong>Native sync into Google Ads,</strong> verified, real-time</div>
+        <div class="axis">Lifecycle</div>
+        <div class="cell" data-label="Influencer">Aired once, earned out</div>
+        <div class="cell" data-label="Agentio">Integration persists, but no resale market</div>
+        <div class="cell" data-label="Programmatic">Continuous impressions</div>
+        <div class="cell us" data-label="Slotted"><strong>Back-catalog inventory + slot resale.</strong> Every old video is still a sellable slot with a fresh read</div>
       </div>
       <div class="diverge-row-d">
         <div class="axis">Buyer workflow</div>
-        <div class="cell" data-label="Influencer">Influencer marketing team, bespoke per deal</div>
-        <div class="cell" data-label="Programmatic">Trading desk, no creator approval needed</div>
-        <div class="cell us" data-label="Slotted"><strong>Trading-desk motion + structural creator approval</strong> on every booking</div>
+        <div class="cell" data-label="Influencer">Influencer marketing org</div>
+        <div class="cell" data-label="Agentio">Trading-desk-style, on integration format</div>
+        <div class="cell" data-label="Programmatic">Trading desk, no creator approval</div>
+        <div class="cell us" data-label="Slotted"><strong>Trading-desk motion + structural creator approval</strong> on DBS-native infrastructure</div>
       </div>
     </div>
   </div>
@@ -765,7 +515,7 @@
     <div class="synth-head">
       <span class="eyebrow">What the synthesis actually is</span>
       <h2>The creator is the creative. <em>The exchange is the rail.</em></h2>
-      <p class="lede" style="margin-top: 22px;">Every spot is creator-produced — recorded by the creator, in their voice, against the buyer's brief, with the creator's approval on every match. Every slot is exchange-cleared — public yield curves, geo tenancy, native measurement, mid-flight swap. The trust transfer of creator-read endorsement, plus the operational speed of media trading. That combination did not exist before.</p>
+      <p class="lede" style="margin-top: 22px;">Every spot is creator-produced. Every slot is exchange-cleared. Every booking is priced to the view curve the buyer actually captures — 30-day slots on 30-day CPM, multi-integration packages on amortized CPM that compounds across the relationship. Every repeat integration climbs the trust curve. That combination did not exist before.</p>
     </div>
 
     <div class="synth-grid">
@@ -789,14 +539,30 @@
         <ul>
           <li>The price — public clearing curves built from real transactions</li>
           <li>The geography — one slot, multiple country tenants, distinct reads</li>
-          <li>The measurement — native sync into Google Ads, no screenshots</li>
-          <li>The lifecycle — slot resells, reads re-license, creative swaps in-flight</li>
+          <li>The measurement — native Google Ads sync, CPM matched to actual slot duration</li>
+          <li>The lifecycle — back-catalog inventory + multi-integration packaging across repeat bookings</li>
         </ul>
         <div class="result">
           <span class="big">Trading-desk-ready</span>
-          Buy audiences at media-buying speed. Creator approval upstream of the trade, not blocking it.
+          Buy audiences at media-buying speed. Trust curve compounds. CPM falls 55% YoY on consistent spend.
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- VS AGENTIO -->
+<!-- SHIFT CARDS -->
+<section style="background: var(--cream-2); padding: 130px 0;">
+  <div class="container">
+    <span class="eyebrow">Why the unit shift matters</span>
+    <h2 style="margin-top:16px">"A campaign" used to mean a deal. Now it means <em>an SKU.</em></h2>
+    <p class="lede" style="margin-top: 22px;">YouTube built Dynamic Brand Segments as a new ad rail and explicitly opted out of the transaction layer. That single change makes the creator-read the unit of trade — and a creator-read is something a marketplace can produce, price, swap, and package across repeat bookings.</p>
+    <div class="shift-grid-cards">
+      <div class="shift-card-c"><div class="label">The deal</div><div class="then">Frozen at launch</div><div class="now">Swap between produced versions.</div></div>
+      <div class="shift-card-c"><div class="label">Geography</div><div class="then">One creative, all viewers</div><div class="now">Different reads per country.</div></div>
+      <div class="shift-card-c"><div class="label">Back catalog</div><div class="then">Earned out years ago</div><div class="now">Evergreen inventory. Fresh read per booking.</div></div>
+      <div class="shift-card-c"><div class="label">Relationship</div><div class="then">One-shot deals</div><div class="now">6/12-month packages. Trust priced in.</div></div>
     </div>
   </div>
 </section>
@@ -805,111 +571,31 @@
 <section class="how">
   <div class="container">
     <div class="section-head">
-      <div class="left">
-        <span class="eyebrow">How a slot becomes a spot</span>
-        <h2>List. Produce. <em>Resell.</em></h2>
-      </div>
-      <p class="lede" style="max-width:380px;">No new tools to learn. No data to manually export. Slotted plugs into the surfaces your team already uses every day.</p>
+      <div class="left"><span class="eyebrow">How a slot becomes a spot</span><h2>List. Produce. <em>Resell.</em></h2></div>
+      <p class="lede" style="max-width:380px;">No new tools to learn. Slotted plugs into Google Ads + YouTube Studio — and prices every booking to the view curve the buyer actually captures.</p>
     </div>
     <div class="steps">
       <div class="step">
-        <div class="step-num">① List</div>
-        <h3>Connect, list, set capacity</h3>
-        <p>Creators connect YouTube Studio. Available DBS slots surface as a calendar across new uploads and back catalog. Publish your endorsement profile — verticals, turnaround, capacity, banned categories. Set base CPMs or accept the platform yield curve.</p>
-        <div class="step-illu">
-          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
-            <g font-family="JetBrains Mono" font-size="8" fill="#6B6E78">
-              <rect x="12" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5"/>
-              <text x="29" y="28" text-anchor="middle">Mon</text>
-              <rect x="50" y="14" width="34" height="22" rx="3" fill="#0A0E1A"/>
-              <text x="67" y="28" text-anchor="middle" fill="#fff">Tue</text>
-              <rect x="88" y="14" width="34" height="22" rx="3" fill="#E85D3D"/>
-              <text x="105" y="28" text-anchor="middle" fill="#fff" font-weight="bold">LIVE</text>
-              <rect x="126" y="14" width="34" height="22" rx="3" fill="#0A0E1A"/>
-              <text x="143" y="28" text-anchor="middle" fill="#fff">Thu</text>
-              <rect x="164" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5" stroke-dasharray="2"/>
-              <text x="181" y="28" text-anchor="middle" fill="#E85D3D">OPEN</text>
-              <rect x="202" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5" stroke-dasharray="2"/>
-              <text x="219" y="28" text-anchor="middle" fill="#E85D3D">OPEN</text>
-              <rect x="240" y="14" width="34" height="22" rx="3" fill="#FFF" stroke="#E5E0D5"/>
-              <text x="257" y="28" text-anchor="middle">Sun</text>
-            </g>
-            <g transform="translate(12, 56)">
-              <rect x="0" y="0" width="256" height="60" rx="8" fill="#FFF" stroke="#E5E0D5"/>
-              <circle cx="22" cy="30" r="11" fill="#E85D3D"/>
-              <text x="44" y="24" font-family="Inter" font-size="11" font-weight="600" fill="#0A0E1A">Yield curve · clearing price</text>
-              <text x="44" y="40" font-family="Inter" font-size="10" fill="#6B6E78">Based on 1,240 comparable slots</text>
-              <text x="240" y="38" text-anchor="end" font-family="Fraunces" font-size="20" font-weight="500" fill="#0A0E1A">$24K</text>
-            </g>
-          </svg>
-        </div>
+        <div class="step-num">01 · LIST</div>
+        <h3>Inventory and capacity enter the exchange</h3>
+        <p>Connect YouTube Studio. Every DBS-eligible slot — new uploads and back catalog — surfaces as priced inventory. Publish your endorsement profile: verticals, turnaround, capacity. Yield curves built from real transactions.</p>
       </div>
       <div class="step">
-        <div class="step-num">② Brief &amp; Produce</div>
-        <h3>Brand briefs. Creator produces.</h3>
-        <p>Buyers submit a structured brief — brand, product, key messages, CTA, audience — not a finished creative. The creator records the read in their own voice, often delivering 2–3 versions. Both sides approve before go-live. Escrow funds on signature.</p>
-        <div class="step-illu">
-          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
-            <g transform="translate(14, 14)">
-              <rect x="0" y="0" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
-              <circle cx="20" cy="17" r="9" fill="url(#g1)"/>
-              <text x="36" y="14" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">Cleo · fintech brief</text>
-              <text x="36" y="26" font-family="Inter" font-size="9" fill="#6B6E78">key msgs · CTA · 14-day · US</text>
-              <text x="240" y="22" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#2BAA6E">● APPROVED</text>
-              <rect x="0" y="44" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
-              <circle cx="20" cy="61" r="9" fill="url(#g2)"/>
-              <text x="36" y="58" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">Athletic Greens</text>
-              <text x="36" y="70" font-family="Inter" font-size="9" fill="#6B6E78">2 reads delivered · brand reviewing</text>
-              <text x="240" y="66" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#4A6CF7">● PRODUCED</text>
-              <rect x="0" y="88" width="252" height="34" rx="6" fill="#FFF" stroke="#E5E0D5"/>
-              <circle cx="20" cy="105" r="9" fill="url(#g3)"/>
-              <text x="36" y="102" font-family="Inter" font-size="10" font-weight="600" fill="#0A0E1A">NordVPN</text>
-              <text x="36" y="114" font-family="Inter" font-size="9" fill="#6B6E78">brief match: 88% · re-license</text>
-              <text x="240" y="110" text-anchor="end" font-family="JetBrains Mono" font-size="9" font-weight="500" fill="#E85D3D">● RE-LICENSE</text>
-            </g>
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E85D3D"/><stop offset="1" stop-color="#F4B942"/></linearGradient>
-              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2BAA6E"/><stop offset="1" stop-color="#3CCB8A"/></linearGradient>
-              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4A6CF7"/><stop offset="1" stop-color="#6E48F2"/></linearGradient>
-            </defs>
-          </svg>
-        </div>
+        <div class="step-num">02 · BRIEF &amp; PRODUCE</div>
+        <h3>Buyer briefs. Creator produces. Both approve.</h3>
+        <p>Buyers submit a structured brief — brand, key messages, CTA, audience. Creator records the read in their voice, often delivering 2–3 versions. Both approve. Escrow funds on signature. Single-shot or packaged into a 6/12mo contract.</p>
       </div>
       <div class="step">
-        <div class="step-num">③ Run, re-license, resell</div>
-        <h3>Live, measured, and back on market</h3>
-        <p>Reads go live in YouTube Studio. Performance syncs from Google Ads in real time. Swap between produced versions in two clicks. When a term ends, the slot reopens — and existing reads re-license when new briefs match.</p>
-        <div class="step-illu">
-          <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-            <rect x="0" y="0" width="280" height="130" fill="#FAF6EE" rx="10"/>
-            <g transform="translate(14, 14)">
-              <text font-family="JetBrains Mono" font-size="9" fill="#6B6E78" y="10">PERFORMANCE — LAST 30 DAYS</text>
-              <polyline points="0,80 30,72 60,68 90,55 120,48 150,30 180,25 210,18 240,12 252,10"
-                fill="none" stroke="#E85D3D" stroke-width="2.2"/>
-              <polyline points="0,80 30,72 60,68 90,55 120,48 150,30 180,25 210,18 240,12 252,10 252,98 0,98"
-                fill="url(#fade)" opacity="0.35"/>
-              <circle cx="252" cy="10" r="4" fill="#E85D3D"/>
-              <circle cx="252" cy="10" r="8" fill="#E85D3D" opacity="0.25"/>
-              <text x="252" y="108" text-anchor="end" font-family="Fraunces" font-size="20" font-weight="500" fill="#0A0E1A">1.4M</text>
-              <text x="190" y="108" text-anchor="end" font-family="Inter" font-size="9" fill="#6B6E78">views · 92% VTR · ↑ 18%</text>
-            </g>
-            <defs>
-              <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-                <stop stop-color="#E85D3D" stop-opacity="0.4"/>
-                <stop offset="1" stop-color="#E85D3D" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+        <div class="step-num">03 · RUN, RENEW, RESELL</div>
+        <h3>Slot reopens. Trust curve compounds.</h3>
+        <p>Performance syncs to Google Ads in real time. CPM is shown for the buyer's actual slot duration (30/60/90-day, or packaged). Swap between produced versions in two clicks. When a term ends, the slot reopens for a new buyer — same creator, fresh read. Each repeat integration with the same brand climbs the trust curve toward incremental CVR.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FOR CREATORS -->
-<section class="audience" id="creators">
+<section id="creators" class="audience">
   <div class="container">
     <div class="audience-block creators">
       <div class="audience-grid">
@@ -918,56 +604,40 @@
           <h2 style="margin-top:14px">You're not selling videos. You're selling <em>endorsement capacity.</em></h2>
           <p class="lede" style="margin-top:20px;">Every long-form video is a slot. Every read you record is a tradeable asset. The exchange clears both — inventory by yield curve, production by your capacity and rate card. The deal ends; the inventory doesn't.</p>
           <ul class="feat-list">
-            <li><span class="check">✓</span><span class="feat-text"><b>Publish your endorsement profile.</b> Verticals you'll endorse, turnaround, capacity per month, rate-card adjustments. Buyers self-match against it.</span></li>
-            <li><span class="check">✓</span><span class="feat-text"><b>Produce on your schedule, in your voice.</b> Record reads in batches. Deliver 2–3 versions per booking so buyers can pick. Stockpile evergreen for re-licensing.</span></li>
-            <li><span class="check">✓</span><span class="feat-text"><b>Re-license what you've already made.</b> When a new brief matches an existing read — with your approval — earn again on production you've already done.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Publish your endorsement profile.</b> Verticals, turnaround, capacity, rate-card adjustments. Buyers self-match.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Monetize your back catalog.</b> Every old video is a sellable slot. New buyer means a fresh read — but the audience is already there, waiting in your archive.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Climb the trust curve with returning buyers.</b> 1.9× CVR lift by the 6th integration. Multi-integration packages mean predictable production schedules and predictable income.</span></li>
             <li><span class="check">✓</span><span class="feat-text"><b>Geo-multiply your slots.</b> One slot, different reads, different countries. Same video. Same time. Four buyers, four invoices.</span></li>
-            <li><span class="check">✓</span><span class="feat-text"><b>Escrowed payouts.</b> Funds held when signed, released on go-live. No more chasing invoices.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Escrowed payouts.</b> Funds held when signed, released on go-live. No chasing.</span></li>
           </ul>
           <div class="cta-row">
             <a href="#cta" class="btn btn-accent">Connect your channel <span class="arrow">→</span></a>
             <a href="#" class="btn btn-ghost">See how the math works</a>
           </div>
         </div>
-        <div>
-          <div class="ui-mock">
-            <div class="ui-mock-head">
-              <span class="ui-title">Inventory · December</span>
-              <div class="ui-actions"><span class="ui-dot"></span><span class="ui-dot"></span><span class="ui-dot"></span></div>
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 24px 60px -20px rgba(11,14,22,0.18);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;">Inventory · clearing this quarter</div>
+          <div style="padding:12px 0;border-bottom:1px solid var(--line);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-weight:500;font-size:14px;">EP 142 · Studio review</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">US + CA · live · integration #4 with Cleo</div></div>
+              <div style="font-family:'Fraunces',serif;font-size:18px;">$24.5K</div>
             </div>
-            <div class="calendar-grid">
-              <div class="cal-day">M 1</div>
-              <div class="cal-day">T 2</div>
-              <div class="cal-day booked">W 3</div>
-              <div class="cal-day booked">T 4</div>
-              <div class="cal-day live">F 5</div>
-              <div class="cal-day live">S 6</div>
-              <div class="cal-day live">S 7</div>
-              <div class="cal-day live">M 8</div>
-              <div class="cal-day produce">T 9</div>
-              <div class="cal-day produce">W 10</div>
-              <div class="cal-day booked">T 11</div>
-              <div class="cal-day open">F 12</div>
-              <div class="cal-day open">S 13</div>
-              <div class="cal-day open">S 14</div>
-              <div class="cal-day open">M 15</div>
-              <div class="cal-day open">T 16</div>
-              <div class="cal-day booked">W 17</div>
-              <div class="cal-day booked">T 18</div>
-              <div class="cal-day booked">F 19</div>
-              <div class="cal-day booked">S 20</div>
-              <div class="cal-day booked">S 21</div>
+          </div>
+          <div style="padding:12px 0;border-bottom:1px solid var(--line);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-weight:500;font-size:14px;">EP 138 · Q&amp;A long-form</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">DE + FR · in production · 12mo package</div></div>
+              <div style="font-family:'Fraunces',serif;font-size:18px;">$18.2K</div>
             </div>
-            <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;">YIELD THIS MONTH</div>
-                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;">$184,200</div>
-              </div>
-              <div style="text-align:right;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;">CAPACITY USED</div>
-                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--accent);">76%</div>
-              </div>
+          </div>
+          <div style="padding:12px 0;border-bottom:1px solid var(--line);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-weight:500;font-size:14px;">EP 119 · Remote work</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Back catalog · NordVPN brief approved</div></div>
+              <div style="font-family:'Fraunces',serif;font-size:18px;">$7.4K</div>
             </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:18px;margin-top:6px;border-top:1px solid var(--line);">
+            <div><div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--muted);letter-spacing:0.08em;">YTD CLEARED</div><div style="font-family:'Fraunces',serif;font-size:26px;margin-top:4px;">$184,200</div></div>
+            <div><div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--muted);letter-spacing:0.08em;">CAPACITY USED</div><div style="font-family:'Fraunces',serif;font-size:26px;margin-top:4px;color:var(--accent);">76%</div></div>
           </div>
         </div>
       </div>
@@ -976,85 +646,49 @@
 </section>
 
 <!-- FOR BRANDS -->
-<section class="audience" id="brands" style="padding-top:0;">
+<section id="brands" class="audience" style="padding-top: 0;">
   <div class="container">
     <div class="audience-block brands">
       <div class="audience-grid">
-        <div>
-          <span class="eyebrow">For brands &amp; agencies</span>
-          <h2 style="margin-top:14px">Buy creator-read endorsements at the <em>speed of media.</em></h2>
-          <p class="lede" style="margin-top:20px;">Submit a brief, not a creative. The creator turns it into a read in their voice. You get audience-first targeting, public clearing prices, mid-flight swap, and native Google Ads measurement — the workflow your trading desk already uses.</p>
-          <ul class="feat-list">
-            <li><span class="check">✓</span><span class="feat-text"><b>Submit a brief, not a creative.</b> Structured object: brand, product, key messages, CTA, banned phrases. The creator records the read. Approval gated by both sides.</span></li>
-            <li><span class="check">✓</span><span class="feat-text"><b>Discover by audience, not by name.</b> Filter by audience, geo, vertical, brand-safety, and creator endorsement profile. Slot allocation runs against clearing price.</span></li>
-            <li><span class="check">✓</span><span class="feat-text"><b>Swap creative mid-flight.</b> Push between produced versions in two clicks. Swap CTAs instantly. Commission new reads on creator turnaround.</span></li>
-            <li><span class="check">✓</span><span class="feat-text"><b>Measurement where you already work.</b> Native DBS metrics in Google Ads. Unified reporting in Slotted. No screenshots.</span></li>
-          </ul>
-          <div class="cta-row">
-            <a href="#cta" class="btn btn-primary">Submit a brief <span class="arrow">→</span></a>
-            <a href="#" class="btn btn-ghost">Trading-desk seat</a>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 28px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(246,242,232,0.6);margin-bottom:20px;">Campaign · Q4 launch · 12 creators</div>
+          <div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.10);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-weight:500;font-size:14px;color:var(--cream);">MKBHD · integration #4</div><div style="font-size:12px;color:rgba(246,242,232,0.5);margin-top:2px;">Tech · 18M · 30d CPM $17.50 · 90d $11.20</div></div>
+              <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--cream);">$24.5K</div>
+            </div>
+          </div>
+          <div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.10);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-weight:500;font-size:14px;color:var(--cream);">Ali Abdaal · integration #2</div><div style="font-size:12px;color:rgba(246,242,232,0.5);margin-top:2px;">Productivity · 12mo package · trust curve +18%</div></div>
+              <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--cream);">$18.2K</div>
+            </div>
+          </div>
+          <div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.10);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-weight:500;font-size:14px;color:var(--cream);">Wendover · integration #1</div><div style="font-size:12px;color:rgba(246,242,232,0.5);margin-top:2px;">Business · DE/FR geo-tenant · 6mo pkg</div></div>
+              <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--cream);">$14.8K</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:18px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.10);">
+            <div><div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;color:rgba(246,242,232,0.55);letter-spacing:0.08em;">CLEARED SPEND</div><div style="font-family:'Fraunces',serif;font-size:26px;margin-top:4px;color:var(--cream);">$420K</div></div>
+            <div><div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;color:rgba(246,242,232,0.55);letter-spacing:0.08em;">90D AMORT. CPM</div><div style="font-family:'Fraunces',serif;font-size:26px;margin-top:4px;color:var(--accent);">$18.40</div></div>
           </div>
         </div>
         <div>
-          <div class="ui-mock">
-            <div class="ui-mock-head">
-              <span class="ui-title">Campaign · Q4 Launch · 12 creators</span>
-              <div class="ui-actions"><span class="ui-dot"></span><span class="ui-dot"></span><span class="ui-dot"></span></div>
-            </div>
-            <div>
-              <div class="listing-row">
-                <div class="listing-creator">
-                  <div class="listing-avatar"></div>
-                  <div>
-                    <div class="listing-name" style="color:var(--cream);">MKBHD</div>
-                    <div class="listing-sub">Tech · 18M subs · US/CA</div>
-                  </div>
-                </div>
-                <div class="listing-stat">
-                  <div class="v" style="color:var(--cream);">$24,500</div>
-                  <div class="l">brief approved · 7d TR</div>
-                </div>
-                <span class="listing-cta produced">Produced</span>
-              </div>
-              <div class="listing-row">
-                <div class="listing-creator">
-                  <div class="listing-avatar av2"></div>
-                  <div>
-                    <div class="listing-name" style="color:var(--cream);">Ali Abdaal</div>
-                    <div class="listing-sub">Productivity · 5.6M · Global</div>
-                  </div>
-                </div>
-                <div class="listing-stat">
-                  <div class="v" style="color:var(--cream);">$18,200</div>
-                  <div class="l">2 versions live · v2 ready</div>
-                </div>
-                <span class="listing-cta">Brief</span>
-              </div>
-              <div class="listing-row">
-                <div class="listing-creator">
-                  <div class="listing-avatar av3"></div>
-                  <div>
-                    <div class="listing-name" style="color:var(--cream);">Wendover</div>
-                    <div class="listing-sub">Business · 4.8M · EU</div>
-                  </div>
-                </div>
-                <div class="listing-stat">
-                  <div class="v" style="color:var(--cream);">$14,800</div>
-                  <div class="l">brief match: 88%</div>
-                </div>
-                <span class="listing-cta relicense">Re-license</span>
-              </div>
-            </div>
-            <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.10);display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:rgba(246,242,232,0.5);text-transform:uppercase;">CLEARED SPEND</div>
-                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--cream);">$420,000</div>
-              </div>
-              <div style="text-align:right;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:rgba(246,242,232,0.5);text-transform:uppercase;">PROJECTED REACH</div>
-                <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:500;letter-spacing:-0.02em;margin-top:4px;color:var(--accent);">8.4M</div>
-              </div>
-            </div>
+          <span class="eyebrow">For brands &amp; trading desks</span>
+          <h2 style="margin-top:14px">Buy creator-read endorsements through your <em>trading desk.</em></h2>
+          <p class="lede" style="margin-top:20px;">Brief in, reads out. Audience-first targeting, public clearing prices, native Google Ads measurement priced to your actual slot duration, mid-flight swap. Multi-integration packages capture the full 90-day view curve and compound CPM down 55% YoY.</p>
+          <ul class="feat-list">
+            <li><span class="check">✓</span><span class="feat-text"><b>Submit a brief, not a creative.</b> Structured object: brand, product, key messages, CTA, banned phrases. The creator turns it into a read in their voice.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Pay for the view curve you capture.</b> 30-day slots clear on 30-day CPM. 60/90-day slot terms and multi-integration packages get the full view-curve amortization. Pricing matches exposure, not vendor averages.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Package multi-integration commitments.</b> 6mo or 12mo contracts with the same creator. Trust curve unlocks 1.9× CVR by the 6th integration. Lock the relationship.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Swap creative mid-flight.</b> Push between produced versions in two clicks. Swap CTAs instantly. Commission new reads on creator turnaround.</span></li>
+            <li><span class="check">✓</span><span class="feat-text"><b>Native Google Ads measurement.</b> DBS performance syncs into the workflow your trading desk already uses. No vendor APIs. No screenshots.</span></li>
+          </ul>
+          <div class="cta-row">
+            <a href="#cta" class="btn btn-primary">Submit a brief <span class="arrow">→</span></a>
+            <a href="#" class="btn btn-ghost-dark">Trading-desk seat</a>
           </div>
         </div>
       </div>
@@ -1065,48 +699,28 @@
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="container">
-    <div class="section-head">
-      <div class="left">
-        <span class="eyebrow">From design partners</span>
-        <h2>The format is new. <em>The wins aren't theoretical.</em></h2>
-      </div>
-    </div>
+    <div class="section-head"><div class="left"><span class="eyebrow">From design partners</span><h2>The format is new. <em>The wins aren't theoretical.</em></h2></div></div>
     <div class="quotes">
       <div class="quote">
         <div class="mark">"</div>
-        <div class="body">Nine years of videos. Before Slotted, only new uploads were inventory and every sponsorship meant a new negotiation. Now the back catalog clears every quarter — different brands, different countries, creator-read each time. I record in batches, re-license what fits, decline what doesn't. Production turned into a yield curve.</div>
-        <div class="who">
-          <div class="who-av"></div>
-          <div>
-            <div class="name">Design partner</div>
-            <div class="role">Creator · 3M+ subscribers, technology</div>
-          </div>
-        </div>
+        <div class="body">Nine years of videos. Before Slotted, only new uploads were inventory. Now my back catalog clears every quarter — different brands, different countries, creator-read each time. Half my revenue now comes from 12-month packages with the same buyers. Production turned into a yield curve.</div>
+        <div class="who"><div class="who-av"></div><div><div class="name">Design partner</div><div class="role">Creator · 3M+ subscribers, technology</div></div></div>
       </div>
       <div class="quote">
         <div class="mark">"</div>
-        <div class="body">First creator inventory my trading desk could buy at media-buying speed. We submit briefs, creators produce reads in their voice, we get audience targeting and Google Ads measurement on the back end. Premium CPMs, exchange motion, creator approval upstream of the trade. Eight reads in a week using the CTV workflow.</div>
-        <div class="who">
-          <div class="who-av b"></div>
-          <div>
-            <div class="name">Design partner</div>
-            <div class="role">Trading Desk Lead · Performance agency</div>
-          </div>
-        </div>
+        <div class="body">First creator inventory my trading desk could buy at media-buying speed — with CPM priced to the actual slot duration we commit to. We package 12-month commitments with creators we like and watch CPM fall 50%+ across the relationship. The trust curve is real and now it's a line item we can budget against.</div>
+        <div class="who"><div class="who-av b"></div><div><div class="name">Design partner</div><div class="role">Trading Desk Lead · Performance agency</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="pricing" id="pricing">
+<section id="pricing" class="pricing">
   <div class="container">
     <div class="section-head" style="margin-bottom:0;">
-      <div class="left">
-        <span class="eyebrow">Pricing</span>
-        <h2>Transparent. <em>And only when the slot clears.</em></h2>
-      </div>
-      <p class="lede" style="max-width:380px;">No listing fees. No subscriptions. No fees on views. We earn when the exchange clears your slot and the creator-read goes live.</p>
+      <div class="left"><span class="eyebrow">Pricing</span><h2>Transparent. <em>And only when the slot clears.</em></h2></div>
+      <p class="lede" style="max-width:380px;">No listing fees. No subscriptions. No fees on views. We earn when the exchange clears your slot.</p>
     </div>
     <div class="price-grid">
       <div class="price-card">
@@ -1118,9 +732,8 @@
           <li>Unlimited slot listings</li>
           <li>Endorsement profile + brief intake</li>
           <li>YouTube Studio + Google Ads sync</li>
-          <li>Standardized contracts + escrow</li>
-          <li>Real-time performance reporting</li>
-          <li>Re-license + resale flow</li>
+          <li>Duration-aware CPM + Google Ads sync</li>
+          <li>Back-catalog inventory enabled</li>
         </ul>
         <a href="#cta" class="btn btn-ghost">Connect your channel</a>
       </div>
@@ -1134,8 +747,8 @@
           <li>Qualified inbound briefs</li>
           <li>Yield-curve clearing prices</li>
           <li>Geo multi-tenant routing</li>
-          <li>Brief-match scoring for re-licensing</li>
-          <li>Demand-side success support</li>
+          <li>Multi-integration packaging</li>
+          <li>Brief-match scoring across creator portfolio</li>
         </ul>
         <a href="#cta" class="btn btn-primary">Get matched <span class="arrow">→</span></a>
       </div>
@@ -1147,9 +760,8 @@
         <ul>
           <li>Multi-brand planning workspace</li>
           <li>Brief library + version management</li>
-          <li>Custom roles + permissions</li>
+          <li>Cumulative CPM reporting</li>
           <li>White-label reporting</li>
-          <li>Bulk-buy and bundle workflows</li>
           <li>Exchange API access</li>
         </ul>
         <a href="#cta" class="btn btn-ghost">Talk to sales</a>
@@ -1159,54 +771,50 @@
 </section>
 
 <!-- FAQ -->
-<section class="faq" id="faq">
+<section id="faq" class="faq">
   <div class="container">
     <div class="faq-grid">
-      <div>
-        <span class="eyebrow">FAQ</span>
-        <h2 style="margin-top:14px;">Questions <em>we get a lot.</em></h2>
-        <p class="lede" style="margin-top:22px;">Don't see yours? <a href="#" style="color:var(--accent);font-weight:500;border-bottom:1.5px solid var(--accent);">Ask us anything →</a></p>
-      </div>
+      <div><span class="eyebrow">FAQ</span><h2 style="margin-top:14px;">Questions <em>we get a lot.</em></h2></div>
       <div>
         <details class="faq-item" open>
+          <summary>How is Slotted different from existing creator-marketing platforms?</summary>
+          <p>Existing platforms — influencer-marketing software, creator-integration buying platforms, and programmatic ad-tech — all share one constraint: their data models were built before Dynamic Brand Segments existed. They treat the campaign or the integration as the unit of trade, which means swap, geo multi-tenancy, back-catalog inventory, and multi-integration packaging require retrofitting onto a shape they weren't designed for (typically 12–24 months of rebuild). Slotted is slot-shaped from day one. Public clearing prices, native Google Ads sync, duration-aware CPM, and the secondary-market mechanics are first-class primitives, not features bolted on. The exchange model also brings buyer-side benefits the legacy platforms can't price for — pay-for-the-curve-you-capture CPM and standardized exchange contracts instead of bespoke per-deal terms.</p>
+        </details>
+        <details class="faq-item">
           <summary>Who actually creates the ad?</summary>
           <p>The creator does — always. The buyer submits a brief (brand, product, key messages, CTA, audience screens). The creator records the read in their own voice, against the brief, often delivering 2–3 versions. Both sides approve before go-live. The creative is never brand-supplied. The trust transfer from creator to brand is the entire reason DBS clears at 3–5× display CPMs.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does CPM work on a DBS slot? Do I get the long view-curve tail?</summary>
+          <p>You get the view curve you commit to. DBS slots are dynamic: when your term ends, the slot reopens to the next buyer. A 30-day slot gives you 30 days of impressions, priced on 30-day CPM. A 60- or 90-day slot lets you capture deeper into the view curve, with proportionally lower amortized CPM. Multi-integration packages (6/12 months across multiple integrations) capture the full 90-day curve and compound the trust curve as well, which is where the 55% YoY cumulative CPM reduction Agentio measured actually applies. Back-catalog inventory gives you a mature, steady view curve from day one. Slotted shows the CPM that matches the duration you actually buy — no vendor averaging, no implied tail you can't access.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is multi-integration packaging?</summary>
+          <p>By the 6th integration with the same creator, CTR is 1.8× higher and CVR is 1.9× higher than the first integration. Single-shot campaigns never capture this — brands cut spend before the trust curve unlocks. Slotted packages 6-month and 12-month commitments with the same creator into single contracts at a 10% discount, giving creators predictable production schedules and giving buyers the cumulative CPM compression (down 55% YoY on consistent spend) that only repetition unlocks.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What happens to back-catalog videos?</summary>
+          <p>Every long-form video a creator has uploaded still has a 60-second slot. Back-catalog videos keep getting views via search, recommendations, and suggested-video surfacing — and those slots are sellable. When a new buyer books a back-catalog slot, the creator records a fresh read for that buyer. The endorsement is always brand-specific; what's reusable is the slot inventory and the audience attached to it, not the creative.</p>
         </details>
         <details class="faq-item">
           <summary>Is this just programmatic ads in disguise?</summary>
           <p>No. Slotted brings the buying motion of programmatic — public clearing prices, yield curves, geo tenancy, swap, native measurement — to a market where the creative is creator-produced and every booking is a direct deal with creator approval. Per Google's own documentation, DBS inventory is not open-exchange programmatic. The motion is exchange-cleared. The creative isn't.</p>
         </details>
         <details class="faq-item">
-          <summary>How long does production take?</summary>
-          <p>Depends on the creator. Each creator publishes their standard turnaround in their endorsement profile — typical range is 5–10 business days from brief approval to delivered read. Buyers see turnaround upfront and can filter for faster cycles. Mid-flight swap between produced versions is instant. CTA-only swaps (URL, promo code) are instant. Commissioning a new version follows the creator's turnaround.</p>
-        </details>
-        <details class="faq-item">
-          <summary>What is re-licensing?</summary>
-          <p>When an existing creator-read fits a new buyer's brief — same product category, compatible messaging, creator-approved — it can be re-licensed at a discount instead of re-produced from scratch. The exchange runs a brief-match score against every existing read in the creator's library. Re-licensing is always opt-in for the creator. It's how production compounds into IP rather than expiring with each campaign.</p>
-        </details>
-        <details class="faq-item">
           <summary>What is a Dynamic Brand Segment, exactly?</summary>
           <p>DBS is a new YouTube format (launching April 2026, US geo-targeting May 2026) that turns the 60-second creator-read sponsorship inside a long-form video into a standardized, swappable, geo-targeted, resellable slot. Google built the delivery and measurement rails. They explicitly opted out of the transaction layer. Slotted is the transaction layer.</p>
         </details>
         <details class="faq-item">
-          <summary>Why isn't a CreatorIQ or Captiv8 the right place for this?</summary>
-          <p>Their data model is the campaign, not the slot or the read. Influencer platforms manage creator relationships and run bespoke per-deal workflows. None of them clear inventory, run public yield curves, route geo multi-tenancy, run brief-match re-licensing, or sync measurement to Google Ads natively. Retrofitting any of those into a campaign-shaped data model is a 12–24 month rebuild. We started slot-shaped, read-aware.</p>
-        </details>
-        <details class="faq-item">
           <summary>Does Slotted replace my agent or manager?</summary>
-          <p>No. Slotted is the marketplace and software layer — discovery, brief intake, contracts, escrow, reporting, re-licensing. Strategy, relationships, and the bespoke deals that don't fit the slot model still belong to humans. Most creators keep both.</p>
+          <p>No. Slotted is the marketplace and software layer. Strategy, relationships, and bespoke deals that don't fit the slot model still belong to humans. Most creators keep both.</p>
         </details>
         <details class="faq-item">
           <summary>How do payments work?</summary>
-          <p>Brands fund escrow when a brief is approved. We release funds to creators when the read goes live in YouTube Studio — or optionally when a view threshold is hit. Payouts run through Stripe Connect with standard creator payment terms.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I block certain brands or verticals?</summary>
-          <p>Yes. Creators publish their endorsement profile upfront — verticals they'll read for, verticals they refuse, competitor blocks, banned categories. Buyers set safety screens by creator type, content category, and audience profile. Both sides keep full approval rights on every brief and every read.</p>
+          <p>Brands fund escrow when a brief is approved. We release funds when the read goes live in YouTube Studio. Payouts run through Stripe Connect with standard creator payment terms.</p>
         </details>
         <details class="faq-item">
           <summary>What's the minimum spend?</summary>
-          <p>Self-serve starts at $10K per campaign. Trading-desk seat and enterprise sales accounts have no minimum. Most first campaigns clear between $50K and $250K across multiple reads.</p>
+          <p>Self-serve starts at $10K per campaign. Trading-desk seat and enterprise sales accounts have no minimum. Most first campaigns clear between $50K and $250K. Multi-integration packages typically start at $150K for 6 months.</p>
         </details>
       </div>
     </div>
@@ -1214,11 +822,11 @@
 </section>
 
 <!-- FINAL CTA -->
-<section class="final-cta" id="cta">
+<section id="cta" class="final-cta">
   <div class="container">
     <span class="eyebrow">Get started</span>
     <h2>The creator is the creative.<br><em>The exchange is the rail.</em></h2>
-    <p class="lede">Creators: 60 seconds to see what your slots clear at, and what your production capacity is worth on the curve. Brands: submit a brief, see audience-matched creators with quoted turnaround and yield — in 48 hours.</p>
+    <p class="lede">Creators: see what your slots and your production capacity are worth on the current curve. Brands: submit a brief, see audience-matched creators with quoted turnaround, duration-aware CPM, and integration-relationship status — in 48 hours.</p>
     <div class="cta-row">
       <a href="#" class="btn btn-primary">Connect your channel <span class="arrow">→</span></a>
       <a href="#" class="btn btn-accent">Submit a brief <span class="arrow">→</span></a>
@@ -1226,7 +834,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -1234,52 +841,17 @@
         <a href="#" class="brand"><span class="brand-dot"></span>Slotted</a>
         <p class="tagline">The endorsement exchange for YouTube Dynamic Brand Segments. Creator-produced creative, exchange-cleared trade. DBS is the first format. The category is everything that comes next.</p>
       </div>
-      <div class="col">
-        <h4>Creators</h4>
-        <ul>
-          <li><a href="#">How clearing works</a></li>
-          <li><a href="#">Endorsement profile</a></li>
-          <li><a href="#">Yield calculator</a></li>
-          <li><a href="#">Connect channel</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Brands</h4>
-        <ul>
-          <li><a href="#">Submit a brief</a></li>
-          <li><a href="#">Trading-desk seat</a></li>
-          <li><a href="#">Exchange API</a></li>
-          <li><a href="#">Request demo</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
+      <div class="col"><h4>Creators</h4><ul><li><a href="#">How clearing works</a></li><li><a href="#">Endorsement profile</a></li><li><a href="#">Yield + production curves</a></li><li><a href="#">Connect channel</a></li></ul></div>
+      <div class="col"><h4>Brands</h4><ul><li><a href="#">Submit a brief</a></li><li><a href="#">Multi-integration packages</a></li><li><a href="#">Trading-desk seat</a></li><li><a href="#">Exchange API</a></li></ul></div>
+      <div class="col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Press</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Slotted, Inc. All rights reserved.</span>
-      <div style="display:flex;gap:20px;">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Brand safety</a>
-      </div>
-    </div>
-    <p style="margin-top:24px;font-size:11px;color:rgba(246,242,232,0.4);max-width:600px;">¹ Google/Ipsos, Video &amp; Social Ad Impact Study, July–August 2023. Online survey, n=13,328 US, UK, BR, FR, DE, IT, JP, online users 18–54 who use social apps/sites monthly or more often.</p>
+    <div class="footer-bottom"><span>© 2026 Slotted, Inc. All rights reserved.</span><div style="display:flex;gap:20px;"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Brand safety</a></div></div>
   </div>
 </footer>
 
 <script>
   const nav = document.getElementById('nav');
-  const onScroll = () => {
-    if (window.scrollY > 40) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-  };
+  const onScroll = () => { if (window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 </script>
